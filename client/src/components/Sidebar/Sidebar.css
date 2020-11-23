@@ -1,31 +1,53 @@
 .sidebar {
   height: 100vh;
-  flex: 0.2;
   color: #fff;
+  flex: 0.9;
   padding: 0 10px 10px 0;
-  min-width: 250px;
+  min-width: 230px;
+  max-width: 270px;
   background-color: #1a1741;
+  height: 90vh;
+  position: fixed;
+}
+
+.sidebar > hr {
+  border: 1px solid #cc00cc50;
+  width: 100%;
+  margin: 10px 4px;
+}
+
+.sidebar > p {
+  margin: 10px 20px;
+  font-size: 14px;
 }
 
 .sidebar-logo {
   width: 25%;
 }
 
+.sidebar-playlists {
+  overflow-y: scroll;
+  height: 60%;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cc00cc50;
+  border-radius: 18px;
+}
+
 .sidebar-plist-title {
   color: #b1afc9;
-  font-size: 24px;
+  font-size: 18px;
+  text-transform: uppercase;
   justify-content: left;
-  margin-left: 25px;
+  margin-left: 20px;
   margin-top: 20px;
-}
-
-hr {
-  border: 1px solid #fafafa75;
-  width: 90%;
-  margin: 10px auto;
-}
-
-p {
-  margin: 10px 20px;
-  font-size: 14px;
 }

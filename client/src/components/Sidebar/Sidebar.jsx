@@ -11,7 +11,7 @@ import './Sidebar.css';
 function Sidebar () {
   const [{ playlists }, dispatch] = useProviderValue();
 
-  const playlistOptions = playlists?.items?.map(p => <Option optionName={p.name} />);
+  const playlistOptions = playlists?.items?.map((p, idx) => <Option key={idx} optionName={p.name} />);
 
   return (
     <div className='sidebar'>
@@ -25,7 +25,9 @@ function Sidebar () {
       <br />
       <strong className='sidebar-plist-title p10'>Playlists</strong>
       <hr />
-      {playlistOptions}
+      <div className='sidebar-playlists'>
+        {playlistOptions}
+      </div>
     </div>
   );
 }

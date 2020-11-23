@@ -2,9 +2,10 @@
   color: #6F6C99;
   height: 40px;
   cursor: pointer;
-  transition: 242ms color ease-in;
+  transition: 0.24s color ease-in;
   justify-content: left;
   margin-left: 25px;
+  font-size: 18px;
 }
 
 .option:hover {
