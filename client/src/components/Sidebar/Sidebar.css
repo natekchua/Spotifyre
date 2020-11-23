@@ -10,3 +10,22 @@
 .sidebar-logo {
   width: 25%;
 }
+
+.sidebar-plist-title {
+  color: #b1afc9;
+  font-size: 24px;
+  justify-content: left;
+  margin-left: 25px;
+  margin-top: 20px;
+}
+
+hr {
+  border: 1px solid #fafafa75;
+  width: 90%;
+  margin: 10px auto;
+}
+
+p {
+  margin: 10px 20px;
+  font-size: 14px;
+}

@@ -17,3 +17,11 @@ code {
 h1, h2, h3 {
   color: #fff;
 }
+
+.p10 {
+  padding: 10px;
+}
+
+.p20 {
+  padding: 20px;
+}

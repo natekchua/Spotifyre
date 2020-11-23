@@ -14,21 +14,34 @@ function App() {
     token
   }, dispatch] = useProviderValue();
 
+  // Retrieve user data upon authentication (initial render)
   useEffect(() => {
     const hash = getResponseToken();
     window.location.hash = '';
     if (hash.access_token) {
+
+      // Set Access Token - Spotify API receives access token to confirm connection.
       dispatch({
         type: 'SET_TOKEN',
         token: hash.access_token              
       })
-      spotify.setAccessToken(hash.access_token);  // Spotify API receives access token to confirm connection.
-      spotify.getMe().then(user => {              // get user account (returns a promise)
+      spotify.setAccessToken(hash.access_token);
+      
+      // Get User Account Details and set user in Context State.
+      spotify.getMe().then(user => {
         dispatch({
           type: 'SET_USER',
-          user: user                                  // same as user: user
+          user: user
         })
-      })
+      });
+
+      // Get User Playlists and set user playlists in Context State.
+      spotify.getUserPlaylists().then(playlists => {
+        dispatch({
+          type: 'SET_PLAYLISTS',
+          playlists: playlists
+        })
+      });
     }
   }, []);
 

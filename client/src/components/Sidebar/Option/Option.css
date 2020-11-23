@@ -1,0 +1,13 @@
+.option {
+  color: #6F6C99;
+  height: 40px;
+  cursor: pointer;
+  transition: 242ms color ease-in;
+  justify-content: left;
+  margin-left: 25px;
+}
+
+.option:hover {
+  color: #53B9EA;
+}
+
