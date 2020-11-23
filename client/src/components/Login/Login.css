@@ -1,0 +1,43 @@
+.flex-basic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-page {
+  flex-direction: column;
+  height: 100vh;
+  background-color: #1f1f4d;
+}
+
+.title {
+  padding: 10px;
+}
+
+.title > img {
+  width: 12%;
+}
+
+.title > h1 {
+  color: #fff;
+  font-weight: 100;
+  font-size: 96px;
+}
+
+.login-page > a {
+  margin: 20px;
+  padding: 20px 26px;
+  border-radius: 50px;
+  background-color: #5B5A99;
+  color: #fff;
+  font-weight: 500;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.login-page h2 {
+  margin: 15px;
+  color: #c1c0ee81;
+  font-weight: 100;
+}
