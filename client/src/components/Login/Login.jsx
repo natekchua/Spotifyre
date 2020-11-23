@@ -1,9 +1,9 @@
 import React from 'react';
 import './Login.css';
 import spotifyreLogo from '../../icons/spotifyre.png';
-import { loginURL } from '../../services/spotify';
+import { loginURL } from '../../services/spotifyUtils';
 
-function Login() {
+function Login () {
   return (
     <div className='login-page flex-basic'>
       <div className='title flex-basic'>
