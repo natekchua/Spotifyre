@@ -1,0 +1,12 @@
+.sidebar {
+  height: 100vh;
+  flex: 0.2;
+  color: #fff;
+  padding: 0 10px 10px 0;
+  min-width: 250px;
+  background-color: #1a1741;
+}
+
+.sidebar-logo {
+  width: 25%;
+}

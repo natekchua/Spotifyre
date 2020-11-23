@@ -1,0 +1,10 @@
+.content {
+  padding: 30px;
+  width: 100%;
+  height: 100vh;
+  overflow-y: overlay;
+  flex: 0.8;
+  color: white;
+  background: linear-gradient(#241961, #210f3d);
+  background-color: rgb(17, 0, 112);
+};

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { getResponseToken } from './services/spotifyUtils';
-import { useProviderValue } from './components/Context/Provider';
+import { useProviderValue } from './components/ContextState/Provider';
 import SpotifyWebApi from 'spotify-web-api-js';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard'
@@ -11,8 +11,7 @@ const spotify = new SpotifyWebApi();
 
 function App() {
   const [{
-    token,
-    user
+    token
   }, dispatch] = useProviderValue();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ function App() {
       spotify.getMe().then(user => {              // get user account (returns a promise)
         dispatch({
           type: 'SET_USER',
-          user                                    // same as user: user
+          user: user                                  // same as user: user
         })
       })
     }
