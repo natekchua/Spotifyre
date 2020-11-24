@@ -22,6 +22,11 @@ h1, h2, h3 {
   color: #fff;
 }
 
+.flex-basic {
+  display: flex;
+  align-items: center;
+}
+
 .p5 {
   padding: 5px;
 }
@@ -40,4 +45,16 @@ h1, h2, h3 {
 
 .p20 {
   padding: 20px;
+}
+
+.m10 {
+  margin: 10px;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.mr10 {
+  margin-right: 10px;
 }

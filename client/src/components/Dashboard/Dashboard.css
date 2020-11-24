@@ -1,7 +1,9 @@
 .dashboard-container {
-
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard {
   display: flex;
+  flex-grow: 1;
 }

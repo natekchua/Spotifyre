@@ -14,7 +14,7 @@ function Dashboard (props) {
         <Sidebar />
         <Content />
       </div>
-      <Footer />
+      <Footer spotify={spotify} />
     </div>
   );
 }

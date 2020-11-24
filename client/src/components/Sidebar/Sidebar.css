@@ -1,13 +1,14 @@
 .sidebar {
   height: 100vh;
   color: #fff;
-  flex: 0.9;
+  display: flex;
+  flex: 0.2;
+  flex-direction: column;
   padding: 0 10px 10px 0;
   min-width: 230px;
   max-width: 270px;
   background-color: #1a1741;
-  height: 90vh;
-  position: fixed;
+  height: 100vh;
 }
 
 .sidebar > hr {

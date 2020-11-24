@@ -4,6 +4,7 @@
   height: 100vh;
   overflow-y: overlay;
   flex: 1;
-  color: white;
+  align-items: right;
+  color: #fff;
   background: linear-gradient(#552dc4, #1b0a35);
 };
