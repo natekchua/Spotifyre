@@ -27,6 +27,12 @@ function App() {
       })
       spotify.setAccessToken(hash.access_token);
       
+      // Save spotify instance in Context State.
+      dispatch({
+        type: 'SET_SPOTIFY',
+        spotify: spotify              
+      })
+
       // Get User Account Details and set user in Context State.
       spotify.getMe().then(user => {
         dispatch({
@@ -55,7 +61,7 @@ function App() {
   }, []);
 
   return (
-    <div className='app'>
+    <div>
       {
         token
           ? <Dashboard spotify={spotify} />

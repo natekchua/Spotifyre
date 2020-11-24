@@ -4,7 +4,11 @@
   align-items: center;
   z-index: 99;
   color: #fff;
+  border: solid rgba(133, 0, 133, 0.253);
+  border-width: 1px 0 1px 0;
+  width: 100%;
 }
+
 .song-row > img {
   height: 40px;
   width: 40px;
@@ -12,7 +16,7 @@
 
 .song-row:hover {
   cursor: pointer;
-  background-color: #000;
+  background-color: rgb(11, 0, 39);
   opacity: 0.8;
 }
 
