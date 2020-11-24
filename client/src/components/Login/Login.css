@@ -1,10 +1,12 @@
 .login-page {
+  justify-content: center;
   flex-direction: column;
   height: 100vh;
   background-color: #1f1f4d;
 }
 
 .title {
+  justify-content: center;
   padding: 10px;
 }
 

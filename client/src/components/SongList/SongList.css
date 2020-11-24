@@ -1,0 +1,24 @@
+.songs-container {
+  margin: 20px -30px;
+}
+
+.song-icons {
+  display: flex;
+  align-items: center;
+}
+
+.song-icons > .MuiSvg-root {
+  margin-right: 20px;
+}
+
+.shuffle {
+  font-size: 80px !important;
+  margin-left: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.shuffle:hover {
+  transition: 0.24s trasnform ease-in;
+  transform: scale(1.1);
+}

@@ -51,6 +51,10 @@ h1, h2, h3 {
   margin: 10px;
 }
 
+.ml5 {
+  margin-left: 5px;
+}
+
 .ml10 {
   margin-left: 10px;
 }

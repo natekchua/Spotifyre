@@ -42,6 +42,15 @@ function App() {
           playlists: playlists
         })
       });
+
+      // "On Repeat" playlist hard-coded for now
+      spotify.getPlaylist('37i9dQZF1EpmFBY9P2HI7S').then(playlist => {
+        dispatch({
+          type: 'SET_CURR_PLAYLIST',
+          currPlaylist: playlist
+        })
+      });
+
     }
   }, []);
 

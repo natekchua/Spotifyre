@@ -18,6 +18,11 @@ const reducer = (state, action) => {
         ...state,
         playlists: action.playlists
       };
+    case 'SET_CURR_PLAYLIST':
+      return {
+        ...state,
+        currPlaylist: action.currPlaylist
+      };
     default:
       return state;
   }
