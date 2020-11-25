@@ -8,7 +8,6 @@ const config = {
   password: process.env.DB_password,
   host: process.env.DB_host,
   port: 5432,
-  ssl=true,
 
   poolSize: 5,
   poolIdleTimeout: 30000,
