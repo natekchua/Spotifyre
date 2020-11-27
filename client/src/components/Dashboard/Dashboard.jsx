@@ -1,20 +1,25 @@
 import React from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import Content from '../MainContent/Content';
-import Footer from '../Footer/Footer';
+import { useProviderValue } from '../ContextState/Provider';
+import SongList from '../SongList/SongList';
 
 import './Dashboard.css';
 
 function Dashboard (props) {
   const { spotify } = props;
+  const [{
+    currPlaylist
+  }, dispatch] = useProviderValue();
 
   return (
-    <div className='dashboard-container'>
-      <div className='dashboard'>
-        <Sidebar />
-        <Content />
+    <div className='Dashboard'>
+      <div className="dashboard-info p10">
+        <img src={currPlaylist?.images[0].url} alt='' />
+        <div className="dashboard-text">
+          <h1>{currPlaylist?.name}</h1>
+          <p>{currPlaylist?.description}</p>
+        </div>
       </div>
-      <Footer spotify={spotify} />
+      <SongList currPlaylist={currPlaylist} />
     </div>
   );
 }
