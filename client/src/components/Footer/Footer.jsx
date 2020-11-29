@@ -25,7 +25,6 @@ function Footer (props) {
         isPlaying: true
       });
     });
-    console.log('s: ', spotify)
   }, [spotify]);
 
   return (

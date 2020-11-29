@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useProviderValue } from '../ContextState/Provider';
 import spotifyreLogo from '../../icons/spotifyre.png';
 import Option from './Option/Option';
@@ -19,9 +20,9 @@ function Sidebar () {
         <img className='sidebar-logo' src={spotifyreLogo} alt='logo'/>
         <h1>Spotifyre</h1>
       </div>
-      <Option optionName='Dashboard' Icon={DashboardIcon} />
-      <Option optionName='Collaborate' Icon={PeopleIcon}/>
-      <Option optionName='Profile' Icon={FaceIcon}/>
+      <Link to={'/dashboard'}><Option optionName='Dashboard' Icon={DashboardIcon} /></Link>
+      <Link to={'/collaborate'}><Option optionName='Collaborate' Icon={PeopleIcon}/></Link>
+      <Link to={'/profile'}><Option optionName='Profile' Icon={FaceIcon}/></Link>
       <br />
       <strong className='sidebar-plist-title p10'>Playlists</strong>
       <hr />

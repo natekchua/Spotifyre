@@ -4,6 +4,6 @@ export const initialState = {
   user: null,
   playlists: [],
   currPlaylist: null,
-  songStatus: false, 
+  songStatus: false,
   currSong: null
 };

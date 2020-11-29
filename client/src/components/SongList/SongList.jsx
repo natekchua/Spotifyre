@@ -8,33 +8,50 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import './SongList.css';
 
 function SongList (props) {
-  const { currPlaylist } = props;
+  const { spotify } = props;
   const [{
-    spotify
+    currPlaylist
   }, dispatch] = useProviderValue();
 
-  const playSong = (id) => {  // WIP
-    console.log(id)
-    spotify?.play({ uris: [`spotify:track:${id}`] }).then((res) => {
-      console.log(res)
-      spotify?.getMyCurrentPlayingTrack().then(song => {
-        dispatch({
-          type: 'SET_CURR_SONG',
-          currSong: {
-            playStatus: song.is_playing,
+  const playPlaylist = (id) => {
+    spotify.play({ context_uri: `spotify:playlist:37i9dQZF1EpmFBY9P2HI7S` })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((song) => {
+          dispatch({
+            type: 'SET_SONG_STATUS',
+            isPlaying: true
+          });
+          dispatch({
+            type: 'SET_CURR_SONG',
             songObj: song.item
-          }
+          });
         });
       });
-    });
-  }
+  };
+
+  const playSong = (id) => {
+    console.log(spotify, id)
+    spotify?.play({ uris: [`spotify:track:${id}`] })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((song) => {
+          dispatch({
+            type: 'SET_SONG_STATUS',
+            isPlaying: true
+          });
+          dispatch({
+            type: 'SET_CURR_SONG',
+            songObj: song.item
+          });
+        });
+      });
+  };
 
   const songs = currPlaylist?.tracks.items.map((s, idx) => <Song key={idx} song={s.track} onPlaySong={playSong} />)
 
   return (
     <div className='songs-container'>
       <div className='song-icons'>
-        <PlayCircleOutlineIcon fontSize='large' className='shuffle' />
+        <PlayCircleOutlineIcon onClick={playPlaylist} fontSize='large' className='shuffle' />
         <StarBorderIcon fontSize='large' />
         <MoreHorizIcon fontSize='large'/>
       </div>

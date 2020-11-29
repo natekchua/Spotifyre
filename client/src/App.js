@@ -3,7 +3,7 @@ import { getResponseToken } from './services/spotifyUtils';
 import { useProviderValue } from './components/ContextState/Provider';
 import SpotifyWebApi from 'spotify-web-api-js';
 import Login from './components/Login/Login';
-import Dashboard from './components/Dashboard/Dashboard'
+import AppContainer from './components/AppContainer/AppContainer';
 
 import './App.css';
 
@@ -64,7 +64,7 @@ function App() {
     <div>
       {
         token
-          ? <Dashboard spotify={spotify} />
+          ? <AppContainer spotify={spotify} />
           : <Login />
       }
     </div>
