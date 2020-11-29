@@ -1,9 +1,183 @@
+/* get rid of some default items for Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* get rid of some default items for firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+h2, h3{
+  font-weight: lighter;
+}
+
+/* ************************* */
+
+/* avatar */
+#profileSettingsAvatar {
+  width: 20vw;
+  max-width: 290px;
+  height: auto;
+}
+
+#avatarInfo-container {
+  padding-left: 2vw;
+}
+
+#avatarInfo-container p{
+  padding-top: 1vh;
+}
+/* ************************* */
+
+/* enable curator slider */
+#enableCuratorMode-container {
+  padding-top: 1vh;
+  padding-bottom: 3vh;
+}
+
+#enableCuratorMode-container div{
+  padding-right: 1vw;
+}
+/* ************************* */
+
+/* curtator settings */
 .curatorSetting {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
-.avatarInfo-container {
-  display:flex;
-  flex-direction: column;
+.curatorSetting p {
+  padding-bottom: 5px;
 }
+
+#curatorSettingsBorder {
+  border: 1px solid #794FF6;
+  border-radius: 34px;
+  width: max-content;
+}
+
+#curatorSettings-container {
+  display: inline-block;
+  width: 400px;
+  padding: 25px;
+}
+
+@media (max-width: 700px) {
+  #curatorSettings-container {
+    width: 35vw;
+  }
+}
+
+#curatorSettings-container .curatorSetting {
+  justify-content: space-around;
+}
+
+#curatorSettings-container input:focus {
+  outline: none;
+}
+
+#curatorSettings-container input[type=number] {
+  border-radius: 34px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  color: #16c5f5;
+  background: hsla(254, 42%, 80%, 0.58);
+  outline: none;
+  text-align: center;
+  border: none;
+}
+
+#curatorSettings-container h2{
+  align-self: center;
+  padding-bottom: 35px;
+}
+
+#curatorSettings-container form {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  color: #16c5f5;
+}
+/* ************************* */
+
+/* save settings button */
+#saveProfileSettingsButton-container {
+  width: 60px;
+  height: 34px;
+  padding-top: 5vh;
+}
+
+#saveProfileSettingsButton {
+  width: 90px;
+  height: 42px;
+  background: #4f2dba;
+  border: none;
+  color: #16c5f5;
+  border-radius: 34px;
+  outline: none;
+}
+
+#saveProfileSettingsButton:active {
+  background: #1c0d4a;
+  -webkit-box-shadow: inset 0px 0px 5px #120638;
+     -moz-box-shadow: inset 0px 0px 5px #120638;
+          box-shadow: inset 0px 0px 5px #120638;
+   outline: none;
+}
+/* ************************* */
+
+/* sliders */
+.switch {
+  position: relative;
+  display: inline-block;
+  min-width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #a9a0c4;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background: #120439;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background: #2e0f85;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* ************************* */
