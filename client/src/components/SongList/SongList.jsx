@@ -14,7 +14,7 @@ function SongList (props) {
   }, dispatch] = useProviderValue();
 
   const playPlaylist = () => {
-    spotify.play({ context_uri: `spotify:playlist:${currPlaylist.id}` })
+    spotify?.play({ context_uri: `spotify:playlist:${currPlaylist.id}` })
       .then((res) => {
         spotify.getMyCurrentPlayingTrack().then((song) => {
           dispatch({

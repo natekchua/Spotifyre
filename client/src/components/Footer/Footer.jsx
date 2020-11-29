@@ -14,8 +14,8 @@ function Footer (props) {
   }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    // Get Current song
     spotify.getMyCurrentPlaybackState().then(song => {
+      console.log(song)
       dispatch({
         type: 'SET_CURR_SONG',
         songObj: song.item

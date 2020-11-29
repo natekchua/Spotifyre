@@ -19,7 +19,7 @@ function Dashboard () {
     <div>
       Welcome to your {tab}!
     </div>
-  )
+  );
 }
 
 export default Dashboard;

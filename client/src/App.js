@@ -23,7 +23,7 @@ function App() {
       // Set Access Token - Spotify API receives access token to confirm connection.
       dispatch({
         type: 'SET_TOKEN',
-        token: hash.access_token              
+        token: hash.access_token
       })
       spotify.setAccessToken(hash.access_token);
       
