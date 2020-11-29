@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../Sidebar/Sidebar';
-import Content from '../Dashboard/Dashboard';
+import Content from '../Profile/Profile';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
