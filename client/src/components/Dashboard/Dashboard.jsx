@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
-import { useProviderValue } from '../ContextState/Provider';
-
-import './Dashboard.css';
+import React, { useEffect } from 'react'
+import { useProviderValue } from '../ContextState/Provider'
+import './Dashboard.css'
 
 function Dashboard () {
-  const [{
-    tab
-  }, dispatch] = useProviderValue();
+  const [dispatch] = useProviderValue()
 
   useEffect(() => {
     dispatch({
@@ -16,10 +13,18 @@ function Dashboard () {
   }, [])
 
   return (
-    <div>
-      Welcome to your {tab}!
-    </div>
-  );
+    <>
+      <div>
+        Top Playlist
+      </div>
+      <div>
+        Recommended Playlists
+      </div>
+      <div>
+        Recently Played Songs
+      </div>
+    </>
+  )
 }
 
-export default Dashboard;
+export default Dashboard
