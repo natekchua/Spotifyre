@@ -8,6 +8,16 @@ const reducer = (state, action) => {
         ...state,
         token: action.token
       };
+    case 'SET_TAB':
+      return {
+        ...state,
+        tab: action.tab
+      };
+    case 'SET_SPOTIFY':
+      return {
+        ...state,
+        token: action.spotify
+      };
     case 'SET_USER':
       return {
         ...state,
@@ -22,6 +32,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         currPlaylist: action.currPlaylist
+      };
+    case 'SET_SONG_STATUS':
+      return {
+        ...state,
+        songStatus: action.isPlaying
+      };
+    case 'SET_CURR_SONG':
+      return {
+        ...state,
+        currSong: action.songObj
       };
     default:
       return state;

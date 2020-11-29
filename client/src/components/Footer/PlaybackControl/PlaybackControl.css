@@ -1,0 +1,20 @@
+.outer-control-icon {
+  color: #6F6C99;
+}
+
+.outer-control-icon:hover,
+.control-icon:hover {
+  transition: transform 0.24s ease-in-out;
+  transform: scale(1.1) !important;
+  color: #ff00ff;
+}
+
+.playback-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0.4;
+  max-width: 300px;
+  padding: 0 100px;
+  color: #e8d3ee;
+}

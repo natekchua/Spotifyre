@@ -1,8 +1,10 @@
 export const initialState = {
   token: null,
+  tab: 'Dashboard',
+  spotify: null,
   user: null,
   playlists: [],
   currPlaylist: null,
-  currPlaying: false,
-  song: null
+  songStatus: false,
+  currSong: null
 };

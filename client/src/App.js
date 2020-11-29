@@ -3,7 +3,7 @@ import { getResponseToken } from './services/spotifyUtils';
 import { useProviderValue } from './components/ContextState/Provider';
 import SpotifyWebApi from 'spotify-web-api-js';
 import Login from './components/Login/Login';
-import AppContainer from './components/AppContainer/AppContainer'
+import AppContainer from './components/AppContainer/AppContainer';
 
 import './App.css';
 
@@ -26,6 +26,12 @@ function App() {
         token: hash.access_token
       })
       spotify.setAccessToken(hash.access_token);
+      
+      // Save spotify instance in Context State.
+      dispatch({
+        type: 'SET_SPOTIFY',
+        spotify: spotify              
+      })
 
       // Get User Account Details and set user in Context State.
       spotify.getMe().then(user => {
@@ -55,7 +61,7 @@ function App() {
   }, []);
 
   return (
-    <div className='app'>
+    <div>
       {
         token
           ? <AppContainer spotify={spotify} />

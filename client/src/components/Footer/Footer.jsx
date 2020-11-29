@@ -1,31 +1,50 @@
-import React from 'react';
-import ShuffleIcon from '@material-ui/icons/Shuffle';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import RepeatIcon from '@material-ui/icons/Repeat';
-import VolumeDownIcon from '@material-ui/icons/VolumeDown';
+import React, { useEffect } from 'react';
+import { useProviderValue } from '../ContextState/Provider';
 import { Slider } from '@material-ui/core';
+import VolumeDownIcon from '@material-ui/icons/VolumeDown';
+import PlaybackControl from './PlaybackControl/PlaybackControl';
 
 import './Footer.css';
 
-function Footer () {
+function Footer (props) {
+  const { spotify } = props;
+  const [{
+    currSong,
+    songStatus
+  }, dispatch] = useProviderValue();
+
+  useEffect(() => {
+    spotify.getMyCurrentPlaybackState().then(song => {
+      console.log(song)
+      dispatch({
+        type: 'SET_CURR_SONG',
+        songObj: song.item
+      });
+      dispatch({
+        type: 'SET_SONG_STATUS',
+        isPlaying: true
+      });
+    });
+  }, [spotify]);
+
   return (
     <div className='footer'>
       <div className='album-desc'>
-        <img src='' alt='' />
-        <div className="song-info">
-          <h4>Title</h4>
-          <p>Artist Name</p>
-        </div>
+        { 
+          songStatus && currSong
+            ? <>
+                <img src={currSong.album.images[1].url} alt='Current Album Art' />
+                <div className='song-info'>
+                  <h4>{currSong.name}</h4>
+                  <p>{currSong.artists.map(a => a.name).join(', ')}</p>
+                </div>
+              </>
+            : <div className='song-info'>
+                <h3>Click Play!</h3>
+              </div>
+        }     
       </div>
-      <div className='playback-control'>
-        <ShuffleIcon className='outer-control-icon' />
-        <SkipPreviousIcon className='control-icon' />
-        <PlayCircleFilledIcon fontSize='large' className='control-icon' />
-        <SkipNextIcon className='control-icon' />
-        <RepeatIcon className='outer-control-icon' />
-      </div>
+      <PlaybackControl spotify={spotify} />
       <div className='volume-control'>
         <VolumeDownIcon className='outer-control-icon pr10' />
         <Slider id='volume' />

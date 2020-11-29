@@ -1,17 +1,36 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useProviderValue } from '../ContextState/Provider';
 import spotifyreLogo from '../../icons/spotifyre.png';
-import Option from './Option/Option';
+import TabOption from './Option/TabOption';
+import PlaylistOption from './Option/PlaylistOption';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import FaceIcon from '@material-ui/icons/Face';
 
 import './Sidebar.css';
 
-function Sidebar () {
+function Sidebar (props) {
+  const { spotify } = props;
   const [{ playlists }, dispatch] = useProviderValue();
 
-  const playlistOptions = playlists?.items?.map((p, idx) => <Option key={idx} optionName={p.name} />);
+  const selectPlaylist = (id) => {
+    spotify.getPlaylist(id).then(playlist => {
+      dispatch({
+        type: 'SET_CURR_PLAYLIST',
+        currPlaylist: playlist
+      })
+    });
+  };
+
+  const playlistOptions = playlists?.items?.map((p, idx) =>
+    <PlaylistOption
+      key={idx}
+      optionName={p.name}
+      playlist={p}
+      onSelectPlaylist={selectPlaylist}
+    />
+  );
 
   return (
     <div className='sidebar'>
@@ -19,9 +38,9 @@ function Sidebar () {
         <img className='sidebar-logo' src={spotifyreLogo} alt='logo'/>
         <h1>Spotifyre</h1>
       </div>
-      <Option optionName='Dashboard' Icon={DashboardIcon} />
-      <Option optionName='Collaborate' Icon={PeopleIcon}/>
-      <Option optionName='Profile' Icon={FaceIcon}/>
+      <Link to={'/dashboard'}><TabOption optionName='Dashboard' Icon={DashboardIcon} /></Link>
+      <Link to={'/collaborate'}><TabOption optionName='Collaborate' Icon={PeopleIcon} /></Link>
+      <Link to={'/profile'}><TabOption optionName='Profile' Icon={FaceIcon} /></Link>
       <br />
       <strong className='sidebar-plist-title p10'>Playlists</strong>
       <hr />
