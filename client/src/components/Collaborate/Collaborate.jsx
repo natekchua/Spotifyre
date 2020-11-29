@@ -8,7 +8,7 @@ import './Collaborate.css';
 function Collaborate (props) {
   const { spotify } = props;
   const [{
-    tab
+
   }, dispatch] = useProviderValue();
 
   useEffect(() => {

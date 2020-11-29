@@ -4,7 +4,7 @@ import SongList from '../SongList/SongList';
 
 import './PlaylistView.css';
 
-function Playlist (props) {
+function PlaylistView (props) {
   const { spotify } = props;
   const [{
     currPlaylist
@@ -24,4 +24,4 @@ function Playlist (props) {
   );
 }
 
-export default Playlist;
+export default PlaylistView;
