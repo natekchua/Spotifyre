@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './Option.css';
 
-function Option (props) {
+function TabOption (props) {
   const {
     optionName,
     Icon
@@ -15,4 +17,4 @@ function Option (props) {
   );
 }
 
-export default Option;
+export default TabOption;

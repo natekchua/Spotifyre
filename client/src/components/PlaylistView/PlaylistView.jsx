@@ -13,7 +13,7 @@ function Playlist (props) {
   return (
     <div>
       <div className="playlist-info p10">
-        <img src={currPlaylist?.images[0].url} alt='' />
+        <img src={currPlaylist?.images[0]?.url} alt='' />
         <div className="playlist-text">
           <h1>{currPlaylist?.name}</h1>
           <p>{currPlaylist?.description}</p>

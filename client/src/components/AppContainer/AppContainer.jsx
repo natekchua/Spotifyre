@@ -16,7 +16,7 @@ function AppContainer (props) {
     <Router>
       <div className='AppContainer-container'>
         <div className='AppContainer'>
-          <Sidebar />
+          <Sidebar spotify={spotify} />
           <div className='Content-container'>
             <Header spotify={spotify} />
             <Route path='/dashboard' exact render={() => <Dashboard spotify={spotify} />} />

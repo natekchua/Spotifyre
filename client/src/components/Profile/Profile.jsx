@@ -14,7 +14,8 @@ function Profile (props) {
       type: 'SET_TAB',
       tab: 'Profile'
     })
-  })
+  }, [])
+
   return (
     <div className='Profile-container'>
       <div className='curatorSetting'>
