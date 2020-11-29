@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useProviderValue } from '../ContextState/Provider';
 
 import './Dashboard.css';
 
 function Dashboard () {
+  const [{
+    tab
+  }, dispatch] = useProviderValue();
+
+  useEffect(() => {
+    dispatch({
+      type: 'SET_TAB',
+      tab: 'Dashboard'
+    })
+  }, [])
+
   return (
     <div>
-      Dashboard Page
+      Welcome to your {tab}!
     </div>
   )
 }

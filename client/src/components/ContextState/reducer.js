@@ -8,6 +8,11 @@ const reducer = (state, action) => {
         ...state,
         token: action.token
       };
+    case 'SET_TAB':
+      return {
+        ...state,
+        tab: action.tab
+      };
     case 'SET_SPOTIFY':
       return {
         ...state,

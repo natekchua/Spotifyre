@@ -11,7 +11,7 @@ function Playlist (props) {
   }, dispatch] = useProviderValue();
 
   return (
-    <div className='playlist'>
+    <div>
       <div className="playlist-info p10">
         <img src={currPlaylist?.images[0].url} alt='' />
         <div className="playlist-text">

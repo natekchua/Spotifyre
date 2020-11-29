@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
 
@@ -7,8 +7,14 @@ import './Profile.css';
 function Profile (props) {
   const [{
     user
-  }] = useProviderValue();
+  }, dispatch] = useProviderValue();
 
+  useEffect(() => {
+    dispatch({
+      type: 'SET_TAB',
+      tab: 'Profile'
+    })
+  })
   return (
     <div className='Profile-container'>
       <div className='curatorSetting'>

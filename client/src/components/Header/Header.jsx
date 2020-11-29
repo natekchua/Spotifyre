@@ -7,7 +7,8 @@ import './Header.css';
 
 function Header () {
   const [{
-    user
+    user,
+    tab
   }, dispatch] = useProviderValue();
   
   return (
@@ -21,7 +22,7 @@ function Header () {
         </input>
       </div>
       <div className='middle-header flex-basic'>
-        <h2>Current Tab Here</h2>
+        <h2>{tab}</h2>
       </div>
       <div className='right-header flex-basic'>
         <Avatar src={user?.images[0].url} alt='profile-pic' />
