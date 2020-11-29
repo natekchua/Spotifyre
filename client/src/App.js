@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getResponseToken } from './services/spotifyUtils';
 import { useProviderValue } from './components/ContextState/Provider';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { getLoginURL } from './services/apiRequests';
+
 import SpotifyWebApi from 'spotify-web-api-js';
 import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
@@ -9,17 +12,20 @@ import './App.css';
 
 const spotify = new SpotifyWebApi();
 
-function App() {
+const App = () => {
+  const [loginURL, setLoginURL] = useState('');
   const [{
     token
   }, dispatch] = useProviderValue();
 
   // Retrieve user data upon authentication (initial render)
   useEffect(() => {
+    getLoginURL().then(res => setLoginURL(res.loginURL))
+    .catch(err => console.log(err));
+
     const hash = getResponseToken();
     window.location.hash = '';
     if (hash.access_token) {
-
       // Set Access Token - Spotify API receives access token to confirm connection.
       dispatch({
         type: 'SET_TOKEN',
@@ -61,13 +67,13 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <Router>
       {
         token
           ? <AppContainer spotify={spotify} />
-          : <Login />
+          : <Route path='/' exact render={() => <Login loginURL={loginURL} />} />
       }
-    </div>
+    </Router>
   );
 }
 

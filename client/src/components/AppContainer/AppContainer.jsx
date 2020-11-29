@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
 import Dashboard from '../Dashboard/Dashboard';
 import Collaborate from '../Collaborate/Collaborate';
@@ -13,20 +13,18 @@ function AppContainer (props) {
   const { spotify } = props;
 
   return (
-    <Router>
-      <div className='AppContainer-container'>
-        <div className='AppContainer'>
-          <Sidebar spotify={spotify} />
-          <div className='Content-container'>
-            <Header spotify={spotify} />
-            <Route path='/dashboard' exact render={() => <Dashboard spotify={spotify} />} />
-            <Route path='/collaborate' render={() => <Collaborate spotify={spotify} />} />
-            <Route path='/profile' render={() => <Profile />} />
-          </div>
+    <div className='AppContainer-container'>
+      <div className='AppContainer'>
+        <Sidebar spotify={spotify} />
+        <div className='Content-container'>
+          <Header spotify={spotify} />
+          <Route path='/dashboard' render={() => <Dashboard spotify={spotify} />} />
+          <Route path='/collaborate' render={() => <Collaborate spotify={spotify} />} />
+          <Route path='/profile' render={() => <Profile />} />
         </div>
-        <Footer spotify={spotify} />
       </div>
-    </Router>
+      <Footer spotify={spotify} />
+    </div>
   );
 }
 
