@@ -1,9 +1,9 @@
 import React from 'react';
 import { useProviderValue } from '../ContextState/Provider';
-import SearchIcon from '@material-ui/icons/Search';
 import { Avatar } from '@material-ui/core';
 
 import './Header.css';
+import Search from '../Search/Search'
 
 function Header () {
   const [{
@@ -14,12 +14,7 @@ function Header () {
   return (
     <div className='header'>
       <div className='left-header flex-basic p5'>
-        <SearchIcon />
-        <input
-          placeholder='Search...'
-          type='text'  
-        >
-        </input>
+        <Search/>
       </div>
       <div className='middle-header flex-basic'>
         <h2>{tab}</h2>
