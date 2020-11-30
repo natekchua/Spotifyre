@@ -1,120 +1,77 @@
 // All API requests to the server.
 
-export const getLoginURL = async () => {
-  const response = await fetch('/api/authenticate');
+const apiGet = async (path) => {
+  const response = await fetch(path);
   const body = await response.json();
   if (response.status !== 200) throw Error(body.message);
   
   return body;
+}
+
+const apiPost = async (path, item) => {
+  const response = await fetch(path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ post: item }),
+  });
+  const body = await response.text();
+  return body;
+}
+
+export const getLoginURL = async () => {
+  return apiGet('/api/authenticate');
 };
 
 export const setAccessToken = async (token) => {
-  const response = await fetch('/api/set-access-token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ post: token }),
-  });
-  const body = await response.text();
-  return body;
+  return apiPost('/api/set-access-token', token);
 };
 
 export const getSpotify = async () => {
-  const response = await fetch('/api/get-spotify');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/get-spotify');
 };
 
 export const getMe = async () => {
-  const response = await fetch('/api/get-me');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/get-me');
 };
 
 export const getUserPlaylists = async () => {
-  const response = await fetch('/api/get-user-playlists');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/get-user-playlists');
 }
 
 export const getPlaylist = async () => {
-  const response = await fetch('/api/get-playlist');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/get-playlist');
 }
 
 export const selectPlaylist = async (id) => {
-  const response = await fetch('/api/select-playlist', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ post: id }),
-  });
-  const body = await response.text();
-  return body;
+  return apiPost('/api/select-playlist', id);
 }
 
 export const getPlaybackState = async () => {
-  const response = await fetch('/api/get-playback-state');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/get-playback-state');
 }
 
 export const play = async () => {
-  const response = await fetch('/api/play');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/play');
 };
 
 export const pause = async () => {
-  const response = await fetch('/api/pause');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/pause');
 };
 
 export const goPrevious = async () => {
-  const response = await fetch('/api/previous-song');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/previous-song');
 };
 
 export const goNext = async () => {
-  const response = await fetch('/api/next-song');
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  return body;
+  return apiGet('/api/next-song');
 };
 
 export const playSong = async (id) => {
-  const response = await fetch('/api/play-song', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ post: id }),
-  });
-  const body = await response.text();
-  return body;
+  return apiPost('/api/play-song', id);
 };
 
 export const playPlaylist = async (id) => {
-  const response = await fetch('/api/play-playlist', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ post: id }),
-  });
-  const body = await response.text();
-  return body;
+  return apiPost('/api/play-playlist', id);
 };
