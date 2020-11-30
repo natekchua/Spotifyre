@@ -31,11 +31,11 @@ app.get('/api/get-spotify', (req, res) => {
 
 app.get('/api/get-me', (req, res) => {
   spotify.getMe().then(
-    function (data) {
+    (data) => {
       console.log('Some information about the authenticated user', data.body);
       res.send({ me: data.body });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -43,11 +43,11 @@ app.get('/api/get-me', (req, res) => {
 
 app.get('/api/get-user-playlists', (req, res) => {
   spotify.getUserPlaylists().then(
-    function (data) {
+    (data) => {
       console.log('Retrieved playlists', data.body);
       res.send({ playlists: data.body });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -55,11 +55,11 @@ app.get('/api/get-user-playlists', (req, res) => {
 
 app.get('/api/get-playlist', (req, res) => {
   spotify.getPlaylist('37i9dQZF1EpmFBY9P2HI7S').then(
-    function (data) {
+    (data) => {
       console.log('Some information about this playlist', data.body);
       res.send({ playlist: data.body });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -67,11 +67,11 @@ app.get('/api/get-playlist', (req, res) => {
 
 app.post('/api/select-playlist', (req, res) => {
   spotify.getPlaylist(req.body.post).then(
-    function (data) {
+    (data) => {
       console.log('The selected playlist', data.body);
       res.send({ playlist: data.body });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -79,7 +79,7 @@ app.post('/api/select-playlist', (req, res) => {
 
 app.get('/api/get-playback-state', (req, res) => {
   spotify.getMyCurrentPlaybackState().then(
-    function (data) {
+    (data) => {
       if (data.body && data.body.is_playing) {
         console.log('User is currently playing something!');
         res.send({
@@ -94,7 +94,7 @@ app.get('/api/get-playback-state', (req, res) => {
         });
       }
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -102,15 +102,11 @@ app.get('/api/get-playback-state', (req, res) => {
 
 app.get('/api/play', (req, res) => {
   spotify.play().then(
-    function () {
-      console.log('Playback started');
-    },
-    function (err) {
-      console.log('Something went wrong!', err);
-    }
+    () => console.log('Playback started'),
+    (err) => console.log('Something went wrong!', err)
   );
   spotify.getMyCurrentPlaybackState().then(
-    function (data) {
+    (data) => {
       if (data.body) {
         res.send({
           song: data.body,
@@ -118,7 +114,7 @@ app.get('/api/play', (req, res) => {
         });
       }
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -126,20 +122,16 @@ app.get('/api/play', (req, res) => {
 
 app.get('/api/pause', (req, res) => {
   spotify.pause().then(
-    function () {
-      console.log('Playback paused');
-    },
-    function (err) {
-      console.log('Something went wrong!', err);
-    }
+    () => console.log('Playback paused'),
+    (err) => console.log('Something went wrong!', err)
   );
   spotify.getMyCurrentPlaybackState().then(
-    function (data) {
+    (data) => {
       if (data.body) {
         res.send({ isPlaying: data.body.is_playing });
       }
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -147,11 +139,11 @@ app.get('/api/pause', (req, res) => {
 
 app.get('/api/previous-song', (req, res) => {
   spotify.skipToPrevious().then(
-    function (data) {
+    (data) => {
       console.log('Skip to previous');
       res.send({ data });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -159,11 +151,11 @@ app.get('/api/previous-song', (req, res) => {
 
 app.get('/api/next-song', (req, res) => {
   spotify.skipToNext().then(
-    function (data) {
+    (data) => {
       console.log('Skip to next');
       res.send({ data });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -171,11 +163,11 @@ app.get('/api/next-song', (req, res) => {
 
 app.post('/api/play-song', (req, res) => {
   spotify.play({ uris: [`spotify:track:${req.body.post}`] }).then(
-    function (data) {
+    (data) => {
       console.log('Song started');
       res.send({ data });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
@@ -183,11 +175,11 @@ app.post('/api/play-song', (req, res) => {
 
 app.post('/api/play-playlist', (req, res) => {
   spotify.play({ context_uri: `spotify:playlist:${req.body.post}` }).then(
-    function (data) {
+    (data) => {
       console.log('Playlist started');
       res.send({ data });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
