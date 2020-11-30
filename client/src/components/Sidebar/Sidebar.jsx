@@ -7,20 +7,20 @@ import PlaylistOption from './Option/PlaylistOption';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import FaceIcon from '@material-ui/icons/Face';
+import { selectPlaylist } from '../../services/apiRequests';
 
 import './Sidebar.css';
 
-function Sidebar (props) {
-  const { spotify } = props;
+function Sidebar () {
   const [{ playlists }, dispatch] = useProviderValue();
 
-  const selectPlaylist = (id) => {
-    spotify.getPlaylist(id).then(playlist => {
+  const onSelectPlaylist = (id) => {
+    selectPlaylist(id).then(res => {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
-        currPlaylist: playlist
+        currPlaylist: JSON.parse(res).playlist
       })
-    });
+    }).catch(err => console.log(err))
   };
 
   const playlistOptions = playlists?.items?.map((p, idx) =>
@@ -28,7 +28,7 @@ function Sidebar (props) {
       key={idx}
       optionName={p.name}
       playlist={p}
-      onSelectPlaylist={selectPlaylist}
+      onSelectPlaylist={onSelectPlaylist}
     />
   );
 

@@ -4,53 +4,56 @@ import Song from '../Song/Song';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { 
+  getPlaybackState,
+  playPlaylist,
+  playSong
+} from '../../services/apiRequests';
+import { wait } from '../../services/helperFunctions';
 
 import './SongList.css';
 
-function SongList (props) {
-  const { spotify } = props;
+function SongList () {
   const [{
     currPlaylist
   }, dispatch] = useProviderValue();
 
-  const playPlaylist = () => {
-    spotify?.play({ context_uri: `spotify:playlist:${currPlaylist.id}` })
-      .then((res) => {
-        spotify.getMyCurrentPlayingTrack().then((song) => {
-          dispatch({
-            type: 'SET_SONG_STATUS',
-            isPlaying: true
-          });
-          dispatch({
-            type: 'SET_CURR_SONG',
-            songObj: song.item
-          });
-        });
+  const onPlayPlaylist = async () => {
+    await playPlaylist(currPlaylist.id);
+    await wait(200);
+    getPlaybackState().then(res => {
+      dispatch({
+        type: 'SET_CURR_SONG',
+        songObj: res.song?.item
       });
+      dispatch({
+        type: 'SET_SONG_STATUS',
+        isPlaying: res.isPlaying
+      });
+    })
   };
 
-  const playSong = (id) => {
-    spotify?.play({ uris: [`spotify:track:${id}`] })
-      .then((res) => {
-        spotify.getMyCurrentPlayingTrack().then((song) => {
-          dispatch({
-            type: 'SET_SONG_STATUS',
-            isPlaying: true
-          });
-          dispatch({
-            type: 'SET_CURR_SONG',
-            songObj: song.item
-          });
-        });
+  const onPlaySong = async (id) => {
+    await playSong(id);
+    await wait(200);
+    getPlaybackState().then(res => {
+      dispatch({
+        type: 'SET_CURR_SONG',
+        songObj: res.song?.item
       });
+      dispatch({
+        type: 'SET_SONG_STATUS',
+        isPlaying: res.isPlaying
+      });
+    })
   };
 
-  const songs = currPlaylist?.tracks.items.map((s, idx) => <Song key={idx} song={s.track} onPlaySong={playSong} />)
+  const songs = currPlaylist?.tracks.items.map((s, idx) => <Song key={idx} song={s.track} onPlaySong={onPlaySong} />)
 
   return (
     <div className='songs-container'>
       <div className='song-icons'>
-        <PlayCircleOutlineIcon onClick={playPlaylist} fontSize='large' className='shuffle' />
+        <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='shuffle' />
         <StarBorderIcon fontSize='large' />
         <MoreHorizIcon fontSize='large'/>
       </div>
