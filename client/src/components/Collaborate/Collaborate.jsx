@@ -20,7 +20,7 @@ function Collaborate (props) {
 
   return (
     <div>
-      <PlaylistView spotify={spotify} />
+      <PlaylistView />
       {/* TODO: Implement split view and suggestion box component etc. */}
     </div>
   );

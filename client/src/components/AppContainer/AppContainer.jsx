@@ -9,21 +9,19 @@ import Header from '../Header/Header';
 
 import './AppContainer.css';
 
-function AppContainer (props) {
-  const { spotify } = props;
-
+function AppContainer () {
   return (
     <div className='AppContainer-container'>
       <div className='AppContainer'>
-        <Sidebar spotify={spotify} />
+        <Sidebar />
         <div className='Content-container'>
-          <Header spotify={spotify} />
-          <Route path='/dashboard' render={() => <Dashboard spotify={spotify} />} />
-          <Route path='/collaborate' render={() => <Collaborate spotify={spotify} />} />
+          <Header />
+          <Route path='/dashboard' render={() => <Dashboard />} />
+          <Route path='/collaborate' render={() => <Collaborate />} />
           <Route path='/profile' render={() => <Profile />} />
         </div>
       </div>
-      <Footer spotify={spotify} />
+      <Footer />
     </div>
   );
 }

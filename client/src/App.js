@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { getResponseToken } from './services/spotifyUtils';
 import { useProviderValue } from './components/ContextState/Provider';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { getLoginURL } from './services/apiRequests';
-
-import SpotifyWebApi from 'spotify-web-api-js';
+import { 
+  getLoginURL,
+  setAccessToken,
+  getMe,
+  getUserPlaylists,
+  getPlaylist,
+  getSpotify
+} from './services/apiRequests';
 import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
 
 import './App.css';
-
-const spotify = new SpotifyWebApi();
 
 const App = () => {
   const [loginURL, setLoginURL] = useState('');
@@ -20,8 +23,9 @@ const App = () => {
 
   // Retrieve user data upon authentication (initial render)
   useEffect(() => {
-    getLoginURL().then(res => setLoginURL(res.loginURL))
-    .catch(err => console.log(err));
+    getLoginURL()
+      .then(res => setLoginURL(res.loginURL))
+      .catch(err => console.log(err));
 
     const hash = getResponseToken();
     window.location.hash = '';
@@ -31,38 +35,40 @@ const App = () => {
         type: 'SET_TOKEN',
         token: hash.access_token
       })
-      spotify.setAccessToken(hash.access_token);
-      
-      // Save spotify instance in Context State.
-      dispatch({
-        type: 'SET_SPOTIFY',
-        spotify: spotify              
-      })
 
+      setAccessToken(hash.access_token);
+
+      // Save spotify instance in Context State.
+      getSpotify().then(res => {
+        dispatch({
+          type: 'SET_SPOTIFY',
+          spotify: res.spotify              
+        })
+      })
+      
       // Get User Account Details and set user in Context State.
-      spotify.getMe().then(user => {
+      getMe().then(res => {
         dispatch({
           type: 'SET_USER',
-          user: user
+          user: res.me
         })
-      });
+      }).catch(err => console.log(err))
 
       // Get User Playlists and set user playlists in Context State.
-      spotify.getUserPlaylists().then(playlists => {
+      getUserPlaylists().then(res => {
         dispatch({
           type: 'SET_PLAYLISTS',
-          playlists: playlists
+          playlists: res.playlists
         })
-      });
+      }).catch(err => console.log(err))
 
       // "On Repeat" playlist hard-coded for now
-      spotify.getPlaylist('37i9dQZF1EpmFBY9P2HI7S').then(playlist => {
+      getPlaylist().then(res => {
         dispatch({
           type: 'SET_CURR_PLAYLIST',
-          currPlaylist: playlist
+          currPlaylist: res.playlist
         })
-      });
-
+      }).catch(err => console.log(err))
     }
   }, []);
 
@@ -70,7 +76,7 @@ const App = () => {
     <Router>
       {
         token
-          ? <AppContainer spotify={spotify} />
+          ? <AppContainer />
           : <Route path='/' exact render={() => <Login loginURL={loginURL} />} />
       }
     </Router>

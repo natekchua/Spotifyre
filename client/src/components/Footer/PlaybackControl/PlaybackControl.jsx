@@ -6,56 +6,71 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import RepeatIcon from '@material-ui/icons/Repeat';
+import { 
+  pause,
+  play,
+  goPrevious,
+  goNext,
+  getPlaybackState
+} from '../../../services/apiRequests';
+import { wait } from '../../../services/helperFunctions';
 
 import './PlaybackControl.css';
 
-function PlaybackControl (props) {
-  const { spotify } = props;
+function PlaybackControl () {
   const [{
     currSong,
     songStatus
   }, dispatch] = useProviderValue();
 
-  const goPrev = async () => {
-    await spotify.skipToPrevious();
-    spotify.getMyCurrentPlayingTrack().then(song => {
+  const prevSong = async () => {
+    await goPrevious();
+    await wait(200);
+    getPlaybackState().then(res => {
       dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: true
+      type: 'SET_CURR_SONG',
+      songObj: res.song?.item
       });
       dispatch({
-        type: 'SET_CURR_SONG',
-        songObj: song.item
+        type: 'SET_SONG_STATUS',
+        isPlaying: res.isPlaying
       });
     });
   };
 
   const handlePlayStatus = () => {
+    let isPlaying;
     if (songStatus) {
-      spotify.pause();
-      dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: false
-      });
+      pause();
+      isPlaying = false;
     } else {
-      spotify.play();
-      dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: true
+      play().then(res => {
+        if (!currSong) {
+          dispatch({
+            type: 'SET_CURR_SONG',
+            songObj: res?.song.item
+          });
+        }
       });
+      isPlaying = true;
     }
+    dispatch({
+      type: 'SET_SONG_STATUS',
+      isPlaying: isPlaying
+    });
   };
 
-  const  goNext = async () => {
-    await spotify.skipToNext();
-    spotify.getMyCurrentPlayingTrack().then(song => {
+  const nextSong = async () => {
+    await goNext();
+    await wait(200);
+    getPlaybackState().then(res => {
       dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: true
+      type: 'SET_CURR_SONG',
+      songObj: res.song?.item
       });
       dispatch({
-        type: 'SET_CURR_SONG',
-        songObj: song.item
+        type: 'SET_SONG_STATUS',
+        isPlaying: res.isPlaying
       });
     });
   };
@@ -63,13 +78,13 @@ function PlaybackControl (props) {
   return (
     <div className='playback-control'>
       <ShuffleIcon className='outer-control-icon' />
-      <SkipPreviousIcon onClick={goPrev} className='control-icon' />
+      <SkipPreviousIcon onClick={prevSong} className='control-icon' />
       {
-        !songStatus && currSong
+        !songStatus
           ? <PlayCircleFilledIcon onClick={handlePlayStatus} fontSize='large' className='control-icon' />
           : <PauseCircleFilledIcon onClick={handlePlayStatus} fontSize='large' className='control-icon' />
       }
-      <SkipNextIcon onClick={goNext} className='control-icon' />
+      <SkipNextIcon onClick={nextSong} className='control-icon' />
       <RepeatIcon className='outer-control-icon' />
     </div>
   );
