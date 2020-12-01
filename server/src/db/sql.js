@@ -15,3 +15,39 @@ const config = {
 };
 
 const pool = new pg.Pool(config);
+
+pool.connect((isErr, client, done) => {
+  if (isErr) {
+    console.log(`Connect query:${isErr.messgage}`);
+    return;
+  }
+
+  client.query('select now();', [], (err, queryResult) => {
+    if (err) {
+      console.log('postgresql: connection failed ->', err);
+    } else {
+      // Query result
+      console.log(
+        `postgresql: connection established (${queryResult.rows[0].now})`
+      );
+    }
+
+    done();
+  });
+});
+
+const SQL = (query) => {
+  return new Promise((resolve, reject) => {
+    pool.query(query, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(err);
+      }
+    });
+  });
+};
+
+pool.on('error', (err) => console.log('postgresql: error ->', err));
+
+module.exports = { SQL };
