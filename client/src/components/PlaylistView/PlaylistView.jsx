@@ -5,8 +5,7 @@ import SongList from '../SongList/SongList';
 
 import './PlaylistView.css';
 
-function PlaylistView (props) {
-  const { spotify } = props;
+function PlaylistView () {
   const [{
     currPlaylist
   }, dispatch] = useProviderValue();
@@ -20,7 +19,7 @@ function PlaylistView (props) {
           <p>{he.decode(currPlaylist?.description)}</p>
         </div>
       </div>
-      <SongList spotify={spotify} currPlaylist={currPlaylist} />
+      <SongList currPlaylist={currPlaylist} />
     </div>
   );
 }

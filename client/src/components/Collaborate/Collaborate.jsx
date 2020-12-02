@@ -5,8 +5,7 @@ import PlaylistView from '../PlaylistView/PlaylistView';
 
 import './Collaborate.css';
 
-function Collaborate (props) {
-  const { spotify } = props;
+function Collaborate () {
   const [{
 
   }, dispatch] = useProviderValue();
@@ -20,7 +19,7 @@ function Collaborate (props) {
 
   return (
     <div>
-      <PlaylistView spotify={spotify} />
+      <PlaylistView />
       {/* TODO: Implement split view and suggestion box component etc. */}
     </div>
   );

@@ -3,29 +3,30 @@ import { useProviderValue } from '../ContextState/Provider';
 import { Slider } from '@material-ui/core';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import PlaybackControl from './PlaybackControl/PlaybackControl';
+import { 
+  getPlaybackState
+} from '../../services/apiRequests';
 
 import './Footer.css';
 
-function Footer (props) {
-  const { spotify } = props;
+function Footer () {
   const [{
     currSong,
     songStatus
   }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    spotify.getMyCurrentPlaybackState().then(song => {
-      console.log(song)
-      dispatch({
+    getPlaybackState().then(res => {
+        dispatch({
         type: 'SET_CURR_SONG',
-        songObj: song.item
+        songObj: res.song?.item
       });
       dispatch({
         type: 'SET_SONG_STATUS',
-        isPlaying: true
+        isPlaying: res.isPlaying
       });
-    });
-  }, [spotify]);
+    })
+  }, []);
 
   return (
     <div className='footer'>
@@ -44,7 +45,7 @@ function Footer (props) {
               </div>
         }     
       </div>
-      <PlaybackControl spotify={spotify} />
+      <PlaybackControl />
       <div className='volume-control'>
         <VolumeDownIcon className='outer-control-icon pr10' />
         <Slider id='volume' />
