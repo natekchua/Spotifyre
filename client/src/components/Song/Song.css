@@ -1,12 +1,12 @@
 .song-row {
-  margin-left: 20px;
+  margin-left: 30px;
   display: flex;
   align-items: center;
   z-index: 99;
   color: #fff;
   border: solid rgba(133, 0, 133, 0.253);
   border-width: 1px 0 1px 0;
-  width: 100%;
+  width: 85%;
 }
 
 .song-row > img {

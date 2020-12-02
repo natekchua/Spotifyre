@@ -4,19 +4,6 @@
   margin: 25px;
 }
 
-.left-header {
-  min-width: 81px;
-  background-color: #fff;
-  color: #6F6C99;
-  border-radius: 30px;
-}
-
-.left-header > input {
-  border: none;
-  outline: none;
-  width: 100%;
-}
-
 .right-header {
   min-width: 81px;
 }

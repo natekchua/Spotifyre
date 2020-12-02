@@ -5,6 +5,8 @@ export const initialState = {
   user: null,
   playlists: [],
   currPlaylist: null,
+  curatorPlaylist: null,
+  playlistSearchResults: [],
   songStatus: false,
   currSong: null
 };

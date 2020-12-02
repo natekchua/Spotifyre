@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getResponseToken } from './services/spotifyUtils';
+import { getResponseToken } from './services/helperFunctions';
 import { useProviderValue } from './components/ContextState/Provider';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { 

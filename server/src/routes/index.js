@@ -184,4 +184,16 @@ app.post('/api/play-playlist', (req, res) => {
   );
 });
 
+app.post('/api/search-for-playlists', (req, res) => {
+  spotify.searchPlaylists(req.body.post).then(
+    (data) => {
+      console.log('Found playlists are', data.body);
+      res.send({ playlistSearchResults: data.body });
+    },
+    function (err) {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 module.exports = app;

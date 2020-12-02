@@ -3,7 +3,6 @@ import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
 
 import './Header.css';
-import Search from '../Search/Search'
 
 function Header () {
   const [{
@@ -13,9 +12,6 @@ function Header () {
   
   return (
     <div className='header'>
-      <div className='left-header flex-basic p5'>
-        <Search/>
-      </div>
       <div className='middle-header flex-basic'>
         <h2>{tab}</h2>
       </div>
