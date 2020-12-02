@@ -6,5 +6,8 @@ export const initialState = {
   playlists: [],
   currPlaylist: null,
   songStatus: false,
-  currSong: null
+  currSong: null,
+  playOnRepeat: '37i9dQZF1EphOfEPXi5KfT',
+  playRewind: '37i9dQZF1EpDfnKhctSw35',
+  playCapsule: '37i9dQZF1EuIxSCUbcUAge',
 };
