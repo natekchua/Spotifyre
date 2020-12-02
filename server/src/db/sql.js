@@ -18,7 +18,7 @@ const pool = new pg.Pool(config);
 
 pool.connect((isErr, client, done) => {
   if (isErr) {
-    console.log(`Connect query:${isErr.messgage}`);
+    console.log(`Connect query:${isErr.message}`);
     return;
   }
 
