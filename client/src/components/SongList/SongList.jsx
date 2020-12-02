@@ -13,13 +13,12 @@ import { wait } from '../../services/helperFunctions';
 
 import './SongList.css';
 
-function SongList () {
-  const [{
-    currPlaylist
-  }, dispatch] = useProviderValue();
+function SongList (props) {
+  const { playlist } = props;
+  const [{ }, dispatch] = useProviderValue();
 
   const onPlayPlaylist = async () => {
-    await playPlaylist(currPlaylist.id);
+    await playPlaylist(playlist.id);
     await wait(200);
     getPlaybackState().then(res => {
       dispatch({
@@ -48,10 +47,10 @@ function SongList () {
     })
   };
 
-  const songs = currPlaylist?.tracks.items.map((s, idx) => <Song key={idx} song={s.track} onPlaySong={onPlaySong} />)
+  const songs = playlist?.tracks.items.map((s, idx) => <Song key={idx} song={s.track} onPlaySong={onPlaySong} />)
 
   return (
-    <div className='songs-container'>
+    <div>
       <div className='song-icons'>
         <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='shuffle' />
         <StarBorderIcon fontSize='large' />

@@ -1,0 +1,30 @@
+.playlist-row {
+  display: flex;
+  z-index: 99;
+  color: #fff;
+  border: solid rgba(32, 0, 32, 0.438);
+  border-width: 1px 0 1px 0;
+  width: 95%;
+}
+
+.playlist-row > img {
+  height: 75px;
+  width: 75px;
+}
+
+.playlist-row:hover {
+  cursor: pointer;
+  background-color: rgb(11, 0, 39);
+  opacity: 0.8;
+}
+
+.playlist-row-info {
+  flex-direction: column;
+  margin-left: 24px;
+  align-content: left;
+}
+
+.playlist-row-info > h1 {
+  font-size: 24px;
+  margin: 2px;
+}

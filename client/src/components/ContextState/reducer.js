@@ -38,6 +38,16 @@ const reducer = (state, action) => {
         ...state,
         curatorPlaylist: action.curatorPlaylist
       };
+    case 'SET_IS_SEARCHING':
+      return {
+        ...state,
+        isSearching: action.isSearching
+      };
+    case 'SET_SEARCH_QUERY':
+      return {
+        ...state,
+        searchQuery: action.searchQuery
+      };
     case 'SET_PLAYLIST_SEARCH_RESULTS':
       return {
         ...state,

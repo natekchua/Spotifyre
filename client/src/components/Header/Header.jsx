@@ -13,11 +13,11 @@ function Header () {
   return (
     <div className='header'>
       <div className='middle-header flex-basic'>
-        <h2>{tab}</h2>
+        <h1>{tab}</h1>
       </div>
       <div className='right-header flex-basic'>
         <Avatar src={user?.images[0].url} alt='profile-pic' />
-        <h4 className='ml-10 p5'>{user?.display_name}</h4>
+        <h3 className='ml-10 p5'>{user?.display_name}</h3>
       </div>
     </div>
   )

@@ -6,6 +6,8 @@ export const initialState = {
   playlists: [],
   currPlaylist: null,
   curatorPlaylist: null,
+  isSearching: true,
+  searchQuery: null,
   playlistSearchResults: [],
   songStatus: false,
   currSong: null

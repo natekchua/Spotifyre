@@ -11,6 +11,7 @@
   margin: 12px;
   height: 100%;
   min-height: 100vh;
+  padding: 18px;
   box-shadow: 0px 0px 24px rgba(234, 0, 255, 0.705);
 }
 
@@ -37,4 +38,11 @@
   min-width: 81px;
   background-color: #fff;
   color: #6F6C99;
+}
+
+.back-button {
+  background: rgba(38, 1, 63, 0.63);
+  border-radius: 12px;
+  width: fit-content;
+  cursor: pointer;
 }
