@@ -83,7 +83,7 @@ module.exports.removeSong = async (playlistID, songID) => {
 
   try {
     const { row } = await SQL(query);
-    return rows;
+    return `Removed ${songID} from ${playlistID}`;
   } catch (err) {
     console.error(err);
     return `Failed to remove song: ${err.message}`;
