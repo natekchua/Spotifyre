@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
-
 import PlaylistView from '../PlaylistView/PlaylistView';
+import CuratorPlaylistView from '../PlaylistView/CuratorPlaylistView';
 
 import './Collaborate.css';
 
 function Collaborate () {
   const [{
-
+    currPlaylist,
+    curatorPlaylist
   }, dispatch] = useProviderValue();
 
   useEffect(() => {
@@ -18,9 +19,9 @@ function Collaborate () {
   }, [])
 
   return (
-    <div>
-      <PlaylistView />
-      {/* TODO: Implement split view and suggestion box component etc. */}
+    <div className='collaborate-container'>
+      <PlaylistView playlist={currPlaylist} />
+      <CuratorPlaylistView playlist={curatorPlaylist} />
     </div>
   );
 }

@@ -1,37 +1,17 @@
 import React from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import Song from '../Song/Song';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { 
   getPlaybackState,
-  playPlaylist,
   playSong
 } from '../../services/apiRequests';
 import { wait } from '../../services/helperFunctions';
 
 import './SongList.css';
 
-function SongList () {
-  const [{
-    currPlaylist
-  }, dispatch] = useProviderValue();
-
-  const onPlayPlaylist = async () => {
-    await playPlaylist(currPlaylist.id);
-    await wait(200);
-    getPlaybackState().then(res => {
-      dispatch({
-        type: 'SET_CURR_SONG',
-        songObj: res.song?.item
-      });
-      dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: res.isPlaying
-      });
-    })
-  };
+function SongList (props) {
+  const { playlist } = props;
+  const [{ }, dispatch] = useProviderValue();
 
   const onPlaySong = async (id) => {
     await playSong(id);
@@ -48,14 +28,13 @@ function SongList () {
     })
   };
 
-  const songs = currPlaylist?.tracks.items.map((s, idx) => <Song key={idx} song={s.track} onPlaySong={onPlaySong} />)
+  const songs = playlist?.tracks.items.map((s, idx) => <Song key={idx} song={s.track} onPlaySong={onPlaySong} />)
 
   return (
-    <div className='songs-container'>
-      <div className='song-icons'>
-        <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='shuffle' />
-        <StarBorderIcon fontSize='large' />
-        <MoreHorizIcon fontSize='large'/>
+    <div>
+      <div className='songs-header'>
+        <p>Song Details</p>
+        <p>Duration</p>
       </div>
       {songs}
     </div>
