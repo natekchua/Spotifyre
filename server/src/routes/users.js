@@ -103,4 +103,12 @@ router.post('/removeSong', (req, res) => {
     });
 });
 
+router.post('/increaseCount', (req, res) => {
+  // TODO
+});
+
+router.post('/decreaseCount', (req, res) => {
+  // TODO
+});
+
 module.exports = router;
