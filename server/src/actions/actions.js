@@ -98,7 +98,7 @@ const increaseCount = async (playlistID) => {
     return row;
   } catch (err) {
     console.error(err);
-    return `Failed to update count: ${err.message}`;
+    return `Failed to increase count: ${err.message}`;
   }
 };
 
@@ -110,7 +110,7 @@ const decreaseCount = async (playlistID) => {
     return row;
   } catch (err) {
     console.error(err);
-    return `Failed to update count: ${err.message}`;
+    return `Failed to decrease count: ${err.message}`;
   }
 };
 
