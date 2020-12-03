@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import he from 'he';
 import SongList from '../SongList/SongList';
 import Search from '../Search/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import PlaylistResultsList from './PlaylistResultsList/PlaylistResultsList';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import { 
+  getPlaybackState,
+  playPlaylist
+} from '../../services/apiRequests';
+import { wait } from '../../services/helperFunctions';
 
 import './PlaylistView.css';
-import PlaylistResultsList from './PlaylistResultsList/PlaylistResultsList';
 
 function CuratorPlaylistView (props) {
   const { playlist } = props;
@@ -22,6 +28,21 @@ function CuratorPlaylistView (props) {
       isSearching: true
     })
   }
+
+  const onPlayPlaylist = async () => {
+    await playPlaylist(playlist.id);
+    await wait(200);
+    getPlaybackState().then(res => {
+      dispatch({
+        type: 'SET_CURR_SONG',
+        songObj: res.song?.item
+      });
+      dispatch({
+        type: 'SET_SONG_STATUS',
+        isPlaying: res.isPlaying
+      });
+    })
+  };
 
   const searchPage = (
     <div className='playlist-container'>
@@ -43,6 +64,11 @@ function CuratorPlaylistView (props) {
               <div className="playlist-text">
                 <h1>{playlist?.name}</h1>
                 <p>{he.decode(playlist?.description)}</p>
+                <br />
+                <p>Created by <strong>{playlist?.owner.display_name}</strong></p>
+                <p>{playlist?.tracks.items.length} Songs</p>
+                <p>{playlist?.followers.total} Followers</p>
+                <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
               </div>
             </div>
             <SongList playlist={playlist} />

@@ -16,9 +16,10 @@
 }
 
 .playlist-info > img {
-  height: 18vw;
+  height: 16vw;
+  max-width: 23vw;
   margin: 0 20px;
-  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.452);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.342);
 }
 
 .playlist-text {
@@ -45,4 +46,14 @@
   border-radius: 12px;
   width: fit-content;
   cursor: pointer;
+  margin-left: 26px;
+}
+
+.play-playlist {
+  font-size: 72px !important;  margin-top: 20px;
+}
+
+.play-playlist:hover {
+  transition: 0.24s trasnform ease-in;
+  transform: scale(1.1);
 }

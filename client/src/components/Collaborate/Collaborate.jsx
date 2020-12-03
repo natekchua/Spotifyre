@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
-
 import PlaylistView from '../PlaylistView/PlaylistView';
 import CuratorPlaylistView from '../PlaylistView/CuratorPlaylistView';
 

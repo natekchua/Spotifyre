@@ -8,7 +8,7 @@ function Song (props) {
   return (
     <div className='song-row p20' onClick={() => onPlaySong(song.id)}>
       <div className='flex-basic'>
-        <img src={song?.album.images[0].url} alt='song' />
+        <img src={song?.album.images[0]?.url} alt='song' />
         <div className='song-info'>
           <h1>{song?.name}</h1>
           <p className='p5'>{song?.artists.map(a => a.name).join(', ')}</p>

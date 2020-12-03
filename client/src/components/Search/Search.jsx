@@ -51,7 +51,7 @@ function Search ({ query }) {
         onKeyPress={event => event.key === 'Enter' ? sendQuery(event) : null}
         InputProps={{
           endAdornment: 
-            <InputAdornment position='end'>
+            <InputAdornment className='search-icon' position='end'>
               <SearchIcon onClick={event => sendQuery(event)}/>
             </InputAdornment>
           }}
