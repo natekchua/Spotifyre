@@ -40,7 +40,7 @@ function Search ({ query }) {
     dispatch({
       type: 'SET_PLAYLIST_SEARCH_RESULTS',
       playlistSearchResults: []
-    })
+    });
   }
   
   return (

@@ -3,6 +3,11 @@ export const initialState = {
   tab: 'Dashboard',
   spotify: null,
   user: null,
+  curationSettings: {
+    curatorMode: false,
+    maxSuggestions: 100,
+    suggestionsPerUser: 10
+  },
   playlists: [],
   currPlaylist: null,
   curatorPlaylist: null,

@@ -10,8 +10,8 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-h2, h3{
-  font-weight: lighter;
+.Profile-container {
+  flex-direction: column;
 }
 
 /* ************************* */
@@ -19,12 +19,8 @@ h2, h3{
 /* avatar */
 #profileSettingsAvatar {
   width: 20vw;
-  max-width: 290px;
+  max-width: 250px;
   height: auto;
-}
-
-#avatarInfo-container {
-  padding-left: 2vw;
 }
 
 #avatarInfo-container p{
@@ -107,28 +103,25 @@ h2, h3{
 
 /* save settings button */
 #saveProfileSettingsButton-container {
-  width: 60px;
-  height: 34px;
-  padding-top: 5vh;
+  padding: 20px;
 }
 
 #saveProfileSettingsButton {
-  width: 90px;
-  height: 42px;
-  background: #4f2dba;
+  background: rgba(50, 0, 189, 0.89);
+  border-radius: 12px;
+  width: fit-content;
+  padding: 18px;
+  cursor: pointer;
+  transition: 0.2s linear;
+  color: #fff;
   border: none;
-  color: #16c5f5;
-  border-radius: 34px;
-  outline: none;
+  font-family: 'Raleway';
 }
 
-#saveProfileSettingsButton:active {
-  background: #1c0d4a;
-  -webkit-box-shadow: inset 0px 0px 5px #120638;
-     -moz-box-shadow: inset 0px 0px 5px #120638;
-          box-shadow: inset 0px 0px 5px #120638;
-   outline: none;
+#saveProfileSettingsButton:hover {
+  background: rgba(89, 0, 255, 0.815);
 }
+
 /* ************************* */
 
 /* sliders */
