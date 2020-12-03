@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Raleway', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -45,6 +45,10 @@ h1, h2, h3 {
 
 .p20 {
   padding: 20px;
+}
+
+.m5 {
+  margin: 5px;
 }
 
 .m10 {

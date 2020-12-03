@@ -1,76 +1,79 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
 
 import './Profile.css';
-
+  
 function Profile (props) {
   const [{
-    user
+    user,
+    curationSettings
   }, dispatch] = useProviderValue();
+
+  const [settings, setSettings] = useState(curationSettings);
 
   useEffect(() => {
     dispatch({
       type: 'SET_TAB',
       tab: 'Profile'
-    })
+    });
   }, [])
 
+
+  const saveSettings = () => {
+    // TODO: send settings object into database for given user.
+    dispatch({
+      type: 'SET_CURATION_SETTINGS',
+      curationSettings: settings
+    });  
+  }
+
   return (
-    <div className='Profile-container'>
+    <div className='Profile-container flex-basic'>
+      <Avatar id='profileSettingsAvatar' src={user?.images[0].url} />
       <div className='curatorSetting'>
-        <Avatar src={user?.images[0].url} alt='profile-pic' />
-        <div id="avatarInfo-container">
-          <p>Profile Name</p>
-          <p>Number of followers</p>
+        <div id='avatarInfo-container'>
+          <p id='avatarInfoName'>{user?.display_name}</p>
+          <p id='avatarInfoNumberOfFollowers'>{user?.followers.total} Followers</p>
         </div>
       </div>
 
-      <form className="switch">
+      <div id='enableCuratorMode-container'>
         <div className='curatorSetting'>
-          <h1 id="curatorSliderHeader">Become a curator</h1>
-          <input type="checkbox" className="slider">
-          </input>
+          <div>
+            <h3 id='curatorSliderHeader'>Enable curator mode</h3>
+          </div>
+
+          <div>
+            <label className='switch'>
+              <input type='checkbox'  id='enableCuratorModeSlider' />
+              <div className='slider' />
+            </label>
+          </div>
         </div>
-      </form>
+      </div>
 
-      <div className='curatorSettings-container'>
-        <h1 id="curatorSettingsHeader">CURATION SETTINGS</h1>
-        <form className='totalSuggestionsAllowedSetting'>
-          <div className='curatorSetting'>
-            <p>Total suggestions allowed</p>
-            <input type='text'>
-            </input>
-          </div>
-        </form>
+      <div id='curatorSettingsBorder'>
+        <div id='curatorSettings-container'>
+          <h2 id='curatorSettingsHeader'>Curator settings</h2>
 
-        <form className='maxSuggestionsSetting'>
-          <div className='curatorSetting'>
-            <p>Max suggestions per user</p>
-            <input type='text'>
-            </input>
-          </div>
-        </form>
+          <form className='totalSuggestionsAllowedSetting'>
+            <div className='curatorSetting'>
+              <p>Total suggestions allowed</p>
+              <input type='number' defaultValue={curationSettings.maxSuggestions} />
+            </div>
+          </form>
 
-        <form className='onlyFollowerSuggestionsSetting'>
-          <div className='curatorSetting'>
-            <p>Only followers can suggest</p>
-            <input type='checkbox'>
-            </input>
-          </div>
-        </form>
-
-        <form className='autoApproveSetting'>
-          <div className='curatorSetting'>
-            <p>Auto approve suggestions</p>
-            <input type='checkbox'>
-            </input>
-          </div>
-        </form>
-
-        <button className='saveCuratorSettings'>
-        SAVE
-        </button>
+          <form className='maxSuggestionsSetting'>
+            <div className='curatorSetting'>
+              <p>Max suggestions per user</p>
+              <input type='number' defaultValue={curationSettings.suggestionsPerUser} />
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id='saveProfileSettingsButton-container'>
+        <button onClick={saveSettings} id='saveProfileSettingsButton'>SAVE SETTINGS</button>
       </div>
     </div>
   );

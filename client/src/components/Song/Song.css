@@ -1,15 +1,15 @@
 .song-row {
-  margin-left: 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   z-index: 99;
   color: #fff;
   border: solid rgba(133, 0, 133, 0.253);
   border-width: 1px 0 1px 0;
-  width: 100%;
+  width: 95%;
 }
 
-.song-row > img {
+.song-row > div > img {
   height: 40px;
   width: 40px;
 }

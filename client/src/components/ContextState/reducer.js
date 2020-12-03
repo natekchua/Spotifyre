@@ -23,6 +23,11 @@ const reducer = (state, action) => {
         ...state,
         user: action.user
       };
+    case 'SET_CURATION_SETTINGS':
+      return {
+        ...state,
+        curationSettings: action.curationSettings
+      };
     case 'SET_PLAYLISTS':
       return {
         ...state,
@@ -32,6 +37,26 @@ const reducer = (state, action) => {
       return {
         ...state,
         currPlaylist: action.currPlaylist
+      };
+    case 'SET_CURATOR_PLAYLIST':
+      return {
+        ...state,
+        curatorPlaylist: action.curatorPlaylist
+      };
+    case 'SET_IS_SEARCHING':
+      return {
+        ...state,
+        isSearching: action.isSearching
+      };
+    case 'SET_SEARCH_QUERY':
+      return {
+        ...state,
+        searchQuery: action.searchQuery
+      };
+    case 'SET_PLAYLIST_SEARCH_RESULTS':
+      return {
+        ...state,
+        playlistSearchResults: action.playlistSearchResults
       };
     case 'SET_SONG_STATUS':
       return {
