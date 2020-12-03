@@ -12,3 +12,10 @@ export const getResponseToken = () => {
     return init;
   }, {})
 }
+
+// https://stackoverflow.com/questions/21294302/converting-milliseconds-to-minutes-and-seconds-with-javascript
+export const getDuration = (ms) => {
+  const mins = Math.floor(ms / 60000);
+  const secs = ((ms % 60000) / 1000).toFixed(0)
+  return (secs === 60 ? (mins + 1) + ":00" : mins + ":" + (secs < 10 ? "0" : "") + secs);
+}
