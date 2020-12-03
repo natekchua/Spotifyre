@@ -1,6 +1,6 @@
 const { SQL } = require('../db/sql.js');
 
-module.exports.getType = async (userID) => {
+const getType = async (userID) => {
     const query = `SELECT user_type FROM public.user WHERE userid=${userID};`;
 
     try {
@@ -12,7 +12,7 @@ module.exports.getType = async (userID) => {
     }
 };
 
-module.exports.getAllCurators = async () => {
+const getAllCurators = async () => {
     const query = "SELECT * FROM public.user WHERE user_type = 'curator';";
 
     try {
@@ -24,7 +24,7 @@ module.exports.getAllCurators = async () => {
     }
 };
 
-module.exports.getAllPlaylists = async () => {
+const getAllPlaylists = async () => {
     const query = 'SELECT playlistid FROM public.playlists;';
 
     try {
@@ -36,7 +36,7 @@ module.exports.getAllPlaylists = async () => {
     }
 };
 
-module.exports.getPlaylistID = async (userID) => {
+const getPlaylistID = async (userID) => {
     const query = `SELECT playlistid FROM public.playlists WHERE userid=${userID};`;
 
     try {
@@ -48,7 +48,7 @@ module.exports.getPlaylistID = async (userID) => {
     }
 };
 
-module.exports.getSuggestions = async (playlistID) => {
+const getSuggestions = async (playlistID) => {
     const query = `SELECT songid, suggested_by_userid, playlist, count FROM public.playlists WHERE playlistid=${playlistID};`;
 
     try {
@@ -60,7 +60,7 @@ module.exports.getSuggestions = async (playlistID) => {
     }
 };
 
-module.exports.addSongSuggestion = async (
+const addSongSuggestion = async (
     playlistID,
     songID,
     suggestedByUserID,
@@ -78,7 +78,7 @@ module.exports.addSongSuggestion = async (
     }
 };
 
-module.exports.removeSong = async (playlistID, songID) => {
+const removeSong = async (playlistID, songID) => {
     const query = `DELETE FROM public.playlists WHERE playlistid=${playlistID} AND songid=${songID};`;
 
     try {
@@ -90,10 +90,22 @@ module.exports.removeSong = async (playlistID, songID) => {
     }
 };
 
-module.exports.increaseCount = async (playlistID) => {
+const increaseCount = async (playlistID) => {
     // TODO
 };
 
-module.exports.decreaseCount = async (playlistID) => {
+const decreaseCount = async (playlistID) => {
     // TODO
+};
+
+module.exports = {
+    getType,
+    getAllCurators,
+    getAllPlaylists,
+    getPlaylistID,
+    getSuggestions,
+    addSongSuggestion,
+    removeSong,
+    increaseCount,
+    decreaseCount
 };

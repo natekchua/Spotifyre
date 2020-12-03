@@ -59,7 +59,7 @@ router.get('/getAllPlaylists', (req, res) => {
 });
 
 router.get('/getSuggestions', (req, res) => {
-  const playlistID = req.body;
+  const playlistID = req.body;    // Need to define a paramter 
 
   action
     .getSuggestions(playlistID)
