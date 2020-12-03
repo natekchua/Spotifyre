@@ -2,19 +2,20 @@ import React, { useEffect } from 'react'
 import { useProviderValue } from '../ContextState/Provider'
 import './Dashboard.css'
 import PlaylistOption from '../Sidebar/Option/PlaylistOption'
+import { selectPlaylist } from '../../services/apiRequests'
 
 function Dashboard (props) {
   // const [dispatch] = useProviderValue()
   const { spotify } = props
   const [{ playlists }, dispatch] = useProviderValue()
 
-  const selectPlaylist = (id) => {
-    spotify.getPlaylist(id).then(playlist => {
+  const onSelectPlaylist = (id) => {
+    selectPlaylist(id).then(res => {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
-        currPlaylist: playlist
+        currPlaylist: JSON.parse(res).playlist
       })
-    })
+    }).catch(err => console.log(err))
   }
 
   useEffect(() => {
@@ -46,13 +47,7 @@ function Dashboard (props) {
       <div>
         Top Playlist
         <div>
-          {/*TODO:get top playlist from database? */}
-        </div>
-      </div>
-      <div>
-        Recommended Playlists
-        <div>
-          {/*TODO: get suggested playlist*/}
+          {/*TODO:get 3 default albums */}
         </div>
       </div>
       <div>
