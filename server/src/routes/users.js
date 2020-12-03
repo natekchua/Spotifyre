@@ -59,7 +59,7 @@ router.get('/getAllPlaylists', (req, res) => {
 });
 
 router.get('/getSuggestions', (req, res) => {
-  const playlistID = req.body;    // Need to define a paramter 
+  const playlistID = req.body; // Need to define a paramter
 
   action
     .getSuggestions(playlistID)
@@ -104,11 +104,33 @@ router.post('/removeSong', (req, res) => {
 });
 
 router.post('/increaseCount', (req, res) => {
-  //TODO
+  const playlistID = req.body;
+
+  action
+    .increaseCount(playlistID)
+    .then((rtn) => {
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
 });
 
 router.post('/increaseCount', (req, res) => {
-  //TODO
+  const playlistID = req.body;
+
+  action
+    .decreaseCount(playlistID)
+    .then((rtn) => {
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
 });
 
 module.exports = router;

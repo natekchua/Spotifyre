@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/wh  },
+    "start": "node ./bin/www"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "commitizen": "^4.2.2",
