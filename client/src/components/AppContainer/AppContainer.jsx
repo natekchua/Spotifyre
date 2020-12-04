@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
 import Dashboard from '../Dashboard/Dashboard';
 import Collaborate from '../Collaborate/Collaborate';
@@ -9,13 +9,14 @@ import Header from '../Header/Header';
 
 import './AppContainer.css';
 
-function AppContainer () {
+function AppContainer (props) {
   return (
     <div className='AppContainer-container'>
       <div className='AppContainer'>
         <Sidebar />
         <div className='Content-container'>
           <Header />
+          { props.token ? <Redirect to='/dashboard' /> : null }
           <Route path='/dashboard' render={() => <Dashboard />} />
           <Route path='/collaborate' render={() => <Collaborate />} />
           <Route path='/profile' render={() => <Profile />} />

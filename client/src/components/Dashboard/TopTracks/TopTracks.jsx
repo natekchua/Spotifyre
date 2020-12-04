@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useProviderValue } from '../../ContextState/Provider';
+import { getPlaybackState, playSong, getTopTracks } from '../../../services/apiRequests';
+import { wait } from '../../../services/helperFunctions';
+import Song from '../../Song/Song';
 
-import './TopTracks.css'
-import { useProviderValue } from '../../ContextState/Provider'
-import { getPlaybackState, playSong, topTracks } from '../../../services/apiRequests'
-import { wait } from '../../../services/helperFunctions'
-import Track from './Track/Track'
+import './TopTracks.css';
 
 function TopTracks () {
-  const [dispatch] = useProviderValue()
-  const [songs, setSongs] = useState(null)
-  const [error, setError] = useState(false)
+  const [{ }, dispatch] = useProviderValue();
+  const [songs, setSongs] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    topTracks().then(r => {
-      setSongs(JSON.parse(r))
+    getTopTracks().then(res => {
+      setSongs(res.topTracks);
     }).catch(() => {
       setError('Error: Problem fetching top tracks, spotify premium is required.')
     })
@@ -34,16 +34,16 @@ function TopTracks () {
     })
   }
 
-  const songItems = songs?.map((s, idx) => <Track key={idx} song={s.track} onPlaySong={onPlaySong}/>)
+  const songItems = songs?.map((s, idx) => <Song key={idx} song={s} onPlaySong={onPlaySong} />);
 
   return (
     <div>
       <div className='songs-header'>
-        <p>Your Top Tracks</p>
+        <h2>Your Top 5 Tracks</h2>
       </div>
       <>{error ? error : songItems}</>
     </div>
-  )
+  );
 }
 
-export default TopTracks
+export default TopTracks;

@@ -1,45 +1,74 @@
 import React, { useEffect, useState } from 'react'
 import { useProviderValue } from '../ContextState/Provider'
 import './Dashboard.css'
-import PlaylistDisplay from './PlaylistDisplay/PlaylistDisplay'
+import ShowcasePlaylist from './Showcase/ShowcasePlaylist'
 import TopTracks from './TopTracks/TopTracks'
-import { selectPlaylist } from '../../services/apiRequests'
+import { getFeaturedPlaylists, selectPlaylist } from '../../services/apiRequests'
 
 function Dashboard () {
-  const [{ playOnRepeat, playRewind, playCapsule }, dispatch] = useProviderValue()
-  const [playObjRepeat, setObjRepeat] = useState(null)
-  const [playObjRewind, setObjRewind] = useState(null)
-  const [playObjCapsule, setObjCapsule] = useState(null)
+  const [{ dashboardPlaylistIDs }, dispatch] = useProviderValue();
+  const [repeatPL, setRepeatPL] = useState(null);
+  const [topSongsPL, setTopSongsPL] = useState(null);
+  const [rewindPL, setRewindPL] = useState(null);
+  const [capsulePL, setCapsulePL] = useState(null);
+  const [featuredPlaylists, setFeaturedPlaylists] = useState([]);
 
   useEffect(() => {
     dispatch({
       type: 'SET_TAB',
       tab: 'Dashboard'
+    });
+
+    getFeaturedPlaylists().then(res => {
+      setFeaturedPlaylists(res.featured.playlists.items);
     })
-    selectPlaylist(playOnRepeat).then(r => {
-      setObjRepeat(JSON.parse(r).playlist)
-    })
-    selectPlaylist(playRewind).then(r => {
-      setObjRewind(JSON.parse(r).playlist)
-    })
-    selectPlaylist(playCapsule).then(r => {
-      setObjCapsule(JSON.parse(r).playlist)
-    })
+
+    const getFirstFeaturedRow = async () => {
+      selectPlaylist(dashboardPlaylistIDs[0]).then(r => {
+        setRepeatPL(JSON.parse(r).playlist);
+      })
+  
+      selectPlaylist(dashboardPlaylistIDs[1]).then(r => {
+        setTopSongsPL(JSON.parse(r).playlist);
+      })
+  
+      selectPlaylist(dashboardPlaylistIDs[2]).then(r => {
+        setRewindPL(JSON.parse(r).playlist);
+      })
+  
+      selectPlaylist(dashboardPlaylistIDs[3]).then(r => {
+        setCapsulePL(JSON.parse(r).playlist);
+      })
+    }
+    getFirstFeaturedRow();
+
   }, [])
 
+  const playlistShowcase = featuredPlaylists.map((fpl, idx) => <ShowcasePlaylist key={idx} playlist={fpl} />);
+
   return (
-    <>
-      <div>
-        <div className="dash-playlists">
-          <PlaylistDisplay playlist={playObjRepeat}/>
-          <PlaylistDisplay playlist={playObjRewind}/>
-          <PlaylistDisplay playlist={playObjCapsule}/>
+    dashboardPlaylistIDs && playlistShowcase
+      ? <>
+        <div className='showcase m20'>
+          <h2 className='p5'>Curated just for you.</h2>
+          <div className="dash-playlists">
+            <ShowcasePlaylist playlist={repeatPL} />
+            <ShowcasePlaylist playlist={topSongsPL} />
+            <ShowcasePlaylist playlist={rewindPL} />
+            <ShowcasePlaylist playlist={capsulePL} />
+          </div>
+          <br />
+          <hr />
+          <h2 className='p5'>Expand your horizon.</h2>
+          <div className="dash-playlists">
+            {playlistShowcase}
+          </div>
         </div>
-      </div>
-      <div>
-        <TopTracks/>
-      </div>
-    </>
+        <div className='p10'>
+          <TopTracks />
+        </div>
+      </>
+      : null
   )
 }
 

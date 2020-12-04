@@ -66,8 +66,8 @@ function CuratorPlaylistView (props) {
                 <p>{he.decode(playlist?.description)}</p>
                 <br />
                 <p>Created by <strong>{playlist?.owner.display_name}</strong></p>
-                <p>{playlist?.tracks.items.length} Songs</p>
-                <p>{playlist?.followers.total} Followers</p>
+                <p><strong>{playlist?.tracks.items.length}</strong> Songs</p>
+                <p><strong>{playlist?.followers.total}</strong> Followers</p>
                 <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
               </div>
             </div>

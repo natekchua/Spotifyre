@@ -1,3 +1,27 @@
 .dash-playlists {
-    display: flex;
+  display: flex;
+  justify-content: space-between;
+}
+
+hr {
+  margin: 24px auto;
+  width: 100%;
+  border: 1px solid rgba(214, 111, 228, 0.479);
+}
+h2 {
+  color: rgb(214, 111, 228);
+  font-weight: 700;
+}
+
+.showcase {
+  animation: fade-in 2s;
+}
+
+@keyframes fade-in {
+  from { 
+    opacity: 0;
+  }
+  to { 
+    opacity: 1; 
+  }
 }

@@ -1,7 +1,7 @@
 const { SQL } = require('../db/sql.js');
 
 const getType = async (userID) => {
-  const query = `SELECT user_type FROM public.user WHERE userid=${userID};`;
+  const query = `SELECT user_type FROM spotifyre.user WHERE userid=${userID};`;
 
   try {
     const { row } = await SQL(query);
@@ -13,7 +13,7 @@ const getType = async (userID) => {
 };
 
 const getAllCurators = async () => {
-  const query = "SELECT * FROM public.user WHERE user_type = 'curator';";
+  const query = "SELECT * FROM spotifyre.user WHERE user_type = 'curator';";
 
   try {
     const { rows } = await SQL(query);
@@ -25,7 +25,7 @@ const getAllCurators = async () => {
 };
 
 const getAllPlaylists = async () => {
-  const query = 'SELECT playlistid FROM public.playlists;';
+  const query = 'SELECT playlistid FROM spotifyre.playlists;';
 
   try {
     const { rows } = await SQL(query);
@@ -37,7 +37,7 @@ const getAllPlaylists = async () => {
 };
 
 const getPlaylistID = async (userID) => {
-  const query = `SELECT playlistid FROM public.playlists WHERE userid=${userID};`;
+  const query = `SELECT playlistid FROM spotifyre.playlists WHERE userid=${userID};`;
 
   try {
     const { rows } = await SQL(query);
@@ -49,7 +49,7 @@ const getPlaylistID = async (userID) => {
 };
 
 const getSuggestions = async (playlistID) => {
-  const query = `SELECT songid, suggested_by_userid, playlist, count FROM public.playlists WHERE playlistid=${playlistID};`;
+  const query = `SELECT songid, suggested_by_userid, playlist, count FROM spotifyre.playlists WHERE playlistid=${playlistID};`;
 
   try {
     const { rows } = await SQL(query);
@@ -67,7 +67,7 @@ const addSongSuggestion = async (
   playlist,
   count
 ) => {
-  const query = `INSERT INTO public.playlists VALUES (${songID}, ${playlistID}, ${suggestedByUserID}, ${playlist}, ${count});`;
+  const query = `INSERT INTO spotifyre.playlists VALUES (${songID}, ${playlistID}, ${suggestedByUserID}, ${playlist}, ${count});`;
 
   try {
     const { rows } = await SQL(query);
@@ -79,7 +79,7 @@ const addSongSuggestion = async (
 };
 
 const removeSong = async (playlistID, songID) => {
-  const query = `DELETE FROM public.playlists WHERE playlistid=${playlistID} AND songid=${songID};`;
+  const query = `DELETE FROM spotifyre.playlists WHERE playlistid=${playlistID} AND songid=${songID};`;
 
   try {
     const { row } = await SQL(query);
@@ -91,7 +91,7 @@ const removeSong = async (playlistID, songID) => {
 };
 
 const increaseCount = async (playlistID) => {
-  const query = `UPDATE public.suggestions SET count=count+1 WHERE playlistid=${playlistID};`;
+  const query = `UPDATE spotifyre.suggestions SET count=count+1 WHERE playlistid=${playlistID};`;
 
   try {
     const { row } = await SQL(query);
@@ -103,7 +103,7 @@ const increaseCount = async (playlistID) => {
 };
 
 const decreaseCount = async (playlistID) => {
-  const query = `UPDATE public.suggestions SET count=count-1 WHERE playlistid=${playlistID};`;
+  const query = `UPDATE spotifyre.suggestions SET count=count-1 WHERE playlistid=${playlistID};`;
 
   try {
     const { row } = await SQL(query);

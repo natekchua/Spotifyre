@@ -1,5 +1,4 @@
 .sidebar {
-  height: 100vh;
   color: #fff;
   display: flex;
   flex: 0.2;
@@ -8,7 +7,7 @@
   min-width: 230px;
   max-width: 270px;
   background-color: #1a1741;
-  height: 100vh;
+  height: 110vh;
 }
 
 .sidebar > hr {
