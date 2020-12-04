@@ -76,7 +76,7 @@ const App = () => {
     <Router>
       {
         token
-          ? <AppContainer />
+          ? <AppContainer token={token} />
           : <Route path='/' exact render={() => <Login loginURL={loginURL} />} />
       }
     </Router>

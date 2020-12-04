@@ -3,6 +3,7 @@
 }
 
 body {
+  background: linear-gradient(#552dc4, #1b0a35);
   margin: 0;
   font-family: 'Raleway', sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -53,6 +54,14 @@ h1, h2, h3 {
 
 .m10 {
   margin: 10px;
+}
+
+.m20 {
+  margin: 20px;
+}
+
+.m30 {
+  margin: 30px;
 }
 
 .ml5 {

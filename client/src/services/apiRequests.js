@@ -80,6 +80,10 @@ export const searchForPlaylists = async (query) => {
   return apiPost('/api/search-for-playlists', query);
 };
 
-export const topTracks = async () => {
-  return apiGet('api/top-tracks')
+export const getTopTracks = async () => {
+  return apiGet('/api/top-tracks');
+}
+
+export const getFeaturedPlaylists = async () => {
+  return apiGet('/api/featured-playlists');
 }

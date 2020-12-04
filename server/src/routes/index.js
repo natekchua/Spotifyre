@@ -190,22 +190,34 @@ app.post('/api/search-for-playlists', (req, res) => {
       console.log('Found playlists are', data.body);
       res.send({ playlistSearchResults: data.body });
     },
-    function (err) {
+    (err) => {
       console.log('Something went wrong!', err);
     }
   );
 });
 
-app.get('api/top-tracks', (req, res) => {
-  spotify.getMyTopTracks().then(
+app.get('/api/featured-playlists', (req, res) => {
+  spotify.getFeaturedPlaylists({ limit: 4 }).then(
     (data) => {
-      console.log('Getting user recently played tracks', data);
-      res.send({ data });
+      console.log(data.body);
+      res.send({ featured: data.body });
     },
     (err) => {
       console.log('Something went wrong!', err);
-      res.send({ error: "You don't have premium" });
     }
   );
 });
+
+app.get('/api/top-tracks', (req, res) => {
+  spotify.getMyTopTracks({ limit: 5 }).then(
+    (data) => {
+      console.log('Found top tracks', data.body);
+      res.send({ topTracks: data.body.items });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 module.exports = app;

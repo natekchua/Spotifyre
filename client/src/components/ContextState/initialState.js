@@ -16,11 +16,11 @@ export const initialState = {
   playlistSearchResults: [],
   songStatus: false,
   currSong: null,
-  dashboardPlaylists: ['37i9dQZF1EphOfEPXi5KfT',
-    '37i9dQZF1EpDfnKhctSw35',
-    '37i9dQZF1EuIxSCUbcUAge'],
-  playOnRepeat: '37i9dQZF1EphOfEPXi5KfT',
-  playRewind: '37i9dQZF1EpDfnKhctSw35',
-  playCapsule: '37i9dQZF1EuIxSCUbcUAge',
-  recentSongs: null,
+  dashboardPlaylistIDs: [
+    '37i9dQZF1EphOfEPXi5KfT',
+    '37i9dQZF1EM18g3xzTa0Pw',
+    '37i9dQZF1CApPEHPqCGz0p',
+    '37i9dQZF1EuIxSCUbcUAge'
+  ],
+  recentSongs: null
 };

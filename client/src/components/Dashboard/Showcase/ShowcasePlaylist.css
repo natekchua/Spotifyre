@@ -1,0 +1,11 @@
+.dash-playlist-info {
+  display: flex;
+  height: 16vw;
+  max-width: 23vw;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.342);
+}
+
+.dash-playlist-info:hover {
+  transition: 0.24s transform ease-in;
+  transform: scale(1.025);
+}
