@@ -30,7 +30,6 @@ function Dashboard () {
   return (
     <>
       <div>
-        Top Playlist
         <div className="dash-playlists">
           <PlaylistDisplay playlist={playObjRepeat}/>
           <PlaylistDisplay playlist={playObjRewind}/>
