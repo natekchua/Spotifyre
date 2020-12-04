@@ -1,0 +1,30 @@
+.song-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+    color: #fff;
+    border: solid rgba(133, 0, 133, 0.253);
+    border-width: 1px 0 1px 0;
+    width: 95%;
+}
+
+.song-row > div > img {
+    height: 40px;
+    width: 40px;
+}
+
+.song-row:hover {
+    cursor: pointer;
+    background-color: rgb(11, 0, 39);
+    opacity: 0.8;
+}
+
+.song-info {
+    margin-left: 24px;
+}
+
+.song-info > h1 {
+    font-size: 16px;
+    margin: 2px;
+}

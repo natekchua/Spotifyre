@@ -1,0 +1,18 @@
+.songs-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 18px;
+    border-bottom: 1px solid rgba(115, 0, 138, 0.425);
+}
+
+.songs-header > p {
+    color: rgb(214, 111, 228);
+    font-weight: 700;
+}
+
+.song-icons > .MuiSvg-root {
+    margin-right: 20px;
+}
+

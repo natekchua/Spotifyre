@@ -15,5 +15,12 @@ export const initialState = {
   searchQuery: null,
   playlistSearchResults: [],
   songStatus: false,
-  currSong: null
+  currSong: null,
+  dashboardPlaylists: ['37i9dQZF1EphOfEPXi5KfT',
+    '37i9dQZF1EpDfnKhctSw35',
+    '37i9dQZF1EuIxSCUbcUAge'],
+  playOnRepeat: '37i9dQZF1EphOfEPXi5KfT',
+  playRewind: '37i9dQZF1EpDfnKhctSw35',
+  playCapsule: '37i9dQZF1EuIxSCUbcUAge',
+  recentSongs: null,
 };
