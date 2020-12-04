@@ -9,8 +9,8 @@
   border-radius: 10px;
   width: 50%;
   margin: 12px;
-  height: 100%;
-  min-height: 100vh;
+  max-height: 90vh;
+  overflow: scroll;
   padding: 18px;
   box-shadow: 0px 0px 24px rgba(234, 0, 255, 0.705);
 }
