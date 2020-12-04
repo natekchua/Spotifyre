@@ -6,6 +6,7 @@
 hr {
   margin: 24px auto;
   width: 100%;
+  border: 1px solid rgba(214, 111, 228, 0.479);
 }
 h2 {
   color: rgb(214, 111, 228);
