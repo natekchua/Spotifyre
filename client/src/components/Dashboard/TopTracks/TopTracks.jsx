@@ -39,7 +39,7 @@ function TopTracks () {
   return (
     <div>
       <div className='songs-header'>
-        <p>Recently Played Songs</p>
+        <p>Your Top Tracks</p>
       </div>
       <>{error ? error : songItems}</>
     </div>
