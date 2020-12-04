@@ -3,10 +3,11 @@ import React from 'react'
 import './PlaylistDisplay.css'
 import { wait } from '../../../services/helperFunctions'
 import { getPlaybackState, playPlaylist } from '../../../services/apiRequests'
+import { useProviderValue } from '../../ContextState/Provider'
 
 function PlaylistDisplay (props) {
-  const { playlist } = props
-  const [{}, dispatch] = useProviderValue()
+  let { playlist } = props
+  const [dispatch] = useProviderValue()
 
   const onPlayPlaylist = async () => {
     await playPlaylist(playlist.id)
@@ -25,13 +26,8 @@ function PlaylistDisplay (props) {
 
   return (
     <>
-      <div className='playlist-container'>
-        <div className="playlist-info p10">
-          <img src={playlist?.images[0].url} alt='album-art' onClick={onPlayPlaylist}/>
-          <div className="playlist-text">
-            <h1>{playlist?.name}</h1>
-          </div>
-        </div>
+      <div className="dash-playlist-info p10">
+        <img src={playlist?.images[0]?.url} alt='album-art' onClick={onPlayPlaylist}/>
       </div>
     </>
   )
