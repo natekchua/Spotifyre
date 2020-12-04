@@ -196,4 +196,16 @@ app.post('/api/search-for-playlists', (req, res) => {
   );
 });
 
+app.get('api/top-tracks', (req, res) => {
+  spotify.getMyTopTracks().then(
+    (data) => {
+      console.log('Getting user recently played tracks', data);
+      res.send({ data });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+      res.send({ error: "You don't have premium" });
+    }
+  );
+});
 module.exports = app;
