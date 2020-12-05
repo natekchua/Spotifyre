@@ -1,8 +1,8 @@
 import React from 'react';
 import { useProviderValue } from '../ContextState/Provider';
-import he from 'he';
-import SongList from '../SongList/SongList';
+import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import he from 'he';
 import { 
   getPlaybackState,
   playPlaylist
@@ -33,9 +33,9 @@ function PlaylistView (props) {
   return (
     <>
       <div className='playlist-container'>
-        <div className="playlist-info p10">
+        <div className='playlist-info p20'>
           <img src={playlist?.images[0].url} alt='album-art' />
-          <div className="playlist-text">
+          <div className='playlist-text'>
             <h1>{playlist?.name}</h1>
             <p>{he.decode(playlist?.description)}</p>
             <br />
@@ -45,7 +45,7 @@ function PlaylistView (props) {
             <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
           </div>
         </div>
-        <SongList playlist={playlist} />
+        <PlaylistPanelHandler playlist={playlist} curatorView={false} />
       </div>
     </>
   );

@@ -41,7 +41,7 @@ app.get('/api/get-me', (req, res) => {
 });
 
 app.get('/api/get-user-playlists', (req, res) => {
-  spotify.getUserPlaylists().then(
+  spotify.getUserPlaylists({ limit: 50 }).then(
     (data) => {
       console.log('Retrieved playlists', data.body);
       res.send({ playlists: data.body });

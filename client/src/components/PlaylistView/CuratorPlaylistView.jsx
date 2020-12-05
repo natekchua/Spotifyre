@@ -1,7 +1,7 @@
 import React from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import he from 'he';
-import SongList from '../SongList/SongList';
+import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
 import Search from '../Search/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlaylistResultsList from './PlaylistResultsList/PlaylistResultsList';
@@ -58,8 +58,7 @@ function CuratorPlaylistView (props) {
     <>
     { playlist && !isSearching
         ? <div className='playlist-container'>
-            <div className='back-button flex-basic p10' onClick={goBackToSearch}><ArrowBackIcon /> Back To Search</div>
-            <div className="playlist-info p10">
+            <div className="playlist-info p20">
               <img src={playlist?.images[0]?.url} alt='' />
               <div className="playlist-text">
                 <h1>{playlist?.name}</h1>
@@ -70,8 +69,9 @@ function CuratorPlaylistView (props) {
                 <p><strong>{playlist?.followers.total}</strong> Followers</p>
                 <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
               </div>
+              <div className='back-button flex-basic p10' onClick={goBackToSearch}><ArrowBackIcon /></div>
             </div>
-            <SongList playlist={playlist} />
+            <PlaylistPanelHandler playlist={playlist} curatorView={true} />
           </div>
         : <>{searchPage}</>
     }
