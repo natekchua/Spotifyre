@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
+import Input from '@material-ui/core/Input';
+import Switch from '@material-ui/core/Switch';
+import Button from '@material-ui/core/Button';
 
 import './Profile.css';
   
-function Profile (props) {
+
+function Profile () {
   const [{
     user,
     curationSettings
   }, dispatch] = useProviderValue();
 
-  const [settings, setSettings] = useState(curationSettings);
+  const [curatorMode, setCuratorMode] = useState(curationSettings.curatorMode);
+  const [maxSuggestions, setMaxSuggestions] = useState(curationSettings.maxSuggestions);
+  const [suggestionsPerUser, setSuggestionsPerUser] = useState(curationSettings.suggestionsPerUser);
 
   useEffect(() => {
     dispatch({
@@ -24,56 +31,110 @@ function Profile (props) {
     // TODO: send settings object into database for given user.
     dispatch({
       type: 'SET_CURATION_SETTINGS',
-      curationSettings: settings
+      curationSettings: {
+        curatorMode: curatorMode,
+        maxSuggestions: maxSuggestions,
+        suggestionsPerUser: suggestionsPerUser
+      }
     });  
   }
 
+  const toggleCuratorMode = () => {
+    setCuratorMode(true);             // user can't disable curator mode once it is enabled (for now).
+  }
+
+  const handleSliderChange = (event, newValue) => {
+    setMaxSuggestions(newValue);
+  };
+
+  const handleBlur = () => {
+    if (maxSuggestions < 0) {
+      setMaxSuggestions(0);
+    } else if (maxSuggestions > 100) {
+      setMaxSuggestions(100);
+    }
+  };
+
+  const handleSliderChangeV2 = (event, newValue) => {
+    setSuggestionsPerUser(newValue);
+  };
+
+
+  const handleBlurV2 = () => {
+    if (suggestionsPerUser < 0) {
+      setSuggestionsPerUser(0);
+    } else if (suggestionsPerUser > 100) {
+      setSuggestionsPerUser(100);
+    }
+  };
+
   return (
-    <div className='Profile-container flex-basic'>
-      <Avatar id='profileSettingsAvatar' src={user?.images[0].url} />
-      <div className='curatorSetting'>
-        <div id='avatarInfo-container'>
-          <p id='avatarInfoName'>{user?.display_name}</p>
-          <p id='avatarInfoNumberOfFollowers'>{user?.followers.total} Followers</p>
+    <div className='profile-container flex-basic'>
+      <Avatar id='profile-settings-avatar' src={user?.images[0].url} />
+      <div className='curator-info'>
+        <div id='avatar-info-container'>
+          <h3>{user?.display_name}</h3>
+          <p>{user?.followers.total} Followers</p>
         </div>
       </div>
-
-      <div id='enableCuratorMode-container'>
-        <div className='curatorSetting'>
-          <div>
-            <h3 id='curatorSliderHeader'>Enable curator mode</h3>
+      <div className='curator-info p10'>
+        <h3 className='p5'>Curator Mode</h3>
+        <Switch
+          checked={curatorMode}
+          onChange={toggleCuratorMode}
+        />
+      </div>
+      {
+        curatorMode
+          ? <div id='curator-settings-container'>
+              <div className='profile-sliders'>
+                <div className='slider-info flex-basic p10'>
+                  <h4>Max Suggestions: </h4>
+                  <Slider
+                    value={typeof maxSuggestions === 'number' ? maxSuggestions : 0}
+                    onChange={handleSliderChange}
+                    style={{ width: '200px',  color: '#f516e2' }}
+                  />
+                  <Input
+                    value={maxSuggestions}
+                    margin='dense'
+                    onBlur={handleBlur}
+                    inputProps={{
+                      step: 10,
+                      min: 0,
+                      max: 100,
+                      type: 'number'
+                    }}
+                  />
+                </div>
+                <div className='slider-info flex-basic p10'>
+                  <h4>Suggestions / User: </h4>
+                  <Slider
+                    value={typeof suggestionsPerUser === 'number' ? suggestionsPerUser : 0}
+                    onChange={handleSliderChangeV2}
+                    aria-labelledby='input-slider'
+                    style={{ width: '190px', color: '#f516e2' }}
+                  />
+                  <Input
+                    value={suggestionsPerUser}
+                    margin='dense'
+                    onBlur={handleBlurV2}
+                    inputProps={{
+                      step: 2,
+                      min: 0,
+                      max: 20,
+                      type: 'number'
+                    }}
+                  />
+                </div>    
+              </div>
           </div>
-
-          <div>
-            <label className='switch'>
-              <input type='checkbox'  id='enableCuratorModeSlider' />
-              <div className='slider' />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div id='curatorSettingsBorder'>
-        <div id='curatorSettings-container'>
-          <h2 id='curatorSettingsHeader'>Curator settings</h2>
-
-          <form className='totalSuggestionsAllowedSetting'>
-            <div className='curatorSetting'>
-              <p>Total suggestions allowed</p>
-              <input type='number' defaultValue={curationSettings.maxSuggestions} />
-            </div>
-          </form>
-
-          <form className='maxSuggestionsSetting'>
-            <div className='curatorSetting'>
-              <p>Max suggestions per user</p>
-              <input type='number' defaultValue={curationSettings.suggestionsPerUser} />
-            </div>
-          </form>
-        </div>
-      </div>
-      <div id='saveProfileSettingsButton-container'>
-        <button onClick={saveSettings} id='saveProfileSettingsButton'>SAVE SETTINGS</button>
+        : <h2>Enable Curator Mode to adjust your playlist suggestion settings.</h2>
+      }
+      <div className='p20'>
+        <Button onClick={saveSettings} variant="contained" color="secondary">
+          SAVE SETTINGS
+        </Button>
       </div>
     </div>
   );
