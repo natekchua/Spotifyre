@@ -23,6 +23,11 @@ const reducer = (state, action) => {
         ...state,
         user: action.user
       };
+    case 'SET_CURATOR':
+      return {
+        ...state,
+        curator: action.curator
+      };
     case 'SET_CURATION_SETTINGS':
       return {
         ...state,

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useProviderValue } from '../../ContextState/Provider';
 import SongList from '../../SongList/SongList';
 import PlaylistPanel from './PlaylistPanel';
+import Suggestions from '../Suggestions/Suggestions';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
@@ -8,7 +10,6 @@ import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import './PlaylistPanel.css';
-import { useProviderValue } from '../../ContextState/Provider';
 
 // *** MATERIAL UI TAB STYLING START *** //
 
@@ -56,6 +57,15 @@ function PlaylistPanelHandler (props) {
   const [tab, setTab] = useState(0);
   const classes = useStyles();
 
+  useEffect(() => {
+    if (curatorView && playlist) {
+      dispatch({
+        type: 'SET_CURATOR',
+        curator: playlist.owner
+      })
+    }
+  }, [])
+
   const onChangeTab = (event, tab) => {
     setTab(tab);
   };
@@ -89,9 +99,7 @@ function PlaylistPanelHandler (props) {
                 : <h3 className='flex-basic m30'>
                     Enable Curator Mode in your Profile Settings to allow playlist suggestions!
                   </h3>
-              : <h3 className='flex-basic m30'>
-                  Sorry! You can't suggest to this playlist because the owner has not enabled Curator Mode.
-                </h3>
+              : <Suggestions curatorView={curatorView} />
           }
           </PlaylistPanel>
         

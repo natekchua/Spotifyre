@@ -3,6 +3,7 @@ export const initialState = {
   tab: 'Dashboard',
   spotify: null,
   user: null,
+  curator: null,
   settingsSetByUser: false,
   curationSettings: {
     curatorMode: false,

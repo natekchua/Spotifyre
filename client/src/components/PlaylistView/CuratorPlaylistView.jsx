@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import he from 'he';
 import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
@@ -14,7 +14,7 @@ import { wait } from '../../services/helperFunctions';
 
 import './PlaylistView.css';
 
-function CuratorPlaylistView(props) {
+function CuratorPlaylistView (props) {
   const { playlist } = props;
   const [{ playlistSearchResults, isSearching }, dispatch] = useProviderValue();
 
