@@ -6,7 +6,7 @@ import Search from '../Search/Search';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlaylistResultsList from './PlaylistResultsList/PlaylistResultsList';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import { 
+import {
   getPlaybackState,
   playPlaylist
 } from '../../services/apiRequests';
@@ -14,7 +14,7 @@ import { wait } from '../../services/helperFunctions';
 
 import './PlaylistView.css';
 
-function CuratorPlaylistView (props) {
+function CuratorPlaylistView(props) {
   const { playlist } = props;
   const [{ playlistSearchResults, isSearching }, dispatch] = useProviderValue();
 
@@ -47,34 +47,34 @@ function CuratorPlaylistView (props) {
   const searchPage = (
     <div className='playlist-container'>
       <Search />
-        { playlistSearchResults?.playlists
-          ? <PlaylistResultsList playlistsFromQuery={playlistSearchResults.playlists} />
-          : <h1 className='flex-basic p20'>Search for a playlist!</h1>
-        }
+      { playlistSearchResults?.playlists
+        ? <PlaylistResultsList playlistsFromQuery={playlistSearchResults.playlists} />
+        : <h1 className='flex-basic p20'>Search for a playlist!</h1>
+      }
     </div>
   );
 
   return (
     <>
-    { playlist && !isSearching
+      { playlist && !isSearching
         ? <div className='playlist-container'>
-            <div className="playlist-info p20">
-              <img src={playlist?.images[0]?.url} alt='' />
-              <div className="playlist-text">
-                <h1>{playlist?.name}</h1>
-                <p>{he.decode(playlist?.description)}</p>
-                <br />
-                <p>Created by <strong>{playlist?.owner.display_name}</strong></p>
-                <p><strong>{playlist?.tracks.items.length}</strong> Songs</p>
-                <p><strong>{playlist?.followers.total}</strong> Followers</p>
-                <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
-              </div>
-              <div className='back-button flex-basic p10' onClick={goBackToSearch}><ArrowBackIcon /></div>
+          <div className="playlist-info p20">
+            <img src={playlist?.images[0]?.url} alt='' />
+            <div className="playlist-text">
+              <h1>{playlist?.name}</h1>
+              <p>{he.decode(playlist?.description)}</p>
+              <br />
+              <p>Created by <strong>{playlist?.owner.display_name}</strong></p>
+              <p><strong>{playlist?.tracks.total}</strong> Songs</p>
+              <p><strong>{playlist?.followers.total}</strong> Followers</p>
+              <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
             </div>
-            <PlaylistPanelHandler playlist={playlist} curatorView={true} />
+            <div className='back-button flex-basic p10' onClick={goBackToSearch}><ArrowBackIcon /></div>
           </div>
+          <PlaylistPanelHandler playlist={playlist} curatorView={true} />
+        </div>
         : <>{searchPage}</>
-    }
+      }
     </>
   );
 }
