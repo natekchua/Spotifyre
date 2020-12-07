@@ -1,8 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const action = require('../actions/actions.js');
-const { SQL } = require('../db/sql.js');
 
 const app = express.Router();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/getCurators', (req, res) => {
   action
@@ -146,12 +148,39 @@ app.post('/increaseCount', (req, res) => {
     });
 });
 
-app.post('/db/save-settings', (req, res) => {
-  const playlistID = req.body;
-
+app.post('/get-settings', (req, res) => {
   action
-    .decreaseCount(playlistID)
+    .getUserSettings(req.body.post)
     .then((rtn) => {
+      console.log('user settings retrieved: ', rtn);
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+app.post('/save-settings', (req, res) => {
+  action
+    .saveUserSettings(req.body.post)
+    .then((rtn) => {
+      console.log('saved settings');
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+app.post('/update-settings', (req, res) => {
+  action
+    .updateUserSettings(req.body.post)
+    .then((rtn) => {
+      console.log('updated settings');
       res.send(rtn);
     })
     .catch((err) => {

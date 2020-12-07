@@ -114,6 +114,50 @@ const decreaseCount = async (playlistID) => {
   }
 };
 
+const getUserSettings = async (id) => {
+  const query = `SELECT "curator_settings" FROM spotifyre.user WHERE "userid" = '${id}'`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    return `Failed to get user settings: ${err.message}`;
+  }
+};
+
+const saveUserSettings = async (params) => {
+  const { user, newCurationSettings } = params;
+  const name = user.display_name.replace(/ /g, '');
+  const curationSettingsStr = JSON.stringify(newCurationSettings);
+
+  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings)
+      VALUES('${user.id}', '${name}', '${curationSettingsStr}');`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    return `Failed to save user settings: ${err.message}`;
+  }
+};
+
+const updateUserSettings = async (params) => {
+  const { user, newCurationSettings } = params;
+  const curationSettingsStr = JSON.stringify(newCurationSettings);
+
+  const query = `UPDATE spotifyre.user SET "curator_settings" = '${curationSettingsStr}' WHERE "userid" = '${user.id}';`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    return `Failed to update user settings: ${err.message}`;
+  }
+};
+
 module.exports = {
   getType,
   getAllCurators,
@@ -124,4 +168,7 @@ module.exports = {
   removeSong,
   increaseCount,
   decreaseCount,
+  getUserSettings,
+  saveUserSettings,
+  updateUserSettings,
 };
