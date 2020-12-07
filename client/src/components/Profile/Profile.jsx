@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
-import { saveCurationSettings } from '../../services/dbRequests';
+import { 
+  saveCurationSettings,
+  updateCurationSettings
+} from '../../services/dbRequests';
+import { Alert } from 'antd';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 
+import 'antd/lib/alert/style/index.css';
 import './Profile.css';
-  
 
 function Profile () {
   const [{
     user,
-    curationSettings
+    curationSettings,
+    settingsSetByUser
   }, dispatch] = useProviderValue();
 
   const [curatorMode, setCuratorMode] = useState(curationSettings.curatorMode);
   const [maxSuggestions, setMaxSuggestions] = useState(curationSettings.maxSuggestions);
   const [suggestionsPerUser, setSuggestionsPerUser] = useState(curationSettings.suggestionsPerUser);
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     dispatch({
@@ -29,19 +35,38 @@ function Profile () {
 
 
   const saveSettings = () => {
-    // TODO: send settings object into database for given user.
     const newCurationSettings = {
       curatorMode: curatorMode,
       maxSuggestions: maxSuggestions,
       suggestionsPerUser: suggestionsPerUser
     };
 
-    saveCurationSettings(newCurationSettings).then(res => {
-      dispatch({
-        type: 'SET_CURATION_SETTINGS',
-        curationSettings: newCurationSettings
-      });  
-    })
+    const params = { user, newCurationSettings };
+    if (!settingsSetByUser) {
+      saveCurationSettings(params).then(res => {
+        console.log(res)
+        dispatch({
+          type: 'SET_CURATION_SETTINGS',
+          curationSettings: newCurationSettings
+        });
+        setNotification('saved');
+      }).catch(err => {
+        setNotification('error');
+        console.log(err)
+      });
+    } else {
+      updateCurationSettings(params).then(res => {
+        console.log(res)
+        dispatch({
+          type: 'SET_CURATION_SETTINGS',
+          curationSettings: newCurationSettings
+        });
+        setNotification('updated');
+      }).catch(err => {
+        setNotification('error');
+        console.log(err)
+      });
+    }
   }
 
   const toggleCuratorMode = () => {
@@ -75,6 +100,24 @@ function Profile () {
 
   return (
     <div className='profile-container flex-basic'>
+      { notification === 'error' 
+        ? <Alert
+            showIcon
+            onClose={() => setNotification('')}
+            message='Failed to save settings.' type='error' closable />
+        : null } 
+      { notification === 'saved' 
+        ? <Alert
+            showIcon
+            onClose={() => setNotification('')}
+            message='Settings successfully saved.' type='success' closable />
+        : null }
+      { notification === 'updated' 
+        ? <Alert
+            showIcon
+            onClose={() => setNotification('')}
+            message='Settings successfully updated.' type='success' closable />
+        : null }
       <Avatar id='profile-settings-avatar' src={user?.images[0].url} />
       <div className='curator-info'>
         <div id='avatar-info-container'>

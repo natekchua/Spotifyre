@@ -28,6 +28,11 @@ const reducer = (state, action) => {
         ...state,
         curationSettings: action.curationSettings
       };
+    case 'CHECK_SETTINGS':
+      return {
+        ...state,
+        settingsSetByUser: action.settingsSetByUser
+      };
     case 'SET_PLAYLISTS':
       return {
         ...state,

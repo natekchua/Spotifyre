@@ -10,6 +10,7 @@ import {
   getPlaylist,
   getSpotify
 } from './services/apiRequests';
+import { getCurationSettings } from './services/dbRequests';
 import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
 
@@ -34,7 +35,7 @@ const App = () => {
       dispatch({
         type: 'SET_TOKEN',
         token: hash.access_token
-      })
+      });
 
       setAccessToken(hash.access_token);
 
@@ -43,7 +44,7 @@ const App = () => {
         dispatch({
           type: 'SET_SPOTIFY',
           spotify: res.spotify              
-        })
+        });
       })
       
       // Get User Account Details and set user in Context State.
@@ -52,14 +53,29 @@ const App = () => {
           type: 'SET_USER',
           user: res.me
         })
+        getCurationSettings(res.me.id).then(res => {
+          if (res) {
+            const resultObj = JSON.parse(res).curator_settings;
+            dispatch({
+              type: 'SET_CURATION_SETTINGS',
+              curationSettings: JSON.parse(resultObj)
+            });
+            dispatch({
+              type: 'CHECK_SETTINGS',
+              settingsSetByUser: true
+            });
+          }
+        }).catch(err => console.log(err))
       }).catch(err => console.log(err))
+
+      
 
       // Get User Playlists and set user playlists in Context State.
       getUserPlaylists().then(res => {
         dispatch({
           type: 'SET_PLAYLISTS',
           playlists: res.playlists
-        })
+        });
       }).catch(err => console.log(err))
 
       // "On Repeat" playlist hard-coded for now
@@ -67,7 +83,7 @@ const App = () => {
         dispatch({
           type: 'SET_CURR_PLAYLIST',
           currPlaylist: res.playlist
-        })
+        });
       }).catch(err => console.log(err))
     }
   }, []);
