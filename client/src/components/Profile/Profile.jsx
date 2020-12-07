@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
+import { saveCurationSettings } from '../../services/dbRequests';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
@@ -29,14 +30,18 @@ function Profile () {
 
   const saveSettings = () => {
     // TODO: send settings object into database for given user.
-    dispatch({
-      type: 'SET_CURATION_SETTINGS',
-      curationSettings: {
-        curatorMode: curatorMode,
-        maxSuggestions: maxSuggestions,
-        suggestionsPerUser: suggestionsPerUser
-      }
-    });  
+    const newCurationSettings = {
+      curatorMode: curatorMode,
+      maxSuggestions: maxSuggestions,
+      suggestionsPerUser: suggestionsPerUser
+    };
+
+    saveCurationSettings(newCurationSettings).then(res => {
+      dispatch({
+        type: 'SET_CURATION_SETTINGS',
+        curationSettings: newCurationSettings
+      });  
+    })
   }
 
   const toggleCuratorMode = () => {
@@ -132,7 +137,7 @@ function Profile () {
         : <h2>Enable Curator Mode to adjust your playlist suggestion settings.</h2>
       }
       <div className='p20'>
-        <Button onClick={saveSettings} variant="contained" color="secondary">
+        <Button onClick={saveSettings} variant='contained' color='secondary'>
           SAVE SETTINGS
         </Button>
       </div>

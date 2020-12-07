@@ -2,9 +2,9 @@ const express = require('express');
 const action = require('../actions/actions.js');
 const { SQL } = require('../db/sql.js');
 
-const router = express.Router();
+const app = express.Router();
 
-router.get('/getCurators', (req, res) => {
+app.get('/getCurators', (req, res) => {
   action
     .getAllCurators()
     .then((rtn) => {
@@ -17,7 +17,20 @@ router.get('/getCurators', (req, res) => {
     });
 });
 
-router.get('/getType', (req, res) => {
+app.get('/getCurators', (req, res) => {
+  action
+    .getAllCurators()
+    .then((rtn) => {
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+app.get('/getType', (req, res) => {
   action
     .getType()
     .then((rtn) => {
@@ -30,7 +43,7 @@ router.get('/getType', (req, res) => {
     });
 });
 
-router.get('/getPlaylistID', (req, res) => {
+app.get('/getPlaylistID', (req, res) => {
   const userID = req.body;
 
   action
@@ -45,7 +58,7 @@ router.get('/getPlaylistID', (req, res) => {
     });
 });
 
-router.get('/getAllPlaylists', (req, res) => {
+app.get('/getAllPlaylists', (req, res) => {
   action
     .getAllPlaylists()
     .then((rtn) => {
@@ -58,7 +71,7 @@ router.get('/getAllPlaylists', (req, res) => {
     });
 });
 
-router.get('/getSuggestions', (req, res) => {
+app.get('/getSuggestions', (req, res) => {
   const playlistID = req.body; // Need to define a paramter
 
   action
@@ -73,7 +86,7 @@ router.get('/getSuggestions', (req, res) => {
     });
 });
 
-router.post('/addSongSuggestion', (req, res) => {
+app.post('/addSongSuggestion', (req, res) => {
   const { playlistID, songID, suggestedUserID, playlist, count } = req.body;
 
   action
@@ -88,7 +101,7 @@ router.post('/addSongSuggestion', (req, res) => {
     });
 });
 
-router.post('/removeSong', (req, res) => {
+app.post('/removeSong', (req, res) => {
   const { playlistID, songID } = req.body;
 
   action
@@ -103,7 +116,7 @@ router.post('/removeSong', (req, res) => {
     });
 });
 
-router.post('/increaseCount', (req, res) => {
+app.post('/increaseCount', (req, res) => {
   const playlistID = req.body;
 
   action
@@ -118,7 +131,7 @@ router.post('/increaseCount', (req, res) => {
     });
 });
 
-router.post('/increaseCount', (req, res) => {
+app.post('/increaseCount', (req, res) => {
   const playlistID = req.body;
 
   action
@@ -133,4 +146,19 @@ router.post('/increaseCount', (req, res) => {
     });
 });
 
-module.exports = router;
+app.post('/db/save-settings', (req, res) => {
+  const playlistID = req.body;
+
+  action
+    .decreaseCount(playlistID)
+    .then((rtn) => {
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+module.exports = app;

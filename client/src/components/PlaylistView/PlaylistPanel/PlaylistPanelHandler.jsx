@@ -8,6 +8,7 @@ import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import './PlaylistPanel.css';
+import { useProviderValue } from '../../ContextState/Provider';
 
 // *** MATERIAL UI TAB STYLING START *** //
 
@@ -50,6 +51,7 @@ const StyledTab = withStyles((theme) => ({
 // *** MATERIAL UI TAB STYLING END *** //
 
 function PlaylistPanelHandler (props) {
+  const [{ curationSettings }, dispatch] = useProviderValue();
   const { playlist, curatorView } = props;
   const [tab, setTab] = useState(0);
   const classes = useStyles();
@@ -80,9 +82,13 @@ function PlaylistPanelHandler (props) {
         <PlaylistPanel value={tab} index={1}>
           {
             !curatorView
-              ? <h3 className='flex-basic m30'>
-                  Enable Curator Mode in your Profile Settings to allow playlist suggestions!
-                </h3>
+              ? curationSettings?.curatorMode 
+                ? <h3 className='flex-basic m30'>
+                    Render suggestions here
+                  </h3>
+                : <h3 className='flex-basic m30'>
+                    Enable Curator Mode in your Profile Settings to allow playlist suggestions!
+                  </h3>
               : <h3 className='flex-basic m30'>
                   Sorry! You can't suggest to this playlist because the owner has not enabled Curator Mode.
                 </h3>

@@ -1,24 +1,5 @@
 // All API requests to the server.
-
-const apiGet = async (path) => {
-  const response = await fetch(path);
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  
-  return body;
-}
-
-const apiPost = async (path, item) => {
-  const response = await fetch(path, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ post: item }),
-  });
-  const body = await response.text();
-  return body;
-}
+import { apiGet, apiPost } from './helperFunctions';
 
 export const getLoginURL = async () => {
   return apiGet('/api/authenticate');

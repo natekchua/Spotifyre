@@ -8,7 +8,6 @@ const config = {
   password: process.env.DB_password,
   host: process.env.DB_host,
   port: 5432,
-
   poolSize: 5,
   poolIdleTimeout: 30000,
   reapIntervalMillis: 10000,
@@ -18,7 +17,7 @@ const pool = new pg.Pool(config);
 
 pool.connect((isErr, client, done) => {
   if (isErr) {
-    console.log(`Connect query:${isErr.message}`);
+    console.log(`Connect query error: ${isErr.message}`);
     return;
   }
 

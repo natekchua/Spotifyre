@@ -19,3 +19,24 @@ export const getDuration = (ms) => {
   const secs = ((ms % 60000) / 1000).toFixed(0)
   return (secs === 60 ? (mins + 1) + ":00" : mins + ":" + (secs < 10 ? "0" : "") + secs);
 }
+
+// Helpers for API requests.
+export const apiGet = async (path) => {
+  const response = await fetch(path);
+  const body = await response.json();
+  if (response.status !== 200) throw Error(body.message);
+  
+  return body;
+}
+
+export const apiPost = async (path, item) => {
+  const response = await fetch(path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ post: item }),
+  });
+  const body = await response.text();
+  return body;
+}
