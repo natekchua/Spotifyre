@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
 import SongList from '../../SongList/SongList';
 import PlaylistPanel from './PlaylistPanel';
-import Suggestions from '../Suggestions/Suggestions';
+import SuggestionsContainer from '../Suggestions/SuggestionsContainer';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
@@ -99,7 +99,7 @@ function PlaylistPanelHandler (props) {
                 : <h3 className='flex-basic m30'>
                     Enable Curator Mode in your Profile Settings to allow playlist suggestions!
                   </h3>
-              : <Suggestions curatorView={curatorView} />
+              : <SuggestionsContainer curatorView={curatorView} />
           }
           </PlaylistPanel>
         

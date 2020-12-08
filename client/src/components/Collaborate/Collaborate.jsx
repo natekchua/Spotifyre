@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
+import { DragDropContext } from 'react-beautiful-dnd';
 import PlaylistView from '../PlaylistView/PlaylistView';
 import CuratorPlaylistView from '../PlaylistView/CuratorPlaylistView';
 
@@ -18,10 +19,16 @@ function Collaborate () {
     })
   }, [])
 
+  const onDragEnd = (result) => {
+    console.log('drag end: ', result)
+  }
+
   return (
     <div className='collaborate-container'>
-      <PlaylistView playlist={currPlaylist} />
-      <CuratorPlaylistView playlist={curatorPlaylist} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <PlaylistView playlist={currPlaylist} />
+        <CuratorPlaylistView playlist={curatorPlaylist} />
+      </DragDropContext>
     </div>
   );
 }

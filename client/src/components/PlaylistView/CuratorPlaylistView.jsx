@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import he from 'he';
 import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
