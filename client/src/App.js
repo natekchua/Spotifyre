@@ -10,7 +10,7 @@ import {
   getPlaylist,
   getSpotify
 } from './services/apiRequests';
-import { getCuratorSettings } from './services/dbRequests';
+import { getSettings } from './services/dbRequests';
 import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
 
@@ -53,15 +53,15 @@ const App = () => {
           type: 'SET_USER',
           user: res.me
         })
-        getCuratorSettings(res.me.id).then(res => {
+        getSettings(res.me.id).then(res => {
           if (res) {
             const resultObj = JSON.parse(res).curator_settings;
             dispatch({
-              type: 'SET_CURATION_SETTINGS',
-              curationSettings: JSON.parse(resultObj)
+              type: 'SET_USER_SETTINGS',
+              userSettings: JSON.parse(resultObj)
             });
             dispatch({
-              type: 'CHECK_SETTINGS',
+              type: 'CHECK_USER_SETTINGS',
               settingsSetByUser: true
             });
           }

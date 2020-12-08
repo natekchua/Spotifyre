@@ -88,12 +88,11 @@ app.get('/getSuggestions', (req, res) => {
     });
 });
 
-app.post('/addSongSuggestion', (req, res) => {
-  const { playlistID, songID, suggestedUserID, playlist, count } = req.body;
-
+app.post('/suggest-song', (req, res) => {
   action
-    .addSongSuggestion(playlistID, songID, suggestedUserID, playlist, count)
+    .addSongSuggestion(req.body.post)
     .then((rtn) => {
+      console.log('song sucessfully suggested: ', rtn);
       res.send(rtn);
     })
     .catch((err) => {
@@ -133,7 +132,7 @@ app.post('/increaseCount', (req, res) => {
     });
 });
 
-app.post('/increaseCount', (req, res) => {
+app.post('/decreaseCount', (req, res) => {
   const playlistID = req.body;
 
   action

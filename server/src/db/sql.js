@@ -39,6 +39,7 @@ pool.connect((isErr, client, done) => {
 const SQL = (query) => {
   return new Promise((resolve, reject) => {
     pool.query(query, (err, res) => {
+      console.log('executing query: ', query); // for debugging purposes, remove later
       if (err) {
         reject(err);
       } else {

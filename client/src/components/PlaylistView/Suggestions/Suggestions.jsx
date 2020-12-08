@@ -27,7 +27,7 @@ function Suggestions () {
   const [{ }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    // TODO: get suggestions from db
+    // TODO: get suggestions from db ***
   
   }, [])
   

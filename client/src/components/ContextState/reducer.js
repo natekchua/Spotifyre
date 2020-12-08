@@ -23,21 +23,32 @@ const reducer = (state, action) => {
         ...state,
         user: action.user
       };
+    case 'CHECK_USER_SETTINGS':
+      return {
+        ...state,
+        settingsSetByUser: action.settingsSetByUser
+      };
+    case 'SET_USER_SETTINGS':
+      return {
+        ...state,
+        userSettings: action.userSettings
+      };
     case 'SET_CURATOR':
       return {
         ...state,
         curator: action.curator
       };
-    case 'SET_CURATION_SETTINGS':
+    case 'CHECK_CURATOR_SETTINGS':
       return {
         ...state,
-        curationSettings: action.curationSettings
+        settingsSetByCurator: action.settingsSetByCurator
       };
-    case 'CHECK_SETTINGS':
+    case 'SET_CURATOR_SETTINGS':
       return {
         ...state,
-        settingsSetByUser: action.settingsSetByUser
+        curatorSettings: action.curatorSettings
       };
+   
     case 'SET_PLAYLISTS':
       return {
         ...state,

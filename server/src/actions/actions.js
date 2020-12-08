@@ -60,18 +60,34 @@ const getSuggestions = async (playlistID) => {
   }
 };
 
-const addSongSuggestion = async (
-  playlistID,
-  songID,
-  suggestedByUserID,
-  playlist,
-  count
-) => {
-  const query = `INSERT INTO spotifyre.playlists VALUES (${songID}, ${playlistID}, ${suggestedByUserID}, ${playlist}, ${count});`;
+const addCuratorPlaylist = async (playlistID, ownerID) => {
+  const query = `INSERT INTO spotifyre.playlists VALUES ('${playlistID}', '${ownerID}');`;
 
   try {
     const { rows } = await SQL(query);
     return rows;
+  } catch (err) {
+    console.error(err);
+    return `Failed to store song suggestion: ${err.message}`;
+  }
+};
+
+const addSongSuggestion = async (params) => {
+  const { playlistInfo, songID, suggestedByUserID } = params;
+  const selectQuery = `select * from spotifyre.playlists where "playlistid" = '${playlistInfo.id}';`; // check if curator playlist exists
+  const insertQuery = `INSERT INTO spotifyre.suggestions VALUES ('${songID}', '${playlistInfo.id}', '${suggestedByUserID}', '${playlistInfo.name}', 1);`;
+
+  try {
+    const { rows } = await SQL(selectQuery);
+    if (rows.length > 0) {
+      // playlist exists
+      const { rows } = await SQL(insertQuery);
+      return rows;
+    } else {
+      await addCuratorPlaylist(playlistInfo.id, playlistInfo.ownerID); // if it doesn't exist, add it into the DB
+      const { rows } = await SQL(insertQuery);
+      return rows;
+    }
   } catch (err) {
     console.error(err);
     return `Failed to store song suggestion: ${err.message}`;

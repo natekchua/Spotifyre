@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
+import { getSettings } from '../../../services/dbRequests';
 import SongList from '../../SongList/SongList';
 import PlaylistPanel from './PlaylistPanel';
 import SuggestionsContainer from '../Suggestions/SuggestionsContainer';
@@ -52,7 +53,7 @@ const StyledTab = withStyles((theme) => ({
 // *** MATERIAL UI TAB STYLING END *** //
 
 function PlaylistPanelHandler (props) {
-  const [{ curationSettings }, dispatch] = useProviderValue();
+  const [{ userSettings, settingsSetByCurator }, dispatch] = useProviderValue();
   const { playlist, curatorView } = props;
   const [tab, setTab] = useState(0);
   const classes = useStyles();
@@ -62,6 +63,28 @@ function PlaylistPanelHandler (props) {
       dispatch({
         type: 'SET_CURATOR',
         curator: playlist.owner
+      })
+      getSettings(playlist.owner.id).then(res => {
+        if (res) {
+          const resultObj = JSON.parse(res).curator_settings;
+          dispatch({
+            type: 'SET_CURATOR_SETTINGS',
+            curatorSettings: JSON.parse(resultObj)
+          });
+          dispatch({
+            type: 'CHECK_CURATOR_SETTINGS',
+            settingsSetByCurator: true
+          });
+        } else {
+          dispatch({
+            type: 'SET_CURATOR_SETTINGS',
+            curatorSettings: []
+          });
+          dispatch({
+            type: 'CHECK_CURATOR_SETTINGS',
+            settingsSetByCurator: false
+          });
+        }
       })
     }
   }, [])
@@ -92,14 +115,14 @@ function PlaylistPanelHandler (props) {
         <PlaylistPanel value={tab} index={1}>
           {
             !curatorView
-              ? curationSettings?.curatorMode 
+              ? userSettings?.curatorMode 
                 ? <h3 className='flex-basic m30'>
-                    Render suggestions here
+                    Render MY suggestions here
                   </h3>
                 : <h3 className='flex-basic m30'>
                     Enable Curator Mode in your Profile Settings to allow playlist suggestions!
                   </h3>
-              : <SuggestionsContainer curatorView={curatorView} />
+              : <SuggestionsContainer curatorView={curatorView} hasCuratorSettings={settingsSetByCurator} />
           }
           </PlaylistPanel>
         

@@ -17,13 +17,13 @@ import './Profile.css';
 function Profile () {
   const [{
     user,
-    curationSettings,
+    userSettings,
     settingsSetByUser
   }, dispatch] = useProviderValue();
 
-  const [curatorMode, setCuratorMode] = useState(curationSettings.curatorMode);
-  const [maxSuggestions, setMaxSuggestions] = useState(curationSettings.maxSuggestions);
-  const [suggestionsPerUser, setSuggestionsPerUser] = useState(curationSettings.suggestionsPerUser);
+  const [curatorMode, setCuratorMode] = useState(userSettings.curatorMode);
+  const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions);
+  const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser);
   const [notification, setNotification] = useState('');
 
   useEffect(() => {
@@ -46,8 +46,8 @@ function Profile () {
       saveCurationSettings(params).then(res => {
         console.log(res)
         dispatch({
-          type: 'SET_CURATION_SETTINGS',
-          curationSettings: newCurationSettings
+          type: 'SET_USER_SETTINGS',
+          userSettings: newCurationSettings
         });
         setNotification('saved');
       }).catch(err => {
@@ -58,8 +58,8 @@ function Profile () {
       updateCurationSettings(params).then(res => {
         console.log(res)
         dispatch({
-          type: 'SET_CURATION_SETTINGS',
-          curationSettings: newCurationSettings
+          type: 'SET_USER_SETTINGS',
+          userSettings: newCurationSettings
         });
         setNotification('updated');
       }).catch(err => {

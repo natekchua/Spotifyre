@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getDuration } from '../../services/helperFunctions';
 import { useProviderValue } from '../ContextState/Provider';
+import { suggestSongToPlaylist } from '../../services/dbRequests';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -12,7 +13,14 @@ const initialState = {
 };
 
 function Song (props) {
-  const [{ curatorPlaylist }, dispatch] = useProviderValue();
+  const [{
+    tab,
+    user,
+    curator,
+    curatorSettings,
+    curatorPlaylist,
+    settingsSetByCurator
+  }, dispatch] = useProviderValue();
   const { song, onPlaySong, curatorView } = props;
   const [state, setState] = useState(initialState);
   const [safeToPlay, setSafeToPlay] = useState(true);
@@ -31,8 +39,20 @@ function Song (props) {
     setSafeToPlay(true);
   };
   
-  const suggestSongToPlaylist = () => {
-    console.log(`suggesting ${song?.name} to Playlist ${curatorPlaylist?.name}.`)
+  const suggestSong = () => {
+    const params = { 
+      songID: song.id,
+      playlistInfo: { 
+        id: curatorPlaylist.id,
+        name: curatorPlaylist.name, 
+        ownerID: curator.id
+      },
+      suggestedByUserID: user.id
+    };
+    // TODO: check current entries with curator Settings to see if they satisfy conditions before posting API request.
+    suggestSongToPlaylist(params).then(res => {
+      console.log(res);
+    }).catch(err => console.log(err));
   }
 
   return (
@@ -46,7 +66,7 @@ function Song (props) {
         </div>
       </div>
       <p className='p5'>{getDuration(song.duration_ms)}</p>
-      { curatorPlaylist && !curatorView
+      { curatorPlaylist && !curatorView && tab === 'Collaborate' && settingsSetByCurator
         ? <Menu     
             keepMounted
             open={state.mouseY !== null}
@@ -58,7 +78,7 @@ function Song (props) {
                 : null
             }
           >
-            <MenuItem onClick={suggestSongToPlaylist}>
+            <MenuItem onClick={suggestSong}>
               Suggest '{song?.name}' to Playlist '{curatorPlaylist?.name}'
             </MenuItem>
           </Menu>
