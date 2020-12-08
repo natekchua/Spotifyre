@@ -197,7 +197,7 @@ app.post('/api/search-for-playlists', (req, res) => {
 });
 
 app.get('/api/featured-playlists', (req, res) => {
-  spotify.getFeaturedPlaylists({ limit: 4 }).then(
+  spotify.getFeaturedPlaylists({ limit: 8 }).then(
     (data) => {
       console.log(data.body);
       res.send({ featured: data.body });
@@ -209,7 +209,7 @@ app.get('/api/featured-playlists', (req, res) => {
 });
 
 app.get('/api/top-tracks', (req, res) => {
-  spotify.getMyTopTracks({ limit: 5 }).then(
+  spotify.getMyTopTracks({ limit: 10 }).then(
     (data) => {
       console.log('Found top tracks', data.body);
       res.send({ topTracks: data.body.items });
