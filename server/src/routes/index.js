@@ -52,6 +52,18 @@ app.get('/api/get-user-playlists', (req, res) => {
   );
 });
 
+app.post('/api/get-curator-playlists', (req, res) => {
+  spotify.getUserPlaylists(req.body.post).then(
+    (data) => {
+      console.log('Retrieved playlists for selected user', data.body);
+      res.send({ curatorPlaylists: data.body });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 app.get('/api/get-playlist', (req, res) => {
   spotify.getPlaylist('37i9dQZF1EpmFBY9P2HI7S').then(
     (data) => {

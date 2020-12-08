@@ -21,6 +21,10 @@ export const getUserPlaylists = async () => {
   return apiGet('/api/get-user-playlists');
 }
 
+export const getCuratorPlaylists = async (params) => {
+  return apiPost('/api/get-curator-playlists', params);
+}
+
 export const getPlaylist = async () => {
   return apiGet('/api/get-playlist');
 }

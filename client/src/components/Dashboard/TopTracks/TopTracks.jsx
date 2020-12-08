@@ -15,7 +15,7 @@ function TopTracks () {
     getTopTracks().then(res => {
       setSongs(res.topTracks);
     }).catch(() => {
-      setError('Error: Problem fetching top tracks, spotify premium is required.')
+      setError('Error: Problem fetching top tracks.')
     })
   }, [])
 
