@@ -22,22 +22,24 @@ const getListStyle = (isDraggingOver) => ({
 
 
 function SongList (props) {
-  const { playlist } = props;
+  const { playlist, curatorView } = props;
   const [{ }, dispatch] = useProviderValue();
 
-  const onPlaySong = async (id) => {
-    await playSong(id);
-    await wait(200);
-    getPlaybackState().then(res => {
-      dispatch({
-        type: 'SET_CURR_SONG',
-        songObj: res.song?.item
-      });
-      dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: res.isPlaying
-      });
-    })
+  const onPlaySong = async (safeToPlay, id) => {
+    if (safeToPlay) {
+      await playSong(id);
+      await wait(200);
+      getPlaybackState().then(res => {
+        dispatch({
+          type: 'SET_CURR_SONG',
+          songObj: res.song?.item
+        });
+        dispatch({
+          type: 'SET_SONG_STATUS',
+          isPlaying: res.isPlaying
+        });
+      })
+    }
   };
 
   const songs = playlist?.tracks.items.map((s, idx) => {
@@ -50,7 +52,7 @@ function SongList (props) {
             provided.draggableProps.style
           )
         }>
-          <Song song={s.track} onPlaySong={onPlaySong} />
+          <Song song={s.track} onPlaySong={onPlaySong} curatorView={curatorView} />
         </li>
         )}
       </Draggable>

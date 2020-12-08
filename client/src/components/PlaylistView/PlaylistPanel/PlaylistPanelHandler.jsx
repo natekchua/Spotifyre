@@ -87,7 +87,7 @@ function PlaylistPanelHandler (props) {
           </StyledTabs>
         </div>
         <PlaylistPanel value={tab} index={0}>
-          <SongList playlist={playlist} />
+          <SongList playlist={playlist} curatorView={curatorView} />
         </PlaylistPanel>
         <PlaylistPanel value={tab} index={1}>
           {

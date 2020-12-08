@@ -64,14 +64,14 @@ function Suggestions () {
   })
 
   return (
-    <div>
+    <div className='suggestion-box'>
       <div className='songs-header'>
         <p>Suggestion Details</p>
       </div>
         <Droppable droppableId='songs'>
           {(provided, snapshot) => (
             <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
-              {!suggestionsList.length ? <h3 className='flex-basic m30'>Drag and Drop your suggestions here!</h3> : null}
+              {!suggestionsList.length ? <h3 className='flex-basic m30'>Add your suggestions here!</h3> : null}
               {suggestionsList}
               {provided.placeholder}
             </ul>
