@@ -6,8 +6,12 @@ import PlaylistRow from './PlaylistRow/PlaylistRow';
 import './PlaylistResultsList.css';
 
 function PlaylistResultsList (props) {
-  const { playlistsFromQuery } = props;
-  const [{ searchQuery }, dispatch] = useProviderValue();
+  const { playlistsFromQuery, goBackToCuratorPlaylist } = props;
+  const [{ 
+    searchQuery,
+    isSearching,
+    curator
+  }, dispatch] = useProviderValue();
 
   const onSelectPlaylist = (id) => {
     selectPlaylist(id).then(res => {
@@ -19,6 +23,9 @@ function PlaylistResultsList (props) {
         type: 'SET_IS_SEARCHING',
         isSearching: false
       })
+      if (goBackToCuratorPlaylist) {
+        goBackToCuratorPlaylist();
+      }
     }).catch(err => console.log(err))
   };
 
@@ -32,7 +39,10 @@ function PlaylistResultsList (props) {
 
   return (
     <div className='playlist-query-results'>
-      <h3>Results found for "{searchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3>
+      { isSearching 
+        ? <h3>Results found for "{searchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3> 
+        : <h3>{curator.display_name}'s Public Playlists</h3>
+      }
       {playlistRows}
     </div>
   );

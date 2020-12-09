@@ -63,7 +63,7 @@ function CuratorPlaylistView (props) {
   const curatorProfile = (
     <div className='playlist-container'>
       <div className='back-button flex-basic p10' onClick={goBackToCuratorPlaylist}><ArrowBackIcon /></div>
-      <PlaylistResultsList playlistsFromQuery={curatorPlaylists} />
+      <PlaylistResultsList playlistsFromQuery={curatorPlaylists} goBackToCuratorPlaylist={goBackToCuratorPlaylist} />
     </div>
   );
 
@@ -89,7 +89,10 @@ function CuratorPlaylistView (props) {
                   <h1>{playlist?.name}</h1>
                   <p>{he.decode(playlist?.description)}</p>
                   <br />
-                  <p>Created by <button onClick={seeCuratorsPlaylists}><strong>{playlist?.owner.display_name}</strong></button></p>
+                  <div className='flex-basic'>
+                    <p>By:&nbsp;</p><div className='profile-name p10' onClick={seeCuratorsPlaylists}><strong>{playlist?.owner.display_name}</strong></div>
+                  </div>
+                  <br />
                   <p><strong>{playlist?.tracks.total}</strong> {playlist?.tracks.total === 1 ? 'Song' : 'Songs'}</p>
                   <p><strong>{playlist?.followers.total}</strong> {playlist?.followers.total === 1 ? 'Follower' : 'Followers'}</p>
                   <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />

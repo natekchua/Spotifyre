@@ -61,6 +61,19 @@
   background: rgba(247, 0, 255, 0.664);
 }
 
+.profile-name {
+  background: rgba(38, 1, 63, 0.63);
+  border-radius: 12px;
+  width: fit-content;
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.profile-name:hover {
+  background: rgba(247, 0, 255, 0.664);
+}
+
+
 .play-playlist {
   font-size: 72px !important;  margin-top: 20px;
 }
