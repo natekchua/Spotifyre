@@ -9,7 +9,7 @@ function PlaylistResultsList (props) {
   const { playlistsFromQuery, goBackToCuratorPlaylist } = props;
   const [{ 
     searchQuery,
-    isSearching,
+    isPlaylistSearching,
     curator
   }, dispatch] = useProviderValue();
 
@@ -20,8 +20,8 @@ function PlaylistResultsList (props) {
         curatorPlaylist: JSON.parse(res).playlist
       })
       dispatch({
-        type: 'SET_IS_SEARCHING',
-        isSearching: false
+        type: 'SET_IS_PLAYLIST_SEARCHING',
+        isPlaylistSearching: false
       })
       if (goBackToCuratorPlaylist) {
         goBackToCuratorPlaylist();
@@ -39,9 +39,9 @@ function PlaylistResultsList (props) {
 
   return (
     <div className='playlist-query-results'>
-      { isSearching 
+      { isPlaylistSearching 
         ? <h3>Results found for "{searchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3> 
-        : <h3>{curator.display_name}'s Public Playlists</h3>
+        : <h2 className='center-text p5'>{curator.display_name}'s Public Playlists</h2>
       }
       {playlistRows}
     </div>

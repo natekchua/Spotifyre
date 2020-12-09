@@ -196,6 +196,18 @@ app.post('/api/play-playlist', (req, res) => {
   );
 });
 
+app.post('/api/search-for-songs', (req, res) => {
+  spotify.searchTracks(req.body.post, { limit: 50 }).then(
+    (data) => {
+      console.log('Found songs are', data.body);
+      res.send({ songsSearchResults: data.body });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 app.post('/api/search-for-playlists', (req, res) => {
   spotify.searchPlaylists(req.body.post).then(
     (data) => {

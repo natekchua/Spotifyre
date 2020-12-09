@@ -61,6 +61,10 @@ export const playPlaylist = async (id) => {
   return apiPost('/api/play-playlist', id);
 };
 
+export const searchForSongs = async (query) => {
+  return apiPost('/api/search-for-songs', query);
+};
+
 export const searchForPlaylists = async (query) => {
   return apiPost('/api/search-for-playlists', query);
 };

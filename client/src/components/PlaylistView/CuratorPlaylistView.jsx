@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import he from 'he';
 import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
-import Search from '../Search/Search';
+import PlaylistSearch from '../Search/PlaylistSearch';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlaylistResultsList from './PlaylistResultsList/PlaylistResultsList';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
@@ -19,7 +19,7 @@ function CuratorPlaylistView (props) {
   const { playlist } = props;
   const [{ 
     playlistSearchResults,
-    isSearching,
+    isPlaylistSearching,
     curator
   }, dispatch] = useProviderValue();
   const [curatorPlaylists, setCuratorPlaylists] = useState([]);
@@ -30,8 +30,8 @@ function CuratorPlaylistView (props) {
       curatorPlaylist: []
     });
     dispatch({
-      type: 'SET_IS_SEARCHING',
-      isSearching: true
+      type: 'SET_IS_PLAYLIST_SEARCHING',
+      isPlaylistSearching: true
     });
   }
 
@@ -69,7 +69,7 @@ function CuratorPlaylistView (props) {
 
   const searchPage = (
     <div className='playlist-container'>
-      <Search />
+      <PlaylistSearch />
       { playlistSearchResults?.playlists
         ? <PlaylistResultsList playlistsFromQuery={playlistSearchResults.playlists} />
         : <h1 className='flex-basic p20'>Search for a playlist!</h1>
@@ -81,7 +81,7 @@ function CuratorPlaylistView (props) {
     <>
       { curatorPlaylists?.items?.length > 0 
         ? <>{curatorProfile}</>
-        : playlist && !isSearching && !curatorPlaylists?.items?.length
+        : playlist && !isPlaylistSearching && !curatorPlaylists?.items?.length
             ? <div className='playlist-container'>
               <div className="playlist-info p20">
                 <img src={playlist?.images[0]?.url} alt='' />

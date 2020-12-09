@@ -81,3 +81,7 @@ ul {
   padding: 0;
   margin: 0;
 }
+
+.center-text {
+  text-align: center;
+}

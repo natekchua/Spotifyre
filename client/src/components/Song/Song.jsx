@@ -65,7 +65,7 @@ function Song (props) {
           <p className='ml5'>{song?.name !== song?.album.name ? song?.album.name : null}</p>
         </div>
       </div>
-      <p className='p5'>{getDuration(song.duration_ms)}</p>
+      <p className='p5'>{getDuration(song?.duration_ms)}</p>
       { curatorPlaylist && !curatorView && tab === 'Collaborate' && settingsSetByCurator
         ? <Menu     
             keepMounted
