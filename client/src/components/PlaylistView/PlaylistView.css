@@ -59,6 +59,7 @@
 
 .back-button:hover {
   background: rgba(247, 0, 255, 0.664);
+  border-radius: 24px;
 }
 
 .profile-name {

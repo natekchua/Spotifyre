@@ -32,9 +32,10 @@
   width: fit-content;
   padding: 15px;
   cursor: pointer;
-  transition: 0.2s linear;
+  transition: 0.15s linear;
 }
 
 .song-search-back-button:hover {
   background: rgba(247, 0, 255, 0.664);
+  border-radius: 30px;
 }

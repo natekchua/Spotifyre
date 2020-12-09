@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getDuration } from '../../services/helperFunctions';
 import { useProviderValue } from '../ContextState/Provider';
-import { suggestSongToPlaylist } from '../../services/dbRequests';
+import { suggestSongToPlaylist, getSuggestionsForPlaylist } from '../../services/dbRequests';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -37,22 +37,38 @@ function Song (props) {
   const handleClose = () => {
     setState(initialState);
     setSafeToPlay(true);
-  };
+  }
   
   const suggestSong = () => {
     const params = { 
-      songID: song.id,
+      songInfo: {
+        id: song.id,
+        name: song.name.replace(/'/g, ''),
+        artist: song.artists.map(a => a.name).join(', ').replace(/'/g, ''),
+        albumArt: song.album.images[0].url
+      },
       playlistInfo: { 
         id: curatorPlaylist.id,
         name: curatorPlaylist.name, 
         ownerID: curator.id
       },
-      suggestedByUserID: user.id
+      suggestedByUserInfo: {
+        id: user.id,
+        name: user.display_name.replace(/'/g, '')
+      }
     };
     // TODO: check current entries with curator Settings to see if they satisfy conditions before posting API request.
-    suggestSongToPlaylist(params).then(res => {
-      console.log(res);
-    }).catch(err => console.log(err));
+    suggestSongToPlaylist(params).then(() => {
+      getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
+        console.log(res)
+        dispatch({
+          type: 'SET_CURATOR_SUGGESTIONS',
+          curatorSuggestions: JSON.parse(res)
+        })
+      })
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   return (

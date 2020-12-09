@@ -19,19 +19,6 @@ app.get('/getCurators', (req, res) => {
     });
 });
 
-app.get('/getCurators', (req, res) => {
-  action
-    .getAllCurators()
-    .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
 app.get('/getType', (req, res) => {
   action
     .getType()
@@ -73,50 +60,6 @@ app.get('/getAllPlaylists', (req, res) => {
     });
 });
 
-app.get('/getSuggestions', (req, res) => {
-  const playlistID = req.body; // Need to define a paramter
-
-  action
-    .getSuggestions(playlistID)
-    .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.post('/suggest-song', (req, res) => {
-  action
-    .addSongSuggestion(req.body.post)
-    .then((rtn) => {
-      console.log('song sucessfully suggested: ', rtn);
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.post('/removeSong', (req, res) => {
-  const { playlistID, songID } = req.body;
-
-  action
-    .removeSong(playlistID, songID)
-    .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
 app.post('/increaseCount', (req, res) => {
   const playlistID = req.body;
 
@@ -146,6 +89,8 @@ app.post('/decreaseCount', (req, res) => {
       res.send({ error: err });
     });
 });
+
+// ****** SETTINGS ****** //
 
 app.post('/get-settings', (req, res) => {
   action
@@ -180,6 +125,50 @@ app.post('/update-settings', (req, res) => {
     .updateUserSettings(req.body.post)
     .then((rtn) => {
       console.log('updated settings');
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+// ****** SUGGESTIONS ****** //
+
+app.post('/playlist-suggestions', (req, res) => {
+  action
+    .getPlaylistSuggestions(req.body.post)
+    .then((rtn) => {
+      console.log('retrieved playlist suggestions');
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+app.post('/suggest-song', (req, res) => {
+  action
+    .addSongSuggestion(req.body.post)
+    .then((rtn) => {
+      console.log('song sucessfully suggested: ', rtn);
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+app.post('/remove-suggestion', (req, res) => {
+  action
+    .removeSongSuggestion(req.body.post)
+    .then((rtn) => {
+      console.log('suggestion removed: ', rtn);
       res.send(rtn);
     })
     .catch((err) => {

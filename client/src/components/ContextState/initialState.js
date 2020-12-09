@@ -9,6 +9,7 @@ export const initialState = {
     maxSuggestions: 100,
     suggestionsPerUser: 10
   },
+  mySuggestions: [],
   curator: null,
   settingsSetByCurator: false,
   curatorSettings: {
@@ -16,6 +17,7 @@ export const initialState = {
     maxSuggestions: 100,
     suggestionsPerUser: 10
   },
+  curatorSuggestions: [],
   playlists: [],
   currPlaylist: null,
   curatorPlaylist: null,

@@ -8,7 +8,7 @@ import './PlaylistResultsList.css';
 function PlaylistResultsList (props) {
   const { playlistsFromQuery, goBackToCuratorPlaylist } = props;
   const [{ 
-    searchQuery,
+    playlistSearchQuery,
     isPlaylistSearching,
     curator
   }, dispatch] = useProviderValue();
@@ -40,7 +40,7 @@ function PlaylistResultsList (props) {
   return (
     <div className='playlist-query-results'>
       { isPlaylistSearching 
-        ? <h3>Results found for "{searchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3> 
+        ? <h3>Results found for "{playlistSearchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3> 
         : <h2 className='center-text p5'>{curator.display_name}'s Public Playlists</h2>
       }
       {playlistRows}

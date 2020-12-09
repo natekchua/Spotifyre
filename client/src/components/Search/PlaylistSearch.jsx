@@ -14,7 +14,7 @@ function PlaylistSearch ({ query }) {
     searchForPlaylists(q.target.value).then(res => {
       dispatch({
         type: 'SET_PLAYLIST_SEARCH_QUERY',
-        playlistsearchQuery: q.target.value
+        playlistSearchQuery: q.target.value
       });
       dispatch({
         type: 'SET_PLAYLIST_SEARCH_RESULTS',

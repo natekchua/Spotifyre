@@ -33,6 +33,11 @@ const reducer = (state, action) => {
         ...state,
         userSettings: action.userSettings
       };
+    case 'SET_MY_SUGGESTIONS':
+      return {
+        ...state,
+        mySuggestions: action.mySuggestions
+      };
     case 'SET_CURATOR':
       return {
         ...state,
@@ -48,7 +53,11 @@ const reducer = (state, action) => {
         ...state,
         curatorSettings: action.curatorSettings
       };
-   
+    case 'SET_CURATOR_SUGGESTIONS':
+      return {
+        ...state,
+        curatorSuggestions: action.curatorSuggestions
+      };   
     case 'SET_PLAYLISTS':
       return {
         ...state,

@@ -53,7 +53,10 @@ const StyledTab = withStyles((theme) => ({
 // *** MATERIAL UI TAB STYLING END *** //
 
 function PlaylistPanelHandler (props) {
-  const [{ userSettings, settingsSetByCurator }, dispatch] = useProviderValue();
+  const [{ 
+    userSettings, 
+    settingsSetByCurator
+  }, dispatch] = useProviderValue();
   const { playlist, curatorView } = props;
   const [tab, setTab] = useState(0);
   const classes = useStyles();

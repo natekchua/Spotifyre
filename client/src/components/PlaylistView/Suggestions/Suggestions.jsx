@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import SuggestionRow from './SuggestionRow/SuggestionRow';
-import Song from '../../Song/Song';
 import { 
   getPlaybackState,
   playSong
 } from '../../../services/apiRequests';
+import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
 import { wait } from '../../../services/helperFunctions';
-
 
 import './Suggestions.css';
 
@@ -23,30 +22,41 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function Suggestions () {
-  const [suggestions, setSuggestions] = useState([]);
-  const [{ }, dispatch] = useProviderValue();
+  const [{ 
+    curatorSuggestions,
+    curatorPlaylist 
+  }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    // TODO: get suggestions from db ***
-  
+    if (!curatorSuggestions.length) {
+      getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
+        console.log(res)
+        dispatch({
+          type: 'SET_CURATOR_SUGGESTIONS',
+          curatorSuggestions: JSON.parse(res)
+        })
+      }) 
+    }
   }, [])
   
-  const onPlaySong = async (id) => {
-    await playSong(id)
-    await wait(200)
-    getPlaybackState().then(res => {
-      dispatch({
-        type: 'SET_CURR_SONG',
-        songObj: res.song?.item
+  const onPlaySong = async (safeToPlay, id) => {
+    if (safeToPlay) {
+      await playSong(id)
+      await wait(200)
+      getPlaybackState().then(res => {
+        dispatch({
+          type: 'SET_CURR_SONG',
+          songObj: res.song?.item
+        })
+        dispatch({
+          type: 'SET_SONG_STATUS',
+          isPlaying: res.isPlaying
+        })
       })
-      dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: res.isPlaying
-      })
-    })
+    }
   }
 
-  const suggestionsList = suggestions?.map((s, idx) => {
+  const suggestionsList = curatorSuggestions?.map((s, idx) => {
     return (
       <Draggable key={idx} draggableId={idx + 's'} index={idx}>
         {(provided, snapshot) => (
@@ -56,7 +66,7 @@ function Suggestions () {
             provided.draggableProps.style
           )
         }>
-          <Song song={s.track} onPlaySong={onPlaySong} />
+          <SuggestionRow suggestion={s} onPlaySong={onPlaySong} />
         </li>
         )}
       </Draggable>
@@ -67,6 +77,7 @@ function Suggestions () {
     <div className='suggestion-box'>
       <div className='songs-header'>
         <p>Suggestion Details</p>
+        <p>Suggested By</p>
       </div>
         <Droppable droppableId='songs'>
           {(provided, snapshot) => (
