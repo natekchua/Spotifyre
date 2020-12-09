@@ -3,22 +3,25 @@
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> Spotify Playlist Curation Manager made with React JS + Node JS 
+> The SpotiFyre application is an extension to the Spotify application, it acts as a Spotify Curator Manager providing features which the current Spotify app doesn't have. SpotiFyre mainly focuses on making playlist collaboration and song sharing between listeners and curators in a manageable way. 
 
 ### 🏠 [Homepage](https://github.com/natekchua/Spotifyre#readme)
 
 ### ✨ [Demo](https://spotifyre.herokuapp.com/)
 
-## Install
+## Install & Usage Locally
 
+### Server
 ```sh
-npm install
+cd server
+npm install && npm start
 ```
 
-## Usage
+### Client
 
 ```sh
-npm start
+cd client
+npm start && npm start
 ```
 
 ## Authors
@@ -43,11 +46,11 @@ npm start
 ## Technology Stack
 
 - [React](https://reactjs.org/) used for the front-end development to build our interface on the client side. 
+- [React Context](https://reactjs.org/docs/context.html)
 - [Node.js](https://nodejs.org/) (Koa) and Axios for HTTP requests.
 - [Express](https://expressjs.com/)
 - [PostgreSQL](https://www.postgresql.org/) queries to interact with the database for storage and persistence.
 - [Heroku](https://heroku.com) used to host the server and PostgreSQL database.
-- [Spotify Web Api](https://developer.spotify.com/documentation/web-api/) backend business logic utilizes Spotify's Javascript API.
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node) universal wrapper/client for the Spotify Web API that runs on Node.JS.
 
 
