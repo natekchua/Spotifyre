@@ -3,7 +3,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> The SpotiFyre application is an extension to the Spotify application, it acts as a Spotify Curator Manager providing features which the current Spotify app doesn't have. SpotiFyre mainly focuses on making playlist collaboration and song sharing between listeners and curators in a manageable way. 
+> The Spotifre application is an extension to the Spotify application, it acts as a Spotify Curator Manager providing features which the current Spotify app doesn't have. Spotifyre mainly focuses on making playlist collaboration and song sharing between listeners and curators in a manageable way. 
 
 ### 🏠 [Homepage](https://github.com/natekchua/Spotifyre#readme)
 
@@ -34,7 +34,7 @@ npm start && npm start
 
 👤 **Nathan Chua**
 - Github: [@natekchua](https://github.com/natekchua)
-- Website:  https://natekchua.me
+- Website: https://natekchua.me
 
 👤 **Naweed Anwari**
 - Github: [@naweedanwari](https://github.com/naweedanwari)
