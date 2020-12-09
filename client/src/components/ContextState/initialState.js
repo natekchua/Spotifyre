@@ -1,5 +1,6 @@
 export const initialState = {
   token: null,
+  notification: null,
   tab: 'Dashboard',
   spotify: null,
   user: null,

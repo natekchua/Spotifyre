@@ -41,8 +41,25 @@ function SuggestionRow (props) {
           type: 'SET_CURATOR_SUGGESTIONS',
           curatorSuggestions: JSON.parse(res)
         })
-      }).catch(err => console.log(err));
-    }).catch(err => console.log(err));
+        dispatch({
+          type: 'SET_NOTIFICATION',
+          notification: {
+            message: 'Suggestion successfully removed from playlist.',
+            type: 'success'
+          }
+        });
+      }).catch(err => errorHandler(err));
+    }).catch(err => errorHandler(err));
+  }
+
+  const errorHandler = (err) => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification: {
+        message: `Oops! ${err}`,
+        type: 'error'
+      }
+    });
   }
 
   const handleClose = () => {

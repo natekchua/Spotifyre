@@ -1,5 +1,7 @@
 import React from 'react';
+import { useProviderValue } from '../ContextState/Provider';
 import { Route, Redirect } from 'react-router-dom';
+import { Alert } from 'antd';
 import Sidebar from '../Sidebar/Sidebar';
 import Dashboard from '../Dashboard/Dashboard';
 import Collaborate from '../Collaborate/Collaborate';
@@ -10,8 +12,28 @@ import Header from '../Header/Header';
 import './AppContainer.css';
 
 function AppContainer (props) {
+  const [{ notification }, dispatch] = useProviderValue();
+
+  const closeNotification = () => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification: null
+    });
+  }
+
   return (
     <div className='AppContainer-container'>
+       { notification
+          ? <Alert
+              className='notification'
+              showIcon
+              onClose={closeNotification}
+              message={notification.message} 
+              type={notification.type}
+              closable
+            />
+          : null 
+        } 
       <div className='AppContainer'>
         <Sidebar />
         <div className='Content-container'>

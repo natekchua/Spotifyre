@@ -44,7 +44,7 @@ function SongList (props) {
 
   const songs = playlist?.tracks.items.map((s, idx) => {
     return (
-      <Draggable key={s.track.id} draggableId={s.track.id.toString()} index={idx}>
+      <Draggable key={s.track.id} draggableId={s.track.id} index={idx}>
         {(provided, snapshot) => (
         <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} 
           style={getItemStyle(
