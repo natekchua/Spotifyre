@@ -3,7 +3,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> The Spotifre application is an extension to the Spotify application, it acts as a Spotify Curator Manager providing features which the current Spotify app doesn't have. Spotifyre mainly focuses on making playlist collaboration and song sharing between listeners and curators in a manageable way. 
+> Spotifyre is a Spotify application that acts as a Playlist Manager for curators. Our app focuses on making playlist collaboration and song sharing between listeners and curators super easy.
 
 ### 🏠 [Homepage](https://github.com/natekchua/Spotifyre#readme)
 
