@@ -9,6 +9,9 @@ const usersRouter = require('./src/routes/users');
 
 const app = express();
 
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,7 +33,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({ error: err });
 });
 
 module.exports = app;
