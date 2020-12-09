@@ -39,6 +39,16 @@ function Song (props) {
     setSafeToPlay(true);
   }
   
+  const errorHandler = (err) => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification: {
+        message: `Oops! ${err}`,
+        type: 'error'
+      }
+    });
+  }
+
   const suggestSong = () => {
     const params = { 
       songInfo: {
@@ -58,17 +68,32 @@ function Song (props) {
       }
     };
     // TODO: check current entries with curator Settings to see if they satisfy conditions before posting API request.
-    suggestSongToPlaylist(params).then(() => {
-      getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
-        console.log(res)
-        dispatch({
-          type: 'SET_CURATOR_SUGGESTIONS',
-          curatorSuggestions: JSON.parse(res)
+    if (curator.id !== user.id) {
+      suggestSongToPlaylist(params).then(() => {
+        getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
+          console.log(res)
+          dispatch({
+            type: 'SET_CURATOR_SUGGESTIONS',
+            curatorSuggestions: JSON.parse(res)
+          })
+          dispatch({
+            type: 'SET_NOTIFICATION',
+            notification: {
+              message: 'Song suggestion successfully submitted to playlist.',
+              type: 'success'
+            }
+          });
         })
-      })
-    }).catch(err => {
-      console.log(err);
-    });
+      }).catch(err => errorHandler(err));
+    } else {
+      dispatch({
+        type: 'SET_NOTIFICATION',
+        notification: {
+          message: 'Nice try! You cannot suggest songs to your own playlist.',
+          type: 'error'
+        }
+      });
+    }
   }
 
   return (

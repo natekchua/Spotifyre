@@ -5,7 +5,6 @@ import {
   saveCurationSettings,
   updateCurationSettings
 } from '../../services/dbRequests';
-import { Alert } from 'antd';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
@@ -24,7 +23,6 @@ function Profile () {
   const [curatorMode, setCuratorMode] = useState(userSettings.curatorMode);
   const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions);
   const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser);
-  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     dispatch({
@@ -33,6 +31,15 @@ function Profile () {
     });
   }, [])
 
+  const errorHandler = (err) => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification: {
+        message: `Oops! ${err}`,
+        type: 'error'
+      }
+    });
+  }
 
   const saveSettings = () => {
     const newCurationSettings = {
@@ -49,11 +56,14 @@ function Profile () {
           type: 'SET_USER_SETTINGS',
           userSettings: newCurationSettings
         });
-        setNotification('saved');
-      }).catch(err => {
-        setNotification('error');
-        console.log(err)
-      });
+        dispatch({
+          type: 'SET_NOTIFICATION',
+          notification: {
+            message: 'Settings successfully saved.',
+            type: 'success'
+          }
+        });       
+      }).catch(err => errorHandler(err));
     } else {
       updateCurationSettings(params).then(res => {
         console.log(res)
@@ -61,11 +71,14 @@ function Profile () {
           type: 'SET_USER_SETTINGS',
           userSettings: newCurationSettings
         });
-        setNotification('updated');
-      }).catch(err => {
-        setNotification('error');
-        console.log(err)
-      });
+        dispatch({
+          type: 'SET_NOTIFICATION',
+          notification: {
+            message: 'Settings successfully updated.',
+            type: 'success'
+          }
+        });
+      }).catch(err => errorHandler(err));
     }
   }
 
@@ -100,24 +113,6 @@ function Profile () {
 
   return (
     <div className='profile-container flex-basic'>
-      { notification === 'error' 
-        ? <Alert
-            showIcon
-            onClose={() => setNotification('')}
-            message='Failed to save settings.' type='error' closable />
-        : null } 
-      { notification === 'saved' 
-        ? <Alert
-            showIcon
-            onClose={() => setNotification('')}
-            message='Settings successfully saved.' type='success' closable />
-        : null }
-      { notification === 'updated' 
-        ? <Alert
-            showIcon
-            onClose={() => setNotification('')}
-            message='Settings successfully updated.' type='success' closable />
-        : null }
       <Avatar id='profile-settings-avatar' src={user?.images[0].url} />
       <div className='curator-info'>
         <div id='avatar-info-container'>

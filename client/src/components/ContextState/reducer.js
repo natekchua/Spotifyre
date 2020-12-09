@@ -8,6 +8,11 @@ const reducer = (state, action) => {
         ...state,
         token: action.token
       };
+    case 'SET_NOTIFICATION':
+      return {
+        ...state,
+        notification: action.notification
+      };
     case 'SET_TAB':
       return {
         ...state,
