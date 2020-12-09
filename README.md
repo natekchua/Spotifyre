@@ -21,7 +21,7 @@ npm install
 npm start
 ```
 
-## Author
+## Authors
 
 👤 **Afrah Ahmed**
 - Github: [@afrahahmed1](https://github.com/afrahahmed1)
@@ -39,6 +39,17 @@ npm start
 👤 **Rakheem Dewji**
 - Github: [@raksdewji](https://github.com/raksdewji)
 - Website: https://raksdewji.github.io/
+
+## Technology Stack
+
+- [React](https://reactjs.org/)
+- [Node.js](https://nodejs.org/) (Koa) and Axios for HTTP requests
+- [Express](https://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- Server: [Heroku](https://heroku.com)
+- [Spotify Web Api](https://developer.spotify.com/documentation/web-api/)
+- [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node) universal wrapper/client for the Spotify Web API that runs on Node.JS 
+
 
 ## 🤝 Contributing
 
