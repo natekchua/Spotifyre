@@ -1,12 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const spotifyUtils = require('../../spotifyUtils.js');
+const cors = require('cors');
 const app = express.Router();
 
 const { spotify, loginURL } = spotifyUtils;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send({ express: 'Welcome to Spotifyre!' });
