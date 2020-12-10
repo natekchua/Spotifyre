@@ -21,7 +21,7 @@ npm install && npm start
 
 ```sh
 cd client
-npm start && npm start
+npm install && npm start
 ```
 
 ## Authors
@@ -46,8 +46,8 @@ npm start && npm start
 ## Technology Stack
 
 - [React](https://reactjs.org/) used for the front-end development to build our interface on the client side. 
-- [React Context](https://reactjs.org/docs/context.html)
-- [Node.js](https://nodejs.org/) (Koa) and Axios for HTTP requests.
+- [React Context](https://reactjs.org/docs/context.html) used for application state management.
+- [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
 - [PostgreSQL](https://www.postgresql.org/) queries to interact with the database for storage and persistence.
 - [Heroku](https://heroku.com) used to host the server and PostgreSQL database.

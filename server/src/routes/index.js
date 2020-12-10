@@ -244,4 +244,17 @@ app.get('/api/top-tracks', (req, res) => {
   );
 });
 
+app.post('/api/add-track-to-playlist', (req, res) => {
+  const { playlistID, songID } = req.body.post;
+  spotify.addTracksToPlaylist(playlistID, [`spotify:track:${songID}`]).then(
+    (data) => {
+      console.log('Added track to playlist!');
+      res.send({ topTracks: data.body.items });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 module.exports = app;

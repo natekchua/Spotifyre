@@ -38,10 +38,10 @@ const reducer = (state, action) => {
         ...state,
         userSettings: action.userSettings
       };
-    case 'SET_MY_SUGGESTIONS':
+    case 'SET_USER_SUGGESTIONS':
       return {
         ...state,
-        mySuggestions: action.mySuggestions
+        userSuggestions: action.userSuggestions
       };
     case 'SET_CURATOR':
       return {

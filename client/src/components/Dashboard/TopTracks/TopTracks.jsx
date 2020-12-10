@@ -40,7 +40,7 @@ function TopTracks () {
 
   return (
     <div>
-      <div className='songs-header'>
+      <div className='songs-header p20'>
         <h2>Your Top 10 Tracks</h2>
       </div>
       <>{error ? error : songItems}</>

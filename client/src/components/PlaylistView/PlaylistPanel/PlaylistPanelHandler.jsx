@@ -3,7 +3,8 @@ import { useProviderValue } from '../../ContextState/Provider';
 import { getSettings } from '../../../services/dbRequests';
 import SongList from '../../SongList/SongList';
 import PlaylistPanel from './PlaylistPanel';
-import SuggestionsContainer from '../Suggestions/SuggestionsContainer';
+import UserSuggestionsContainer from '../Suggestions/UserSuggestionsContainer';
+import CuratorSuggestionsContainer from '../Suggestions/CuratorSuggestionsContainer';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
@@ -98,37 +99,30 @@ function PlaylistPanelHandler (props) {
 
   return (
     <div>
-       <div className={classes.playlistViewHeader}>
-          <StyledTabs
-            value={tab}
-            onChange={onChangeTab}
-            variant='fullWidth'
-            centered
-          >
-            <StyledTab icon={<LibraryMusicIcon />} label='Songs' {...tabProps(0)} />
-            <StyledTab
-              icon={<ThumbsUpDownIcon />}
-              label={curatorView ? 'Make a Suggestion' : 'Suggestions'} {...tabProps(1)}
-            />
-          </StyledTabs>
-        </div>
-        <PlaylistPanel value={tab} index={0}>
-          <SongList playlist={playlist} curatorView={curatorView} />
-        </PlaylistPanel>
-        <PlaylistPanel value={tab} index={1}>
-          {
-            !curatorView
-              ? userSettings?.curatorMode 
-                ? <h3 className='flex-basic m30'>
-                    Render MY suggestions here
-                  </h3>
-                : <h3 className='flex-basic m30'>
-                    Enable Curator Mode in your Profile Settings to allow playlist suggestions!
-                  </h3>
-              : <SuggestionsContainer curatorView={curatorView} hasCuratorSettings={settingsSetByCurator} />
-          }
-          </PlaylistPanel>
-        
+      <div className={classes.playlistViewHeader}>
+        <StyledTabs
+          value={tab}
+          onChange={onChangeTab}
+          variant='fullWidth'
+          centered
+        >
+          <StyledTab icon={<LibraryMusicIcon />} label='Songs' {...tabProps(0)} />
+          <StyledTab
+            icon={<ThumbsUpDownIcon />}
+            label={curatorView ? 'Make a Suggestion' : 'Suggestions'} {...tabProps(1)}
+          />
+        </StyledTabs>
+      </div>
+      <PlaylistPanel value={tab} index={0}>
+        <SongList playlist={playlist} curatorView={curatorView} />
+      </PlaylistPanel>
+      <PlaylistPanel value={tab} index={1}>
+        {
+          !curatorView
+            ? <UserSuggestionsContainer userSettings={userSettings} />
+            : <CuratorSuggestionsContainer curatorView={curatorView} hasCuratorSettings={settingsSetByCurator} />
+        }
+      </PlaylistPanel>
     </div>
   );
 }

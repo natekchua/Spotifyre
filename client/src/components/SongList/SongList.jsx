@@ -61,7 +61,7 @@ function SongList (props) {
 
   return (
     <div>
-      <div className='songs-header'>
+      <div className='songs-header p20'>
         <p>Song Details</p>
         <p>Duration</p>
       </div>

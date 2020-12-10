@@ -28,3 +28,25 @@
   font-size: 16px;
   margin: 2px;
 }
+
+.reject-suggestion {
+  background: #1c045e;
+  border-radius: 8px;
+  margin: 3px;
+  padding: 8px;
+}
+
+.reject-suggestion:hover {
+  background: #390ead;
+}
+
+.accept-suggestion {
+  background: #017fd3;
+  border-radius: 8px;
+  margin: 3px;
+  padding: 8px;
+}
+
+.accept-suggestion:hover {
+  background: #57b4f1; 
+}

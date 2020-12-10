@@ -11,7 +11,7 @@ const initialState = {
   mouseY: null,
 };
 
-function SuggestionRow (props) {
+function CuratorSuggestionRow (props) {
   const [{ 
     user,
     curatorPlaylist
@@ -101,4 +101,4 @@ function SuggestionRow (props) {
   );
 }
 
-export default SuggestionRow;
+export default CuratorSuggestionRow;

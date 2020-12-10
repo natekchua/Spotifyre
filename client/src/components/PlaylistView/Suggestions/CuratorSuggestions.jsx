@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import SuggestionRow from './SuggestionRow/SuggestionRow';
+import CuratorSuggestionRow from './SuggestionRow/CuratorSuggestionRow';
 import { 
   getPlaybackState,
   playSong
@@ -21,14 +21,15 @@ const getListStyle = (isDraggingOver) => ({
   background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)',
 });
 
-function Suggestions () {
+function CuratorSuggestions () {
   const [{ 
     curatorSuggestions,
     curatorPlaylist 
   }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    if (!curatorSuggestions.length) {
+    // get suggestions from DB if playlist suggestion isn't loaded or new playlist suggestions are generated.
+    if (!curatorSuggestions?.length || curatorSuggestions[0]?.playlistid !== curatorPlaylist?.id) { 
       getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
         console.log(res)
         dispatch({
@@ -66,16 +67,16 @@ function Suggestions () {
             provided.draggableProps.style
           )
         }>
-          <SuggestionRow suggestion={s} onPlaySong={onPlaySong} />
+          <CuratorSuggestionRow suggestion={s} onPlaySong={onPlaySong} />
         </li>
         )}
       </Draggable>
-    )
+    );
   })
 
   return (
     <div className='suggestion-box'>
-      <div className='songs-header'>
+      <div className='songs-header p20'>
         <p>Suggestion Details</p>
         <p>Suggested By</p>
       </div>
@@ -92,5 +93,4 @@ function Suggestions () {
   );
 }
 
-export default Suggestions;
-
+export default CuratorSuggestions;

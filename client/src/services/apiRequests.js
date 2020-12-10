@@ -76,3 +76,7 @@ export const getTopTracks = async () => {
 export const getFeaturedPlaylists = async () => {
   return apiGet('/api/featured-playlists');
 }
+
+export const addTrackToPlaylist = async (params) => {
+  return apiPost('/api/add-track-to-playlist', params);
+}
