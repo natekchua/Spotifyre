@@ -1,12 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const action = require('../actions/actions.js');
-const cors = require('cors');
-
 const app = express.Router();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 app.get('/getCurators', (req, res) => {
   action
