@@ -21,11 +21,6 @@ app.get('/api/authenticate', (req, res) => {
   });
 });
 
-app.post('/api/set-access-token', (req, res) => {
-  spotify.setAccessToken(req.body.post);
-  res.send(`token: ${req.body.post} has been posted`);
-});
-
 app.get('/api/get-spotify', (req, res) => {
   res.send({ spotify: spotify });
 });
@@ -54,34 +49,10 @@ app.get('/api/get-user-playlists', (req, res) => {
   );
 });
 
-app.post('/api/get-curator-playlists', (req, res) => {
-  spotify.getUserPlaylists(req.body.post).then(
-    (data) => {
-      console.log('Retrieved playlists for selected user', data.body);
-      res.send({ curatorPlaylists: data.body });
-    },
-    (err) => {
-      console.log('Something went wrong!', err);
-    }
-  );
-});
-
 app.get('/api/get-playlist', (req, res) => {
   spotify.getPlaylist('37i9dQZF1DX7Jl5KP2eZaS').then(
     (data) => {
       console.log('Some information about this playlist', data.body);
-      res.send({ playlist: data.body });
-    },
-    (err) => {
-      console.log('Something went wrong!', err);
-    }
-  );
-});
-
-app.post('/api/select-playlist', (req, res) => {
-  spotify.getPlaylist(req.body.post).then(
-    (data) => {
-      console.log('The selected playlist', data.body);
       res.send({ playlist: data.body });
     },
     (err) => {
@@ -174,6 +145,59 @@ app.get('/api/next-song', (req, res) => {
   );
 });
 
+app.get('/api/featured-playlists', (req, res) => {
+  spotify.getFeaturedPlaylists({ limit: 8 }).then(
+    (data) => {
+      console.log(data.body);
+      res.send({ featured: data.body });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
+app.get('/api/top-tracks', (req, res) => {
+  spotify.getMyTopTracks({ limit: 10 }).then(
+    (data) => {
+      console.log('Found top tracks', data.body);
+      res.send({ topTracks: data.body.items });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
+app.post('/api/set-access-token', (req, res) => {
+  spotify.setAccessToken(req.body.post);
+  res.send(`token: ${req.body.post} has been posted`);
+});
+
+app.post('/api/get-curator-playlists', (req, res) => {
+  spotify.getUserPlaylists(req.body.post).then(
+    (data) => {
+      console.log('Retrieved playlists for selected user', data.body);
+      res.send({ curatorPlaylists: data.body });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
+app.post('/api/select-playlist', (req, res) => {
+  spotify.getPlaylist(req.body.post).then(
+    (data) => {
+      console.log('The selected playlist', data.body);
+      res.send({ playlist: data.body });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 app.post('/api/play-song', (req, res) => {
   spotify.play({ uris: [`spotify:track:${req.body.post}`] }).then(
     (data) => {
@@ -215,30 +239,6 @@ app.post('/api/search-for-playlists', (req, res) => {
     (data) => {
       console.log('Found playlists are', data.body);
       res.send({ playlistSearchResults: data.body });
-    },
-    (err) => {
-      console.log('Something went wrong!', err);
-    }
-  );
-});
-
-app.get('/api/featured-playlists', (req, res) => {
-  spotify.getFeaturedPlaylists({ limit: 8 }).then(
-    (data) => {
-      console.log(data.body);
-      res.send({ featured: data.body });
-    },
-    (err) => {
-      console.log('Something went wrong!', err);
-    }
-  );
-});
-
-app.get('/api/top-tracks', (req, res) => {
-  spotify.getMyTopTracks({ limit: 10 }).then(
-    (data) => {
-      console.log('Found top tracks', data.body);
-      res.send({ topTracks: data.body.items });
     },
     (err) => {
       console.log('Something went wrong!', err);
