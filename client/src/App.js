@@ -18,9 +18,7 @@ import './App.css';
 
 const App = () => {
   const [loginURL, setLoginURL] = useState('');
-  const [{
-    token
-  }, dispatch] = useProviderValue();
+  const [{ token }, dispatch] = useProviderValue();
 
   // Retrieve user data upon authentication (initial render)
   useEffect(() => {
@@ -68,8 +66,6 @@ const App = () => {
         }).catch(err => console.log(err))
       }).catch(err => console.log(err))
 
-      
-
       // Get User Playlists and set user playlists in Context State.
       getUserPlaylists().then(res => {
         dispatch({
@@ -78,7 +74,7 @@ const App = () => {
         });
       }).catch(err => console.log(err))
 
-      // "On Repeat" playlist hard-coded for now
+      // Top tracks of 2020 playlist hard-coded for now
       getPlaylist().then(res => {
         dispatch({
           type: 'SET_CURR_PLAYLIST',

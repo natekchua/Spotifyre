@@ -64,8 +64,8 @@ function PlaylistView (props) {
               <p>{he.decode(playlist?.description)}</p>
               <br />
               <p>Created by <strong>{playlist?.owner.display_name}</strong></p>
-              <p><strong>{playlist?.tracks.total}</strong> {playlist?.tracks.total === 1 ? 'Song' : 'Songs'}</p>
-              <p><strong>{playlist?.followers.total}</strong> {playlist?.followers.total === 1 ? 'Follower' : 'Followers'}</p>
+              <p><strong>{playlist?.tracks?.total}</strong> {playlist?.tracks?.total === 1 ? 'Song' : 'Songs'}</p>
+              <p><strong>{playlist?.followers?.total}</strong> {playlist?.followers?.total === 1 ? 'Follower' : 'Followers'}</p>
               <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
             </div>
             <div className='back-button flex-basic p10' onClick={goToSearch}><SearchIcon /></div>

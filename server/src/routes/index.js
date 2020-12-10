@@ -65,7 +65,7 @@ app.post('/api/get-curator-playlists', (req, res) => {
 });
 
 app.get('/api/get-playlist', (req, res) => {
-  spotify.getPlaylist('37i9dQZF1EpmFBY9P2HI7S').then(
+  spotify.getPlaylist('37i9dQZF1DX7Jl5KP2eZaS').then(
     (data) => {
       console.log('Some information about this playlist', data.body);
       res.send({ playlist: data.body });

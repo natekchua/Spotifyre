@@ -84,7 +84,7 @@ function UserSuggestions () {
         <Droppable droppableId='songs'>
           {(provided, snapshot) => (
             <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
-              {!suggestionsList.length ? <h3 className='flex-basic m30'>No one has suggested songs to your playlist yet {ReactEmoji.emojify(':(')}</h3> : null}
+              {!suggestionsList.length ? <h3 className='flex-basic m30'>No one has suggested songs to this playlist yet&nbsp;{ReactEmoji.emojify(':(')}</h3> : null}
               {suggestionsList}
               {provided.placeholder}
             </ul>
@@ -95,4 +95,3 @@ function UserSuggestions () {
 }
 
 export default UserSuggestions;
-
