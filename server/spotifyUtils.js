@@ -9,7 +9,7 @@ require('dotenv').config();
 const ENDPOINT = 'https://accounts.spotify.com/authorize';
 
 // Client ID, Client Secret and Redirect URI of the Spotifyre app.
-const redirectURI = 'https://localhost:3000/';
+const redirectURI = 'http://spotifyre-manager.netlify.app/';
 const clientID = process.env.clientID;
 const clientSecret = process.env.clientSecret;
 
