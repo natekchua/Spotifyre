@@ -1,24 +1,5 @@
 // All API requests to the server.
-
-const apiGet = async (path) => {
-  const response = await fetch(path);
-  const body = await response.json();
-  if (response.status !== 200) throw Error(body.message);
-  
-  return body;
-}
-
-const apiPost = async (path, item) => {
-  const response = await fetch(path, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ post: item }),
-  });
-  const body = await response.text();
-  return body;
-}
+import { apiGet, apiPost } from './helperFunctions';
 
 export const getLoginURL = async () => {
   return apiGet('/api/authenticate');
@@ -38,6 +19,10 @@ export const getMe = async () => {
 
 export const getUserPlaylists = async () => {
   return apiGet('/api/get-user-playlists');
+}
+
+export const getCuratorPlaylists = async (params) => {
+  return apiPost('/api/get-curator-playlists', params);
 }
 
 export const getPlaylist = async () => {
@@ -76,6 +61,10 @@ export const playPlaylist = async (id) => {
   return apiPost('/api/play-playlist', id);
 };
 
+export const searchForSongs = async (query) => {
+  return apiPost('/api/search-for-songs', query);
+};
+
 export const searchForPlaylists = async (query) => {
   return apiPost('/api/search-for-playlists', query);
 };
@@ -86,4 +75,8 @@ export const getTopTracks = async () => {
 
 export const getFeaturedPlaylists = async () => {
   return apiGet('/api/featured-playlists');
+}
+
+export const addTrackToPlaylist = async (params) => {
+  return apiPost('/api/add-track-to-playlist', params);
 }

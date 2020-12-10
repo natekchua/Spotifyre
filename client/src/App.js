@@ -10,6 +10,7 @@ import {
   getPlaylist,
   getSpotify
 } from './services/apiRequests';
+import { getSettings } from './services/dbRequests';
 import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
 
@@ -17,9 +18,7 @@ import './App.css';
 
 const App = () => {
   const [loginURL, setLoginURL] = useState('');
-  const [{
-    token
-  }, dispatch] = useProviderValue();
+  const [{ token }, dispatch] = useProviderValue();
 
   // Retrieve user data upon authentication (initial render)
   useEffect(() => {
@@ -34,7 +33,7 @@ const App = () => {
       dispatch({
         type: 'SET_TOKEN',
         token: hash.access_token
-      })
+      });
 
       setAccessToken(hash.access_token);
 
@@ -43,7 +42,7 @@ const App = () => {
         dispatch({
           type: 'SET_SPOTIFY',
           spotify: res.spotify              
-        })
+        });
       })
       
       // Get User Account Details and set user in Context State.
@@ -52,6 +51,19 @@ const App = () => {
           type: 'SET_USER',
           user: res.me
         })
+        getSettings(res.me.id).then(res => {
+          if (res) {
+            const resultObj = JSON.parse(res).curator_settings;
+            dispatch({
+              type: 'SET_USER_SETTINGS',
+              userSettings: JSON.parse(resultObj)
+            });
+            dispatch({
+              type: 'CHECK_USER_SETTINGS',
+              settingsSetByUser: true
+            });
+          }
+        }).catch(err => console.log(err))
       }).catch(err => console.log(err))
 
       // Get User Playlists and set user playlists in Context State.
@@ -59,15 +71,15 @@ const App = () => {
         dispatch({
           type: 'SET_PLAYLISTS',
           playlists: res.playlists
-        })
+        });
       }).catch(err => console.log(err))
 
-      // "On Repeat" playlist hard-coded for now
+      // Top tracks of 2020 playlist hard-coded for now
       getPlaylist().then(res => {
         dispatch({
           type: 'SET_CURR_PLAYLIST',
           currPlaylist: res.playlist
-        })
+        });
       }).catch(err => console.log(err))
     }
   }, []);

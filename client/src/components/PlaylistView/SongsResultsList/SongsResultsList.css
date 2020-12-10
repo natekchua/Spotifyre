@@ -1,0 +1,12 @@
+.songs-query-results {
+  margin: 10px;
+}
+
+.songs-icons {
+  display: flex;
+  align-items: center;
+}
+
+.songs-icons > .MuiSvg-root {
+  margin-right: 20px;
+}

@@ -1,26 +1,34 @@
 export const initialState = {
   token: null,
+  notification: null,
   tab: 'Dashboard',
   spotify: null,
   user: null,
-  curationSettings: {
+  settingsSetByUser: false,
+  userSettings: {
     curatorMode: false,
     maxSuggestions: 100,
     suggestionsPerUser: 10
   },
+  userSuggestions: [],
+  curator: null,
+  settingsSetByCurator: false,
+  curatorSettings: {
+    curatorMode: false,
+    maxSuggestions: 100,
+    suggestionsPerUser: 10
+  },
+  curatorSuggestions: [],
   playlists: [],
   currPlaylist: null,
   curatorPlaylist: null,
-  isSearching: true,
-  searchQuery: null,
+  isPlaylistSearching: true,
+  playlistSearchQuery: null,
   playlistSearchResults: [],
+  isSongSearching: false,
+  songsSearchQuery: null,
+  songsSearchResults: [],
   songStatus: false,
   currSong: null,
-  dashboardPlaylistIDs: [
-    '37i9dQZF1EphOfEPXi5KfT',
-    '37i9dQZF1EM18g3xzTa0Pw',
-    '37i9dQZF1CApPEHPqCGz0p',
-    '37i9dQZF1EuIxSCUbcUAge'
-  ],
   recentSongs: null
 };

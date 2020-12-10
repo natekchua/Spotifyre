@@ -38,11 +38,11 @@ function Sidebar () {
         <img className='sidebar-logo' src={spotifyreLogo} alt='logo'/>
         <h1>Spotifyre</h1>
       </div>
-      <Link to={'/dashboard'}><TabOption optionName='Dashboard' Icon={DashboardIcon} /></Link>
-      <Link to={'/collaborate'}><TabOption optionName='Collaborate' Icon={PeopleIcon} /></Link>
-      <Link to={'/profile'}><TabOption optionName='Profile' Icon={FaceIcon} /></Link>
+      <Link to={'/dashboard'} className='option-link'><TabOption optionName='Dashboard' Icon={DashboardIcon} /></Link>
+      <Link to={'/collaborate'} className='option-link'><TabOption optionName='Collaborate' Icon={PeopleIcon} /></Link>
+      <Link to={'/profile'} className='option-link'><TabOption optionName='Profile' Icon={FaceIcon} /></Link>
       <br />
-      <strong className='sidebar-plist-title p10'>Playlists</strong>
+      <strong className='sidebar-plist-title p10'>My Playlists</strong>
       <hr />
       <div className='sidebar-playlists'>
         {playlistOptions}

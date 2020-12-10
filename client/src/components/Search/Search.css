@@ -13,6 +13,7 @@
   border-radius: 12px;
   width: fit-content;
   padding: 18px;
+  margin-left: 5px;
   cursor: pointer;
   transition: 0.2s linear;
 }
@@ -23,4 +24,18 @@
 
 .search-icon {
   cursor: pointer;
+}
+
+.song-search-back-button {
+  background: rgba(38, 1, 63, 0.63);
+  border-radius: 12px;
+  width: fit-content;
+  padding: 15px;
+  cursor: pointer;
+  transition: 0.15s linear;
+}
+
+.song-search-back-button:hover {
+  background: rgba(247, 0, 255, 0.664);
+  border-radius: 30px;
 }

@@ -8,6 +8,11 @@ const reducer = (state, action) => {
         ...state,
         token: action.token
       };
+    case 'SET_NOTIFICATION':
+      return {
+        ...state,
+        notification: action.notification
+      };
     case 'SET_TAB':
       return {
         ...state,
@@ -23,11 +28,41 @@ const reducer = (state, action) => {
         ...state,
         user: action.user
       };
-    case 'SET_CURATION_SETTINGS':
+    case 'CHECK_USER_SETTINGS':
       return {
         ...state,
-        curationSettings: action.curationSettings
+        settingsSetByUser: action.settingsSetByUser
       };
+    case 'SET_USER_SETTINGS':
+      return {
+        ...state,
+        userSettings: action.userSettings
+      };
+    case 'SET_USER_SUGGESTIONS':
+      return {
+        ...state,
+        userSuggestions: action.userSuggestions
+      };
+    case 'SET_CURATOR':
+      return {
+        ...state,
+        curator: action.curator
+      };
+    case 'CHECK_CURATOR_SETTINGS':
+      return {
+        ...state,
+        settingsSetByCurator: action.settingsSetByCurator
+      };
+    case 'SET_CURATOR_SETTINGS':
+      return {
+        ...state,
+        curatorSettings: action.curatorSettings
+      };
+    case 'SET_CURATOR_SUGGESTIONS':
+      return {
+        ...state,
+        curatorSuggestions: action.curatorSuggestions
+      };   
     case 'SET_PLAYLISTS':
       return {
         ...state,
@@ -43,20 +78,35 @@ const reducer = (state, action) => {
         ...state,
         curatorPlaylist: action.curatorPlaylist
       };
-    case 'SET_IS_SEARCHING':
+    case 'SET_IS_PLAYLIST_SEARCHING':
       return {
         ...state,
-        isSearching: action.isSearching
+        isPlaylistSearching: action.isPlaylistSearching
       };
-    case 'SET_SEARCH_QUERY':
+    case 'SET_PLAYLIST_SEARCH_QUERY':
       return {
         ...state,
-        searchQuery: action.searchQuery
+        playlistSearchQuery: action.playlistSearchQuery
       };
     case 'SET_PLAYLIST_SEARCH_RESULTS':
       return {
         ...state,
         playlistSearchResults: action.playlistSearchResults
+      };
+    case 'SET_IS_SONG_SEARCHING':
+      return {
+        ...state,
+        isSongSearching: action.isSongSearching
+      };
+    case 'SET_SONGS_SEARCH_QUERY':
+    return {
+      ...state,
+      songsSearchQuery: action.songsSearchQuery
+    };
+    case 'SET_SONGS_SEARCH_RESULTS':
+      return {
+        ...state,
+        songsSearchResults: action.songsSearchResults
       };
     case 'SET_SONG_STATUS':
       return {

@@ -1,17 +1,5 @@
 const { SQL } = require('../db/sql.js');
 
-const getType = async (userID) => {
-  const query = `SELECT user_type FROM spotifyre.user WHERE userid=${userID};`;
-
-  try {
-    const { row } = await SQL(query);
-    return row[0].user_type;
-  } catch (err) {
-    console.error(err);
-    return `Failed to get user_type: ${err.message}`;
-  }
-};
-
 const getAllCurators = async () => {
   const query = "SELECT * FROM spotifyre.user WHERE user_type = 'curator';";
 
@@ -48,8 +36,10 @@ const getPlaylistID = async (userID) => {
   }
 };
 
-const getSuggestions = async (playlistID) => {
-  const query = `SELECT songid, suggested_by_userid, playlist, count FROM spotifyre.playlists WHERE playlistid=${playlistID};`;
+// ****** SUGGESTIONS ****** //
+
+const getPlaylistSuggestions = async (playlistID) => {
+  const query = `SELECT * FROM spotifyre.suggestions WHERE "playlistid"='${playlistID}';`;
 
   try {
     const { rows } = await SQL(query);
@@ -60,14 +50,8 @@ const getSuggestions = async (playlistID) => {
   }
 };
 
-const addSongSuggestion = async (
-  playlistID,
-  songID,
-  suggestedByUserID,
-  playlist,
-  count
-) => {
-  const query = `INSERT INTO spotifyre.playlists VALUES (${songID}, ${playlistID}, ${suggestedByUserID}, ${playlist}, ${count});`;
+const addCuratorPlaylist = async (playlistID, ownerID) => {
+  const query = `INSERT INTO spotifyre.playlists VALUES ('${playlistID}', '${ownerID}');`;
 
   try {
     const { rows } = await SQL(query);
@@ -78,12 +62,37 @@ const addSongSuggestion = async (
   }
 };
 
-const removeSong = async (playlistID, songID) => {
-  const query = `DELETE FROM spotifyre.playlists WHERE playlistid=${playlistID} AND songid=${songID};`;
+const addSongSuggestion = async (params) => {
+  const { songInfo, playlistInfo, suggestedByUserInfo } = params;
+  const selectQuery = `select * from spotifyre.playlists where "playlistid" = '${playlistInfo.id}';`; // check if curator playlist exists
+  const insertQuery = `INSERT INTO spotifyre.suggestions
+   VALUES ('${songInfo.id}', '${playlistInfo.id}', '${suggestedByUserInfo.id}', '${playlistInfo.name}', 1,
+    '${songInfo.name}', '${songInfo.artist}', '${songInfo.albumArt}', '${suggestedByUserInfo.name}');`;
 
   try {
-    const { row } = await SQL(query);
-    return `Removed ${songID} from ${playlistID}`;
+    const { rows } = await SQL(selectQuery);
+    if (rows.length > 0) {
+      // playlist exists
+      const { rows } = await SQL(insertQuery);
+      return rows;
+    } else {
+      await addCuratorPlaylist(playlistInfo.id, playlistInfo.ownerID); // if it doesn't exist, add it into the DB
+      const { rows } = await SQL(insertQuery);
+      return rows;
+    }
+  } catch (err) {
+    console.error(err);
+    return `Failed to store song suggestion: ${err.message}`;
+  }
+};
+
+const removeSongSuggestion = async (params) => {
+  const { songID, playlistID } = params;
+  const query = `DELETE FROM spotifyre.suggestions WHERE "songid"='${songID}' AND "playlistid"='${playlistID}';`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows;
   } catch (err) {
     console.error(err);
     return `Failed to remove song: ${err.message}`;
@@ -114,14 +123,62 @@ const decreaseCount = async (playlistID) => {
   }
 };
 
+// ****** SETTINGS ****** //
+
+const getUserSettings = async (id) => {
+  const query = `SELECT "curator_settings" FROM spotifyre.user WHERE "userid" = '${id}'`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    return `Failed to get user settings: ${err.message}`;
+  }
+};
+
+const saveUserSettings = async (params) => {
+  const { user, newCurationSettings } = params;
+  const name = user.display_name.replace(/ /g, '');
+  const curationSettingsStr = JSON.stringify(newCurationSettings);
+
+  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings)
+      VALUES('${user.id}', '${name}', '${curationSettingsStr}');`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    return `Failed to save user settings: ${err.message}`;
+  }
+};
+
+const updateUserSettings = async (params) => {
+  const { user, newCurationSettings } = params;
+  const curationSettingsStr = JSON.stringify(newCurationSettings);
+
+  const query = `UPDATE spotifyre.user SET "curator_settings" = '${curationSettingsStr}' WHERE "userid" = '${user.id}';`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    return `Failed to update user settings: ${err.message}`;
+  }
+};
+
 module.exports = {
-  getType,
   getAllCurators,
   getAllPlaylists,
   getPlaylistID,
-  getSuggestions,
+  getPlaylistSuggestions,
   addSongSuggestion,
-  removeSong,
+  removeSongSuggestion,
   increaseCount,
   decreaseCount,
+  getUserSettings,
+  saveUserSettings,
+  updateUserSettings,
 };

@@ -1,0 +1,52 @@
+.suggestion-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99;
+  color: #fff;
+  border: solid rgba(133, 0, 133, 0.253);
+  border-width: 1px 0 1px 0;
+  width: 95%;
+}
+
+.suggestion-row > div > img {
+  height: 40px;
+  width: 40px;
+}
+
+.suggestion-row:hover {
+  cursor: pointer;
+  background-color: rgb(11, 0, 39);
+  opacity: 0.8;
+}
+
+.suggestion-info {
+  margin-left: 24px;
+}
+
+.suggestion-info > h1 {
+  font-size: 16px;
+  margin: 2px;
+}
+
+.reject-suggestion {
+  background: #1c045e;
+  border-radius: 8px;
+  margin: 3px;
+  padding: 8px;
+}
+
+.reject-suggestion:hover {
+  background: #390ead;
+}
+
+.accept-suggestion {
+  background: #017fd3;
+  border-radius: 8px;
+  margin: 3px;
+  padding: 8px;
+}
+
+.accept-suggestion:hover {
+  background: #57b4f1; 
+}

@@ -17,3 +17,10 @@
   color: #fff;
   background: linear-gradient(#552dc4, #1b0a35);
 }
+
+.notification {
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px;
+}

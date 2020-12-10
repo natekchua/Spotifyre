@@ -3,7 +3,7 @@
 }
 
 body {
-  background: linear-gradient(#552dc4, #1b0a35);
+  background: #1b0a35;
   margin: 0;
   font-family: 'Raleway', sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -74,4 +74,14 @@ h1, h2, h3 {
 
 .mr10 {
   margin-right: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.center-text {
+  text-align: center;
 }

@@ -41,7 +41,7 @@ app.get('/api/get-me', (req, res) => {
 });
 
 app.get('/api/get-user-playlists', (req, res) => {
-  spotify.getUserPlaylists().then(
+  spotify.getUserPlaylists({ limit: 50 }).then(
     (data) => {
       console.log('Retrieved playlists', data.body);
       res.send({ playlists: data.body });
@@ -52,8 +52,20 @@ app.get('/api/get-user-playlists', (req, res) => {
   );
 });
 
+app.post('/api/get-curator-playlists', (req, res) => {
+  spotify.getUserPlaylists(req.body.post).then(
+    (data) => {
+      console.log('Retrieved playlists for selected user', data.body);
+      res.send({ curatorPlaylists: data.body });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 app.get('/api/get-playlist', (req, res) => {
-  spotify.getPlaylist('37i9dQZF1EpmFBY9P2HI7S').then(
+  spotify.getPlaylist('37i9dQZF1DX7Jl5KP2eZaS').then(
     (data) => {
       console.log('Some information about this playlist', data.body);
       res.send({ playlist: data.body });
@@ -184,6 +196,18 @@ app.post('/api/play-playlist', (req, res) => {
   );
 });
 
+app.post('/api/search-for-songs', (req, res) => {
+  spotify.searchTracks(req.body.post, { limit: 50 }).then(
+    (data) => {
+      console.log('Found songs are', data.body);
+      res.send({ songsSearchResults: data.body });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
 app.post('/api/search-for-playlists', (req, res) => {
   spotify.searchPlaylists(req.body.post).then(
     (data) => {
@@ -197,7 +221,7 @@ app.post('/api/search-for-playlists', (req, res) => {
 });
 
 app.get('/api/featured-playlists', (req, res) => {
-  spotify.getFeaturedPlaylists({ limit: 4 }).then(
+  spotify.getFeaturedPlaylists({ limit: 8 }).then(
     (data) => {
       console.log(data.body);
       res.send({ featured: data.body });
@@ -209,9 +233,22 @@ app.get('/api/featured-playlists', (req, res) => {
 });
 
 app.get('/api/top-tracks', (req, res) => {
-  spotify.getMyTopTracks({ limit: 5 }).then(
+  spotify.getMyTopTracks({ limit: 10 }).then(
     (data) => {
       console.log('Found top tracks', data.body);
+      res.send({ topTracks: data.body.items });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
+});
+
+app.post('/api/add-track-to-playlist', (req, res) => {
+  const { playlistID, songID } = req.body.post;
+  spotify.addTracksToPlaylist(playlistID, [`spotify:track:${songID}`]).then(
+    (data) => {
+      console.log('Added track to playlist!');
       res.send({ topTracks: data.body.items });
     },
     (err) => {

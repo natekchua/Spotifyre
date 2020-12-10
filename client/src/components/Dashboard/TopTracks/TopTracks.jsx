@@ -15,31 +15,33 @@ function TopTracks () {
     getTopTracks().then(res => {
       setSongs(res.topTracks);
     }).catch(() => {
-      setError('Error: Problem fetching top tracks, spotify premium is required.')
+      setError('Error: Problem fetching top tracks.')
     })
   }, [])
 
-  const onPlaySong = async (id) => {
-    await playSong(id)
-    await wait(200)
-    getPlaybackState().then(res => {
-      dispatch({
-        type: 'SET_CURR_SONG',
-        songObj: res.song?.item
+  const onPlaySong = async (safeToPlay = true, id) => {
+    if (safeToPlay) {
+      await playSong(id)
+      await wait(200)
+      getPlaybackState().then(res => {
+        dispatch({
+          type: 'SET_CURR_SONG',
+          songObj: res.song?.item
+        })
+        dispatch({
+          type: 'SET_SONG_STATUS',
+          isPlaying: res.isPlaying
+        })
       })
-      dispatch({
-        type: 'SET_SONG_STATUS',
-        isPlaying: res.isPlaying
-      })
-    })
+    }
   }
 
   const songItems = songs?.map((s, idx) => <Song key={idx} song={s} onPlaySong={onPlaySong} />);
 
   return (
     <div>
-      <div className='songs-header'>
-        <h2>Your Top 5 Tracks</h2>
+      <div className='songs-header p20'>
+        <h2>Your Top 10 Tracks</h2>
       </div>
       <>{error ? error : songItems}</>
     </div>
