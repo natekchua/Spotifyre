@@ -22,7 +22,7 @@ export const getDuration = (ms) => {
 
 // Helpers for API requests.
 export const apiGet = async (path) => {
-  const response = await fetch(path);
+  const response = await fetch('https://spotifyre.herokuapp.com' + path);
   const body = await response.json();
   if (response.status !== 200) throw Error(body.message);
   
