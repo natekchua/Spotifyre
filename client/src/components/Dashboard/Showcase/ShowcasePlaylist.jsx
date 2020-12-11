@@ -7,10 +7,14 @@ import './ShowcasePlaylist.css';
 
 function ShowcasePlaylist (props) {
   const { playlist } = props
-  const [{ }, dispatch] = useProviderValue();
+  const [{ user }, dispatch] = useProviderValue();
 
   const onSelectPlaylist = (id) => {
-    selectPlaylist(id).then(res => {
+    const params = {
+      playlistID: id,
+      userID: user.id
+    };
+    selectPlaylist(params).then(res => {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
         currPlaylist: JSON.parse(res).playlist

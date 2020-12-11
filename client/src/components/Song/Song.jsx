@@ -67,6 +67,7 @@ function Song (props) {
         name: user.display_name.replace(/'/g, '')
       }
     };
+
     // TODO: check current entries with curator Settings to see if they satisfy conditions before posting API request.
     if (curator.id !== user.id) {
       suggestSongToPlaylist(params).then(() => {

@@ -15,7 +15,7 @@ const breakPoints = [
 ];
 
 function Dashboard () {
-  const [{  }, dispatch] = useProviderValue();
+  const [{ user }, dispatch] = useProviderValue();
   const [featuredPlaylists, setFeaturedPlaylists] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function Dashboard () {
       tab: 'Dashboard'
     });
 
-    getFeaturedPlaylists().then(res => {
+    getFeaturedPlaylists(user.id).then(res => {
       setFeaturedPlaylists(res.featured.playlists.items);
     })
   }, [])

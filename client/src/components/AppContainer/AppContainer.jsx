@@ -12,7 +12,7 @@ import Header from '../Header/Header';
 import './AppContainer.css';
 
 function AppContainer (props) {
-  const [{ notification }, dispatch] = useProviderValue();
+  const [{ notification, user }, dispatch] = useProviderValue();
 
   const closeNotification = () => {
     dispatch({
@@ -23,28 +23,33 @@ function AppContainer (props) {
 
   return (
     <div className='AppContainer-container'>
-       { notification
-          ? <Alert
-              className='notification'
-              showIcon
-              onClose={closeNotification}
-              message={notification.message} 
-              type={notification.type}
-              closable
-            />
-          : null 
-        } 
-      <div className='AppContainer'>
-        <Sidebar />
-        <div className='Content-container'>
-          <Header />
-          { props.token ? <Redirect to='/dashboard' /> : null }
-          <Route path='/dashboard' render={() => <Dashboard />} />
-          <Route path='/collaborate' render={() => <Collaborate />} />
-          <Route path='/profile' render={() => <Profile />} />
-        </div>
-      </div>
-      <Footer />
+      { notification
+        ? <Alert
+            className='notification'
+            showIcon
+            onClose={closeNotification}
+            message={notification.message} 
+            type={notification.type}
+            closable
+          />
+        : null 
+      }
+      { user
+        ? <>
+          <div className='AppContainer'>
+            <Sidebar />
+            <div className='Content-container'>
+              <Header />
+              { props.token ? <Redirect to='/dashboard' /> : null }
+              <Route path='/dashboard' render={() => <Dashboard />} />
+              <Route path='/collaborate' render={() => <Collaborate />} />
+              <Route path='/profile' render={() => <Profile />} />
+            </div>
+          </div>
+          <Footer />
+          </>
+        : null
+      }
     </div>
   );
 }

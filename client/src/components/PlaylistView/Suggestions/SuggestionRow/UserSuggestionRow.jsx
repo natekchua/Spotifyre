@@ -42,7 +42,8 @@ function UserSuggestionRow (props) {
     console.log('accept suggestion');
     const params = {
       songID: suggestion?.songid,
-      playlistID: suggestion?.playlistid
+      playlistID: suggestion?.playlistid,
+      userID: user.id
     };
     try {
       await addTrackToPlaylist(params);

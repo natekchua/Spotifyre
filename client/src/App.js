@@ -4,11 +4,9 @@ import { useProviderValue } from './components/ContextState/Provider';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { 
   getLoginURL,
-  setAccessToken,
   getMe,
   getUserPlaylists,
-  getPlaylist,
-  getSpotify
+  getPlaylist
 } from './services/apiRequests';
 import { getSettings } from './services/dbRequests';
 import Login from './components/Login/Login';
@@ -35,24 +33,16 @@ const App = () => {
         token: hash.access_token
       });
 
-      setAccessToken(hash.access_token);
-
-      // Save spotify instance in Context State.
-      getSpotify().then(res => {
-        dispatch({
-          type: 'SET_SPOTIFY',
-          spotify: res.spotify              
-        });
-      })
-      
       // Get User Account Details and set user in Context State.
-      getMe().then(res => {
+      getMe(hash.access_token).then(res => {
+        const me = JSON.parse(res).me;
         dispatch({
           type: 'SET_USER',
-          user: res.me
+          user: me
         })
-        getSettings(res.me.id).then(res => {
-          if (res) {
+
+        getSettings(me.id).then(res => {
+          if (JSON.parse(JSON.parse(res).curator_settings)) {
             const resultObj = JSON.parse(res).curator_settings;
             dispatch({
               type: 'SET_USER_SETTINGS',
@@ -63,26 +53,38 @@ const App = () => {
               settingsSetByUser: true
             });
           }
-        }).catch(err => console.log(err))
-      }).catch(err => console.log(err))
+        }).catch(err => errorHandler(err));
 
-      // Get User Playlists and set user playlists in Context State.
-      getUserPlaylists().then(res => {
-        dispatch({
-          type: 'SET_PLAYLISTS',
-          playlists: res.playlists
-        });
-      }).catch(err => console.log(err))
+        // Get User Playlists and set user playlists in Context State.
+        getUserPlaylists(me.id).then(res => {
+          dispatch({
+            type: 'SET_PLAYLISTS',
+            playlists: res.playlists
+          });
+        }).catch(err => errorHandler(err));
+  
+        // Top tracks of 2020 playlist hard-coded for now
+        getPlaylist(me.id).then(res => {
+          dispatch({
+            type: 'SET_CURR_PLAYLIST',
+            currPlaylist: res.playlist
+          });
+        }).catch(err => errorHandler(err));
 
-      // Top tracks of 2020 playlist hard-coded for now
-      getPlaylist().then(res => {
-        dispatch({
-          type: 'SET_CURR_PLAYLIST',
-          currPlaylist: res.playlist
-        });
-      }).catch(err => console.log(err))
+      }).catch(err => errorHandler(err));
+
     }
   }, []);
+
+  const errorHandler = (err) => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification: {
+        message: `Oops! ${err}`,
+        type: 'error'
+      }
+    });
+  }
 
   return (
     <Router>

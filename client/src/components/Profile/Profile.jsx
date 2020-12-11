@@ -49,37 +49,20 @@ function Profile () {
     };
 
     const params = { user, newCurationSettings };
-    if (!settingsSetByUser) {
-      saveCurationSettings(params).then(res => {
-        console.log(res)
-        dispatch({
-          type: 'SET_USER_SETTINGS',
-          userSettings: newCurationSettings
-        });
-        dispatch({
-          type: 'SET_NOTIFICATION',
-          notification: {
-            message: 'Settings successfully saved.',
-            type: 'success'
-          }
-        });       
-      }).catch(err => errorHandler(err));
-    } else {
-      updateCurationSettings(params).then(res => {
-        console.log(res)
-        dispatch({
-          type: 'SET_USER_SETTINGS',
-          userSettings: newCurationSettings
-        });
-        dispatch({
-          type: 'SET_NOTIFICATION',
-          notification: {
-            message: 'Settings successfully updated.',
-            type: 'success'
-          }
-        });
-      }).catch(err => errorHandler(err));
-    }
+    updateCurationSettings(params).then(res => {
+      console.log(res)
+      dispatch({
+        type: 'SET_USER_SETTINGS',
+        userSettings: newCurationSettings
+      });
+      dispatch({
+        type: 'SET_NOTIFICATION',
+        notification: {
+          message: 'Settings successfully updated.',
+          type: 'success'
+        }
+      });
+    }).catch(err => errorHandler(err));
   }
 
   const toggleCuratorMode = () => {

@@ -20,7 +20,8 @@ function CuratorPlaylistView (props) {
   const [{ 
     playlistSearchResults,
     isPlaylistSearching,
-    curator
+    curator,
+    user
   }, dispatch] = useProviderValue();
   const [curatorPlaylists, setCuratorPlaylists] = useState([]);
 
@@ -40,9 +41,13 @@ function CuratorPlaylistView (props) {
   }
 
   const onPlayPlaylist = async () => {
-    await playPlaylist(playlist.id);
+    const params = {
+      playlistID: playlist.id,
+      userID: user.id
+    }
+    await playPlaylist(params);
     await wait(200);
-    getPlaybackState().then(res => {
+    getPlaybackState(user.id).then(res => {
       dispatch({
         type: 'SET_CURR_SONG',
         songObj: res.song?.item
@@ -55,7 +60,11 @@ function CuratorPlaylistView (props) {
   };
 
   const seeCuratorsPlaylists = async () => {
-    getCuratorPlaylists(curator.id).then(res => {
+    const params = {
+      curatorID: curator.id,
+      userID: user.id
+    };
+    getCuratorPlaylists(params).then(res => {
       setCuratorPlaylists(JSON.parse(res).curatorPlaylists)
     })      
   }

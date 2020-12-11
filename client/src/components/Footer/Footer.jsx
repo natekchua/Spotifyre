@@ -12,11 +12,12 @@ import './Footer.css';
 function Footer () {
   const [{
     currSong,
-    songStatus
+    songStatus,
+    user
   }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    getPlaybackState().then(res => {
+    getPlaybackState(user.id).then(res => {
         dispatch({
         type: 'SET_CURR_SONG',
         songObj: res.song?.item

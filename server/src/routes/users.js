@@ -106,20 +106,6 @@ app.post('/get-settings', (req, res) => {
     });
 });
 
-app.post('/save-settings', (req, res) => {
-  action
-    .saveUserSettings(req.body.post)
-    .then((rtn) => {
-      console.log('saved settings');
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
 app.post('/update-settings', (req, res) => {
   action
     .updateUserSettings(req.body.post)

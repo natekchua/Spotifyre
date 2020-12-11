@@ -9,10 +9,14 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import './Search.css';
 
 function SongSearch ({ query }) {
-  const [{ }, dispatch] = useProviderValue();
+  const [{ user }, dispatch] = useProviderValue();
 
   const sendQuery = (q) => {
-    searchForSongs(q.target.value).then(res => {
+    const params = {
+      query: q.target.value,
+      userID: user.id
+    };
+    searchForSongs(params).then(res => {
       dispatch({
         type: 'SET_SONGS_SEARCH_QUERY',
         songsSearchQuery: q.target.value

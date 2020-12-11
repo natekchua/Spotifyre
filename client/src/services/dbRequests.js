@@ -1,12 +1,8 @@
 // All api requests involving the Postgres database.
-import { apiGet, apiPost } from './helperFunctions';
+import { apiPost } from './helperFunctions';
 
 export const getSettings = async (id) => {
   return apiPost('/users/get-settings', id);
-}
-
-export const saveCurationSettings = async (params) => {
-  return apiPost('/users/save-settings', params);
 }
 
 export const updateCurationSettings = async (params) => {
