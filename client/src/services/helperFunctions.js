@@ -30,7 +30,7 @@ export const apiGet = async (path) => {
 }
 
 export const apiPost = async (path, item) => {
-  const response = await fetch(path, {
+  const response = await fetch('https://spotifyre.herokuapp.com' + path, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
