@@ -13,15 +13,15 @@ function UserSuggestionRow (props) {
     currPlaylist
   }, dispatch] = useProviderValue();
   const { suggestion, onPlaySong } = props
-  const [safeToPlay, setSafeToPlay] = useState(false);
+  const [safeToPlay, setSafeToPlay] = useState(true);
 
   const rejectSuggestion = () => {
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid
     };
+    setSafeToPlay(false);
     removeSuggestionFromPlaylist(params).then(res => {
-      console.log(res)
       getSuggestionsForPlaylist(currPlaylist.id).then(res => {
         dispatch({
           type: 'SET_USER_SUGGESTIONS',
@@ -45,10 +45,10 @@ function UserSuggestionRow (props) {
       playlistID: suggestion?.playlistid,
       userID: user.id
     };
+    setSafeToPlay(false);
     try {
       await addTrackToPlaylist(params);
       removeSuggestionFromPlaylist(params).then(res => {
-        console.log(res)
         getSuggestionsForPlaylist(currPlaylist.id).then(res => {
           dispatch({
             type: 'SET_USER_SUGGESTIONS',
@@ -63,7 +63,6 @@ function UserSuggestionRow (props) {
           });
         }).catch(err => errorHandler(err));
       }).catch(err => errorHandler(err));
-      setSafeToPlay(true);
     } catch (err) {
       errorHandler(err);
     }

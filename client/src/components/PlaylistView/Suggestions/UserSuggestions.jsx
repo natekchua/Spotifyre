@@ -9,6 +9,7 @@ import {
 } from '../../../services/apiRequests';
 import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
 import { wait } from '../../../services/helperFunctions';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 import './Suggestions.css';
 
@@ -32,17 +33,11 @@ function UserSuggestions () {
   useEffect(() => {
     // get suggestions from DB if playlist suggestion isn't loaded or new playlist suggestions are generated.
     if (!userSuggestions?.length || userSuggestions[0]?.playlistid !== currPlaylist?.id) { 
-      getSuggestionsForPlaylist(currPlaylist.id).then(res => {
-        console.log(res)
-        dispatch({
-          type: 'SET_USER_SUGGESTIONS',
-          userSuggestions: JSON.parse(res)
-        })
-      }) 
+      refreshSuggestions();
     }
   }, [])
   
-  const onPlaySong = async (safeToPlay, id) => {
+  const onPlaySong = async (safeToPlay = false, id) => {
     if (safeToPlay) {
       const params = {
         songID: id,
@@ -61,6 +56,16 @@ function UserSuggestions () {
         });
       })
     }
+  }
+
+  const refreshSuggestions = () => {
+    getSuggestionsForPlaylist(currPlaylist.id).then(res => {
+      console.log(res)
+      dispatch({
+        type: 'SET_USER_SUGGESTIONS',
+        userSuggestions: JSON.parse(res)
+      })
+    }) 
   }
 
   const suggestionsList = userSuggestions?.map((s, idx) => {
@@ -86,15 +91,16 @@ function UserSuggestions () {
         <p>Suggestion Details</p>
         <p style={{ marginRight: '85px' }}>Suggested By</p>
       </div>
-        <Droppable droppableId='songs'>
-          {(provided, snapshot) => (
-            <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
-              {!suggestionsList.length ? <h3 className='flex-basic m30'>No one has suggested songs to this playlist yet&nbsp;{ReactEmoji.emojify(':(')}</h3> : null}
-              {suggestionsList}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>  
+      <RefreshIcon  className='refresh-icon' onClick={refreshSuggestions} /> 
+      <Droppable droppableId='songs'>
+        {(provided, snapshot) => (
+          <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
+            {!suggestionsList.length ? <h3 className='flex-basic m30'>No one has suggested songs to this playlist yet&nbsp;{ReactEmoji.emojify(':(')}</h3> : null}
+            {suggestionsList}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>  
     </div>
   );
 }

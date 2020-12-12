@@ -108,7 +108,7 @@ function Song (props) {
         </div>
       </div>
       <p className='p5'>{getDuration(song?.duration_ms)}</p>
-      { curatorPlaylist && !curatorView && tab === 'Collaborate' && settingsSetByCurator
+      { curatorPlaylist?.name && !curatorView && tab === 'Collaborate' && settingsSetByCurator
         ? <Menu     
             keepMounted
             open={state.mouseY !== null}

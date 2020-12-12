@@ -8,6 +8,7 @@ import {
 } from '../../../services/apiRequests';
 import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
 import { wait } from '../../../services/helperFunctions';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 import './Suggestions.css';
 
@@ -31,13 +32,7 @@ function CuratorSuggestions () {
   useEffect(() => {
     // get suggestions from DB if playlist suggestion isn't loaded or new playlist suggestions are generated.
     if (!curatorSuggestions?.length || curatorSuggestions[0]?.playlistid !== curatorPlaylist?.id) { 
-      getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
-        console.log(res)
-        dispatch({
-          type: 'SET_CURATOR_SUGGESTIONS',
-          curatorSuggestions: JSON.parse(res)
-        })
-      }) 
+      refreshSuggestions();
     }
   }, [])
   
@@ -60,6 +55,16 @@ function CuratorSuggestions () {
         });
       })
     }
+  }
+
+  const refreshSuggestions = async () => {
+    getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
+      console.log(res)
+      dispatch({
+        type: 'SET_CURATOR_SUGGESTIONS',
+        curatorSuggestions: JSON.parse(res)
+      })
+    }) 
   }
 
   const suggestionsList = curatorSuggestions?.map((s, idx) => {
@@ -85,15 +90,16 @@ function CuratorSuggestions () {
         <p>Suggestion Details</p>
         <p>Suggested By</p>
       </div>
-        <Droppable droppableId='songs'>
-          {(provided, snapshot) => (
-            <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
-              {!suggestionsList.length ? <h3 className='flex-basic m30'>Add your suggestions here!</h3> : null}
-              {suggestionsList}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>  
+      <RefreshIcon className='refresh-icon' onClick={refreshSuggestions} /> 
+      <Droppable droppableId='songs'>
+        {(provided, snapshot) => (
+          <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
+            {!suggestionsList.length ? <h3 className='flex-basic m30'>Add your suggestions here!</h3> : null}
+            {suggestionsList}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>  
     </div>
   );
 }
