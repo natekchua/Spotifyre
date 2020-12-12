@@ -97,7 +97,7 @@ function Song (props) {
   }
 
   return (
-    <div className='flex-basic song-row p20' onClick={() => onPlaySong(safeToPlay, song.id)} onContextMenu={onRightClick}>
+    <div className='flex-basic song-row' onClick={() => onPlaySong(safeToPlay, song.id)} onContextMenu={onRightClick}>
       <div className='flex-basic'>
         <img src={song?.album.images[0]?.url} alt='song' />
         <div className='song-info'>
