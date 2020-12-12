@@ -4,7 +4,7 @@
   justify-content: space-between;
   bottom: 0;
   padding: 24px;
-  height: 75px;
+  height: 125px;
   width: 100%;
   background-color: #2d184e;
 }
@@ -19,9 +19,8 @@
 }
 
 .album-desc > img {
-  height: 100%;
-  width: 100px;
-  object-fit: contain;
+  height: 80px;
+  width: 80px;
 }
 
 .song-info > h4 {
@@ -48,7 +47,7 @@
   align-items: center;
   justify-content: space-between;
   flex: 0.4;
-  max-width: 300px;
+  max-width: 400px;
   padding: 0 100px;
   color: #e8d3ee;
 }
@@ -65,4 +64,71 @@
 #volume {
   width: 60%;
   color: #cc00cc;
+}
+
+/* Responsive Media Queries */
+
+@media only screen and (min-width: 1024px) {
+
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+  .footer {
+    padding: 10px;
+    height: 70px;
+    width: 100%;
+    background-color: #2d184e;
+  }
+  
+  .album-desc {
+    width: 400px;
+  }
+  
+  .album-desc > img {
+    height: 100%;
+    width: 50px;
+  }
+  
+  .song-info > h4 {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+  
+  .song-info > p {
+    font-size: 10px;
+  }
+  
+  .outer-control-icon {
+    display: none;
+  }
+  
+  .playback-control {
+    justify-content: space-around;
+    max-width: 300px;
+    padding: 5px;
+  }
+  
+  .volume-control {
+    display: none;
+  }
+  
+  #volume {
+    display: none;
+  }
+}
+
+/* Larger Phones and Tablets (Landscape) */
+@media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
+
+}
+
+/* XS / Smaller Phones (Landscape) */
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
+
 }

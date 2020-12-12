@@ -7,6 +7,7 @@
   border: solid rgba(133, 0, 133, 0.253);
   border-width: 1px 0 1px 0;
   width: 95%;
+  padding: 20px;
 }
 
 .song-row > div > img {
@@ -25,6 +26,78 @@
 }
 
 .song-info > h1 {
-  font-size: 16px;
+  font-size: 11px;
   margin: 2px;
+}
+
+/* Responsive Media Queries */
+
+@media only screen and (min-width: 1024px) {
+
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 360px) and (max-width: 767px) {
+  .songs-header h2 {
+    font-size: 16px;
+  }
+  .song-row {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .song-row > div > img {
+    height: 20px;
+    width: 20px;
+  }
+  
+  .song-row:hover {
+    cursor: pointer;
+    background-color: rgb(11, 0, 39);
+    opacity: 0.8;
+  }
+  
+  .song-info {
+    margin-left: 8px;
+  }
+}
+
+@media only screen and (min-width: 280px) and (max-width: 359px) {
+  .songs-header h2 {
+    font-size: 12px;
+  }
+  .song-row {
+    width: 95%;
+    padding: 4px;
+  }
+
+  .song-row > div > img {
+    height: 10px;
+    width: 10px;
+  }
+  
+  .song-row:hover {
+    cursor: pointer;
+    background-color: rgb(11, 0, 39);
+    opacity: 0.8;
+  }
+  
+  .song-info {
+    margin-left: 3px;
+  }
+}
+
+/* Larger Phones and Tablets (Landscape) */
+@media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
+
+}
+
+/* XS / Smaller Phones (Landscape) */
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
+
 }

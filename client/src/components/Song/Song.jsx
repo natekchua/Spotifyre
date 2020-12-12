@@ -17,7 +17,6 @@ function Song (props) {
     tab,
     user,
     curator,
-    curatorSettings,
     curatorPlaylist,
     settingsSetByCurator
   }, dispatch] = useProviderValue();
