@@ -125,6 +125,33 @@ const decreaseCount = async (playlistID) => {
 
 // ****** SETTINGS ****** //
 
+const setTokens = async (data, user) => {
+  const { access_token, refresh_token } = data;
+  const selectQuery = `SELECT COUNT(*) FROM spotifyre.user WHERE "userid" = '${user.id}';`;
+  const updateQuery = `UPDATE spotifyre.user SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}'
+    WHERE "userid" = '${user.id}';`;
+  try {
+    const { rows } = await SQL(selectQuery);
+    if (Number(rows[0].count) <= 0) {
+      // user does not exist
+      const params = {
+        userID: user.id,
+        name: user.display_name,
+        curatorSettings: null,
+        accessToken: access_token,
+        refreshToken: refresh_token,
+      };
+      await addUser(params);
+    } else {
+      const { rows } = await SQL(updateQuery);
+      return rows[0];
+    }
+  } catch (err) {
+    console.error(err);
+    return `Failed to set user tokens: ${err.message}`;
+  }
+};
+
 const getUserToken = async (id) => {
   const query = `SELECT "access_token" FROM spotifyre.user WHERE "userid" = '${id}'`;
 
@@ -150,9 +177,9 @@ const getUser = async (id) => {
 };
 
 const addUser = async (params) => {
-  const { userID, name, curatorSettings, accessToken } = params;
-  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings, access_token)
-  VALUES('${userID}', '${name}', '${curatorSettings}', '${accessToken}');`;
+  const { userID, name, curatorSettings, accessToken, refreshToken } = params;
+  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings, access_token, refresh_token)
+  VALUES('${userID}', '${name}', '${curatorSettings}', '${accessToken}', '${refreshToken}');`;
 
   try {
     const { rows } = await SQL(query);
@@ -200,6 +227,7 @@ module.exports = {
   removeSongSuggestion,
   increaseCount,
   decreaseCount,
+  setTokens,
   getUserToken,
   getUser,
   addUser,

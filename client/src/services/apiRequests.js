@@ -1,9 +1,13 @@
 // All API requests to the server.
 import { apiGet, apiPost } from './helperFunctions';
 
-export const getLoginURL = async () => {
-  return apiGet('/api/authenticate');
+export const getAuthURL = async () => {
+  return apiGet('/api/authorize');
 };
+
+export const getToken = async (code) => {
+  return apiPost(`/api/handle-token`, code);
+}
 
 export const getMe = async (token) => {
   return apiPost('/api/get-me', token);

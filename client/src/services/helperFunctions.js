@@ -13,6 +13,11 @@ export const getResponseToken = () => {
   }, {})
 }
 
+// Parse the authorization code from the URL
+export const getCode = () => {
+  return window.location.href.split('=')[1].split('&')[0];
+}
+
 // https://stackoverflow.com/questions/21294302/converting-milliseconds-to-minutes-and-seconds-with-javascript
 export const getDuration = (ms) => {
   const mins = Math.floor(ms / 60000);

@@ -3,9 +3,10 @@ const bodyParser = require('body-parser');
 const spotifyUtils = require('../../spotifyUtils.js');
 const actions = require('../actions/actions.js');
 const SpotifyWebApi = require('spotify-web-api-node');
+const permissions = require('../../permissions.js');
 const app = express.Router();
 
-const { loginURL } = spotifyUtils;
+const { spotify } = spotifyUtils;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,8 +15,38 @@ app.get('/', (req, res) => {
   res.send({ express: 'Welcome to Spotifyre!' });
 });
 
-app.get('/api/authenticate', (req, res) => {
-  res.send({ loginURL: loginURL });
+app.get('/api/authorize', async (req, res) => {
+  const authorizeURL = await spotify.createAuthorizeURL(
+    permissions,
+    null,
+    true
+  );
+  console.log('authorize URL: ', authorizeURL);
+  res.send({ loginURL: authorizeURL });
+});
+
+app.post('/api/handle-token', (req, res) => {
+  spotify.authorizationCodeGrant(req.body.post).then(
+    async (data) => {
+      console.log('The token expires in ' + data.body['expires_in']);
+      console.log('The access token is ' + data.body['access_token']);
+      console.log('The refresh token is ' + data.body['refresh_token']);
+
+      // Set the access token on the API object to use it in later calls
+      spotify.setAccessToken(data.body['access_token']);
+      spotify.setRefreshToken(data.body['refresh_token']);
+      const user = await spotify.getMe();
+      await actions.setTokens(data.body, user.body);
+      const tokens = {
+        accessToken: data.body['access_token'],
+        refreshToken: data.body['refresh_token'],
+      };
+      res.send({ tokens });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
 });
 
 app.post('/api/get-me', (req, res) => {
@@ -23,16 +54,6 @@ app.post('/api/get-me', (req, res) => {
   loggedInSpotify.setAccessToken(req.body.post);
   loggedInSpotify.getMe().then(
     async (data) => {
-      const userExists = await actions.getUser(data.body.id);
-      if (!userExists) {
-        const params = {
-          userID: data.body.id,
-          name: data.body.display_name,
-          curatorSettings: null,
-          accessToken: req.body.post,
-        };
-        await actions.addUser(params);
-      }
       console.log('Some information about the authenticated user', data.body);
       res.send({ me: data.body });
     },
