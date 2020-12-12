@@ -8,10 +8,14 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import './Search.css';
 
 function PlaylistSearch ({ query }) {
-  const [{ }, dispatch] = useProviderValue();
+  const [{ user }, dispatch] = useProviderValue();
 
   const sendQuery = (q) => {
-    searchForPlaylists(q.target.value).then(res => {
+    const params = {
+      query: q.target.value,
+      userID: user.id
+    };
+    searchForPlaylists(params).then(res => {
       dispatch({
         type: 'SET_PLAYLIST_SEARCH_QUERY',
         playlistSearchQuery: q.target.value

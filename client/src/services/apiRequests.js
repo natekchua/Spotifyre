@@ -1,80 +1,76 @@
 // All API requests to the server.
 import { apiGet, apiPost } from './helperFunctions';
 
-export const getLoginURL = async () => {
-  return apiGet('/api/authenticate');
+export const getAuthURL = async () => {
+  return apiGet('/api/authorize');
 };
 
-export const setAccessToken = async (token) => {
-  return apiPost('/api/set-access-token', token);
+export const getToken = async (code) => {
+  return apiPost(`/api/handle-token`, code);
+}
+
+export const getMe = async (token) => {
+  return apiPost('/api/get-me', token);
 };
 
-export const getSpotify = async () => {
-  return apiGet('/api/get-spotify');
-};
-
-export const getMe = async () => {
-  return apiGet('/api/get-me');
-};
-
-export const getUserPlaylists = async () => {
-  return apiGet('/api/get-user-playlists');
+export const getUserPlaylists = async (userID) => {
+  return apiGet(`/api/get-user-playlists/${userID}`);
 }
 
 export const getCuratorPlaylists = async (params) => {
   return apiPost('/api/get-curator-playlists', params);
 }
 
-export const getPlaylist = async () => {
-  return apiGet('/api/get-playlist');
-}
+export const getPlaylist = async (userID) => {
+  return apiGet(`/api/get-playlist/${userID}`);
+};
 
 export const selectPlaylist = async (id) => {
   return apiPost('/api/select-playlist', id);
 }
 
-export const getPlaybackState = async () => {
-  return apiGet('/api/get-playback-state');
+export const getPlaybackState = async (userID) => {
+  return apiGet(`/api/get-playback-state/${userID}`);
 }
 
-export const play = async () => {
-  return apiGet('/api/play');
+export const play = async (userID) => {
+  return apiGet(`/api/play/${userID}`);
 };
 
-export const pause = async () => {
-  return apiGet('/api/pause');
+export const pause = async (userID) => {
+  return apiGet(`/api/pause/${userID}`);
 };
 
-export const goPrevious = async () => {
-  return apiGet('/api/previous-song');
+export const goPrevious = async (userID) => {
+  return apiGet(`/api/previous-song/${userID}`);
 };
 
-export const goNext = async () => {
-  return apiGet('/api/next-song');
+export const goNext = async (userID) => {
+  return apiGet(`/api/next-song/${userID}`);
 };
 
 export const playSong = async (id) => {
   return apiPost('/api/play-song', id);
 };
 
-export const playPlaylist = async (id) => {
-  return apiPost('/api/play-playlist', id);
+export const playPlaylist = async (params) => {
+  return apiPost('/api/play-playlist', params);
 };
 
-export const searchForSongs = async (query) => {
-  return apiPost('/api/search-for-songs', query);
+export const searchForSongs = async (params) => {
+  return apiPost('/api/search-for-songs', params);
 };
 
-export const searchForPlaylists = async (query) => {
-  return apiPost('/api/search-for-playlists', query);
+export const searchForPlaylists = async (params) => {
+  return apiPost("/api/search-for-playlists", params);
 };
 
-export const getTopTracks = async () => {
-  return apiGet('/api/top-tracks');
+export const getTopTracks = async (userID) => {
+  return apiGet(`/api/top-tracks/${userID}`);
 }
 
-export const getFeaturedPlaylists = async () => {
-  return apiGet('/api/featured-playlists');
+export const getFeaturedPlaylists = async (userID) => {
+  return apiGet(`/api/featured-playlists/${userID}`);
 }
 
 export const addTrackToPlaylist = async (params) => {

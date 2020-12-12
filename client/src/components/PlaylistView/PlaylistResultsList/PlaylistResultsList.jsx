@@ -10,11 +10,16 @@ function PlaylistResultsList (props) {
   const [{ 
     playlistSearchQuery,
     isPlaylistSearching,
-    curator
+    curator,
+    user
   }, dispatch] = useProviderValue();
 
   const onSelectPlaylist = (id) => {
-    selectPlaylist(id).then(res => {
+    const params = {
+      playlistID: id,
+      userID: user.id
+    };
+    selectPlaylist(params).then(res => {
       dispatch({
         type: 'SET_CURATOR_PLAYLIST',
         curatorPlaylist: JSON.parse(res).playlist

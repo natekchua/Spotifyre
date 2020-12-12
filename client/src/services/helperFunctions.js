@@ -13,6 +13,11 @@ export const getResponseToken = () => {
   }, {})
 }
 
+// Parse the authorization code from the URL
+export const getCode = () => {
+  return window.location.href.split('=')[1].split('&')[0];
+}
+
 // https://stackoverflow.com/questions/21294302/converting-milliseconds-to-minutes-and-seconds-with-javascript
 export const getDuration = (ms) => {
   const mins = Math.floor(ms / 60000);
@@ -23,6 +28,7 @@ export const getDuration = (ms) => {
 // Helpers for API requests.
 export const apiGet = async (path) => {
   const response = await fetch('https://spotifyre.herokuapp.com' + path);
+  // const response = await fetch(path);   // uncomment for local dev environment
   const body = await response.json();
   if (response.status !== 200) throw Error(body.message);
   
@@ -31,6 +37,7 @@ export const apiGet = async (path) => {
 
 export const apiPost = async (path, item) => {
   const response = await fetch('https://spotifyre.herokuapp.com' + path, {
+  // const response = await fetch(path, {    // uncomment for local dev environment
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

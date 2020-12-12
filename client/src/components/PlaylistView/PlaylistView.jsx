@@ -18,13 +18,18 @@ function PlaylistView (props) {
   const { playlist } = props;
   const [{ 
     songsSearchResults, 
-    isSongSearching 
+    isSongSearching,
+    user
   }, dispatch] = useProviderValue();
 
   const onPlayPlaylist = async () => {
-    await playPlaylist(playlist.id);
+    const params = {
+      playlistID: playlist.id,
+      userID: user.id
+    }
+    await playPlaylist(params);
     await wait(200);
-    getPlaybackState().then(res => {
+    getPlaybackState(user.id).then(res => {
       dispatch({
         type: 'SET_CURR_SONG',
         songObj: res.song?.item

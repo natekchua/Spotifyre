@@ -125,8 +125,47 @@ const decreaseCount = async (playlistID) => {
 
 // ****** SETTINGS ****** //
 
-const getUserSettings = async (id) => {
-  const query = `SELECT "curator_settings" FROM spotifyre.user WHERE "userid" = '${id}'`;
+const setTokens = async (data, user) => {
+  const { access_token, refresh_token } = data;
+  const selectQuery = `SELECT COUNT(*) FROM spotifyre.user WHERE "userid" = '${user.id}';`;
+  const updateQuery = `UPDATE spotifyre.user SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}'
+    WHERE "userid" = '${user.id}';`;
+  try {
+    const { rows } = await SQL(selectQuery);
+    if (Number(rows[0].count) <= 0) {
+      // user does not exist
+      const params = {
+        userID: user.id,
+        name: user.display_name,
+        curatorSettings: null,
+        accessToken: access_token,
+        refreshToken: refresh_token,
+      };
+      await addUser(params);
+    } else {
+      const { rows } = await SQL(updateQuery);
+      return rows[0];
+    }
+  } catch (err) {
+    console.error(err);
+    return `Failed to set user tokens: ${err.message}`;
+  }
+};
+
+const getUserToken = async (id) => {
+  const query = `SELECT "access_token" FROM spotifyre.user WHERE "userid" = '${id}'`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows[0].access_token;
+  } catch (err) {
+    console.error(err);
+    return `Failed to get user settings: ${err.message}`;
+  }
+};
+
+const getUser = async (id) => {
+  const query = `SELECT * FROM spotifyre.user WHERE "userid" = '${id}'`;
 
   try {
     const { rows } = await SQL(query);
@@ -137,20 +176,30 @@ const getUserSettings = async (id) => {
   }
 };
 
-const saveUserSettings = async (params) => {
-  const { user, newCurationSettings } = params;
-  const name = user.display_name.replace(/ /g, '');
-  const curationSettingsStr = JSON.stringify(newCurationSettings);
+const addUser = async (params) => {
+  const { userID, name, curatorSettings, accessToken, refreshToken } = params;
+  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings, access_token, refresh_token)
+  VALUES('${userID}', '${name}', '${curatorSettings}', '${accessToken}', '${refreshToken}');`;
 
-  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings)
-      VALUES('${user.id}', '${name}', '${curationSettingsStr}');`;
+  try {
+    const { rows } = await SQL(query);
+    console.log('addUser query result: ', rows[0]);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    return `Failed to add user: ${err.message}`;
+  }
+};
+
+const getUserSettings = async (id) => {
+  const query = `SELECT "curator_settings" FROM spotifyre.user WHERE "userid" = '${id}'`;
 
   try {
     const { rows } = await SQL(query);
     return rows[0];
   } catch (err) {
     console.error(err);
-    return `Failed to save user settings: ${err.message}`;
+    return `Failed to get user settings: ${err.message}`;
   }
 };
 
@@ -178,7 +227,10 @@ module.exports = {
   removeSongSuggestion,
   increaseCount,
   decreaseCount,
+  setTokens,
+  getUserToken,
+  getUser,
+  addUser,
   getUserSettings,
-  saveUserSettings,
   updateUserSettings,
 };

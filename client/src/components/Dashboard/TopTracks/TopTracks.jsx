@@ -7,12 +7,12 @@ import Song from '../../Song/Song';
 import './TopTracks.css';
 
 function TopTracks () {
-  const [{ }, dispatch] = useProviderValue();
+  const [{ user }, dispatch] = useProviderValue();
   const [songs, setSongs] = useState(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getTopTracks().then(res => {
+    getTopTracks(user.id).then(res => {
       setSongs(res.topTracks);
     }).catch(() => {
       setError('Error: Problem fetching top tracks.')
@@ -21,9 +21,13 @@ function TopTracks () {
 
   const onPlaySong = async (safeToPlay = true, id) => {
     if (safeToPlay) {
-      await playSong(id)
-      await wait(200)
-      getPlaybackState().then(res => {
+      const params = {
+        songID: id,
+        userID: user.id
+      }
+      await playSong(params);
+      await wait(200);
+      getPlaybackState(user.id).then(res => {
         dispatch({
           type: 'SET_CURR_SONG',
           songObj: res.song?.item

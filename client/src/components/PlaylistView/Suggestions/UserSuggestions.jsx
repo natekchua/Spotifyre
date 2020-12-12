@@ -25,7 +25,8 @@ const getListStyle = (isDraggingOver) => ({
 function UserSuggestions () {
   const [{ 
     userSuggestions,
-    currPlaylist 
+    currPlaylist,
+    user
   }, dispatch] = useProviderValue();
 
   useEffect(() => {
@@ -43,17 +44,21 @@ function UserSuggestions () {
   
   const onPlaySong = async (safeToPlay, id) => {
     if (safeToPlay) {
-      await playSong(id)
-      await wait(200)
-      getPlaybackState().then(res => {
+      const params = {
+        songID: id,
+        userID: user.id
+      };
+      await playSong(params);
+      await wait(200);
+      getPlaybackState(user.id).then(res => {
         dispatch({
           type: 'SET_CURR_SONG',
           songObj: res.song?.item
-        })
+        });
         dispatch({
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
-        })
+        });
       })
     }
   }

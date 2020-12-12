@@ -12,10 +12,14 @@ import { selectPlaylist } from '../../services/apiRequests';
 import './Sidebar.css';
 
 function Sidebar () {
-  const [{ playlists }, dispatch] = useProviderValue();
+  const [{ playlists, user }, dispatch] = useProviderValue();
 
   const onSelectPlaylist = (id) => {
-    selectPlaylist(id).then(res => {
+    const params = {
+      playlistID: id,
+      userID: user.id
+    };
+    selectPlaylist(params).then(res => {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
         currPlaylist: JSON.parse(res).playlist

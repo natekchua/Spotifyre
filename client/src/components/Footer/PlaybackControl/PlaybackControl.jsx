@@ -20,13 +20,14 @@ import './PlaybackControl.css';
 function PlaybackControl () {
   const [{
     currSong,
-    songStatus
+    songStatus,
+    user
   }, dispatch] = useProviderValue();
 
   const prevSong = async () => {
-    await goPrevious();
+    await goPrevious(user.id);
     await wait(200);
-    getPlaybackState().then(res => {
+    getPlaybackState(user.id).then(res => {
       dispatch({
       type: 'SET_CURR_SONG',
       songObj: res.song?.item
@@ -41,10 +42,10 @@ function PlaybackControl () {
   const handlePlayStatus = () => {
     let isPlaying;
     if (songStatus) {
-      pause();
+      pause(user.id);
       isPlaying = false;
     } else {
-      play().then(res => {
+      play(user.id).then(res => {
         if (!currSong) {
           dispatch({
             type: 'SET_CURR_SONG',
@@ -61,9 +62,9 @@ function PlaybackControl () {
   };
 
   const nextSong = async () => {
-    await goNext();
+    await goNext(user.id);
     await wait(200);
-    getPlaybackState().then(res => {
+    getPlaybackState(user.id).then(res => {
       dispatch({
       type: 'SET_CURR_SONG',
       songObj: res.song?.item

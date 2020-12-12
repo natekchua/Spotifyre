@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const spotifyUtils = require('../../spotifyUtils.js');
+const actions = require('../actions/actions.js');
+const SpotifyWebApi = require('spotify-web-api-node');
+const permissions = require('../../permissions.js');
 const app = express.Router();
 
-const { spotify, loginURL } = spotifyUtils;
+const { spotify } = spotifyUtils;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,20 +15,45 @@ app.get('/', (req, res) => {
   res.send({ express: 'Welcome to Spotifyre!' });
 });
 
-app.get('/api/authenticate', (req, res) => {
-  res.send({
-    spotify: spotify,
-    loginURL: loginURL,
-  });
+app.get('/api/authorize', async (req, res) => {
+  const authorizeURL = await spotify.createAuthorizeURL(
+    permissions,
+    null,
+    true
+  );
+  console.log('authorize URL: ', authorizeURL);
+  res.send({ loginURL: authorizeURL });
 });
 
-app.get('/api/get-spotify', (req, res) => {
-  res.send({ spotify: spotify });
+app.post('/api/handle-token', (req, res) => {
+  spotify.authorizationCodeGrant(req.body.post).then(
+    async (data) => {
+      console.log('The token expires in ' + data.body['expires_in']);
+      console.log('The access token is ' + data.body['access_token']);
+      console.log('The refresh token is ' + data.body['refresh_token']);
+
+      // Set the access token on the API object to use it in later calls
+      spotify.setAccessToken(data.body['access_token']);
+      spotify.setRefreshToken(data.body['refresh_token']);
+      const user = await spotify.getMe();
+      await actions.setTokens(data.body, user.body);
+      const tokens = {
+        accessToken: data.body['access_token'],
+        refreshToken: data.body['refresh_token'],
+      };
+      res.send({ tokens });
+    },
+    (err) => {
+      console.log('Something went wrong!', err);
+    }
+  );
 });
 
-app.get('/api/get-me', (req, res) => {
-  spotify.getMe().then(
-    (data) => {
+app.post('/api/get-me', (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  loggedInSpotify.setAccessToken(req.body.post);
+  loggedInSpotify.getMe().then(
+    async (data) => {
       console.log('Some information about the authenticated user', data.body);
       res.send({ me: data.body });
     },
@@ -35,8 +63,11 @@ app.get('/api/get-me', (req, res) => {
   );
 });
 
-app.get('/api/get-user-playlists', (req, res) => {
-  spotify.getUserPlaylists({ limit: 50 }).then(
+app.get('/api/get-user-playlists/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.getUserPlaylists({ limit: 50 }).then(
     (data) => {
       console.log('Retrieved playlists', data.body);
       res.send({ playlists: data.body });
@@ -47,8 +78,11 @@ app.get('/api/get-user-playlists', (req, res) => {
   );
 });
 
-app.get('/api/get-playlist', (req, res) => {
-  spotify.getPlaylist('37i9dQZF1DX7Jl5KP2eZaS').then(
+app.get('/api/get-playlist/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.getPlaylist('37i9dQZF1DX7Jl5KP2eZaS').then(
     (data) => {
       console.log('Some information about this playlist', data.body);
       res.send({ playlist: data.body });
@@ -59,8 +93,11 @@ app.get('/api/get-playlist', (req, res) => {
   );
 });
 
-app.get('/api/get-playback-state', (req, res) => {
-  spotify.getMyCurrentPlaybackState().then(
+app.get('/api/get-playback-state/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.getMyCurrentPlaybackState().then(
     (data) => {
       if (data.body && data.body.is_playing) {
         console.log('User is currently playing something!');
@@ -82,12 +119,15 @@ app.get('/api/get-playback-state', (req, res) => {
   );
 });
 
-app.get('/api/play', (req, res) => {
-  spotify.play().then(
+app.get('/api/play/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.play().then(
     () => console.log('Playback started'),
     (err) => console.log('Something went wrong!', err)
   );
-  spotify.getMyCurrentPlaybackState().then(
+  loggedInSpotify.getMyCurrentPlaybackState().then(
     (data) => {
       if (data.body) {
         res.send({
@@ -102,12 +142,15 @@ app.get('/api/play', (req, res) => {
   );
 });
 
-app.get('/api/pause', (req, res) => {
-  spotify.pause().then(
+app.get('/api/pause/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.pause().then(
     () => console.log('Playback paused'),
     (err) => console.log('Something went wrong!', err)
   );
-  spotify.getMyCurrentPlaybackState().then(
+  loggedInSpotify.getMyCurrentPlaybackState().then(
     (data) => {
       if (data.body) {
         res.send({ isPlaying: data.body.is_playing });
@@ -119,8 +162,11 @@ app.get('/api/pause', (req, res) => {
   );
 });
 
-app.get('/api/previous-song', (req, res) => {
-  spotify.skipToPrevious().then(
+app.get('/api/previous-song/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.skipToPrevious().then(
     (data) => {
       console.log('Skip to previous');
       res.send({ data });
@@ -131,8 +177,11 @@ app.get('/api/previous-song', (req, res) => {
   );
 });
 
-app.get('/api/next-song', (req, res) => {
-  spotify.skipToNext().then(
+app.get('/api/next-song/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.skipToNext().then(
     (data) => {
       console.log('Skip to next');
       res.send({ data });
@@ -143,8 +192,11 @@ app.get('/api/next-song', (req, res) => {
   );
 });
 
-app.get('/api/featured-playlists', (req, res) => {
-  spotify.getFeaturedPlaylists({ limit: 8 }).then(
+app.get('/api/featured-playlists/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.getFeaturedPlaylists({ limit: 8 }).then(
     (data) => {
       console.log(data.body);
       res.send({ featured: data.body });
@@ -155,8 +207,11 @@ app.get('/api/featured-playlists', (req, res) => {
   );
 });
 
-app.get('/api/top-tracks', (req, res) => {
-  spotify.getMyTopTracks({ limit: 10 }).then(
+app.get('/api/top-tracks/:userID', async (req, res) => {
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(req.params.userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.getMyTopTracks({ limit: 10 }).then(
     (data) => {
       console.log('Found top tracks', data.body);
       res.send({ topTracks: data.body.items });
@@ -167,13 +222,13 @@ app.get('/api/top-tracks', (req, res) => {
   );
 });
 
-app.post('/api/set-access-token', (req, res) => {
-  spotify.setAccessToken(req.body.post);
-  res.send(`token: ${req.body.post} has been posted`);
-});
-
-app.post('/api/get-curator-playlists', (req, res) => {
-  spotify.getUserPlaylists(req.body.post).then(
+// ****** POSTS ****** //
+app.post('/api/get-curator-playlists', async (req, res) => {
+  const { curatorID, userID } = req.body.post;
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.getUserPlaylists(curatorID).then(
     (data) => {
       console.log('Retrieved playlists for selected user', data.body);
       res.send({ curatorPlaylists: data.body });
@@ -184,8 +239,12 @@ app.post('/api/get-curator-playlists', (req, res) => {
   );
 });
 
-app.post('/api/select-playlist', (req, res) => {
-  spotify.getPlaylist(req.body.post).then(
+app.post('/api/select-playlist', async (req, res) => {
+  const { playlistID, userID } = req.body.post;
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.getPlaylist(playlistID).then(
     (data) => {
       console.log('The selected playlist', data.body);
       res.send({ playlist: data.body });
@@ -196,8 +255,12 @@ app.post('/api/select-playlist', (req, res) => {
   );
 });
 
-app.post('/api/play-song', (req, res) => {
-  spotify.play({ uris: [`spotify:track:${req.body.post}`] }).then(
+app.post('/api/play-song', async (req, res) => {
+  const { songID, userID } = req.body.post;
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.play({ uris: [`spotify:track:${songID}`] }).then(
     (data) => {
       console.log('Song started');
       res.send({ data });
@@ -208,8 +271,12 @@ app.post('/api/play-song', (req, res) => {
   );
 });
 
-app.post('/api/play-playlist', (req, res) => {
-  spotify.play({ context_uri: `spotify:playlist:${req.body.post}` }).then(
+app.post('/api/play-playlist', async (req, res) => {
+  const { playlistID, userID } = req.body.post;
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.play({ context_uri: `spotify:playlist:${playlistID}` }).then(
     (data) => {
       console.log('Playlist started');
       res.send({ data });
@@ -220,8 +287,12 @@ app.post('/api/play-playlist', (req, res) => {
   );
 });
 
-app.post('/api/search-for-songs', (req, res) => {
-  spotify.searchTracks(req.body.post, { limit: 50 }).then(
+app.post('/api/search-for-songs', async (req, res) => {
+  const { query, userID } = req.body.post;
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.searchTracks(query, { limit: 50 }).then(
     (data) => {
       console.log('Found songs are', data.body);
       res.send({ songsSearchResults: data.body });
@@ -232,8 +303,12 @@ app.post('/api/search-for-songs', (req, res) => {
   );
 });
 
-app.post('/api/search-for-playlists', (req, res) => {
-  spotify.searchPlaylists(req.body.post).then(
+app.post('/api/search-for-playlists', async (req, res) => {
+  const { query, userID } = req.body.post;
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify.searchPlaylists(query).then(
     (data) => {
       console.log('Found playlists are', data.body);
       res.send({ playlistSearchResults: data.body });
@@ -244,17 +319,22 @@ app.post('/api/search-for-playlists', (req, res) => {
   );
 });
 
-app.post('/api/add-track-to-playlist', (req, res) => {
-  const { playlistID, songID } = req.body.post;
-  spotify.addTracksToPlaylist(playlistID, [`spotify:track:${songID}`]).then(
-    (data) => {
-      console.log('Added track to playlist!');
-      res.send({ topTracks: data.body.items });
-    },
-    (err) => {
-      console.log('Something went wrong!', err);
-    }
-  );
+app.post('/api/add-track-to-playlist', async (req, res) => {
+  const { playlistID, songID, userID } = req.body.post;
+  const loggedInSpotify = new SpotifyWebApi();
+  const userAccessToken = await actions.getUserToken(userID);
+  loggedInSpotify.setAccessToken(userAccessToken);
+  loggedInSpotify
+    .addTracksToPlaylist(playlistID, [`spotify:track:${songID}`])
+    .then(
+      (data) => {
+        console.log('Added track to playlist!');
+        res.send({ topTracks: data.body.items });
+      },
+      (err) => {
+        console.log('Something went wrong!', err);
+      }
+    );
 });
 
 module.exports = app;
