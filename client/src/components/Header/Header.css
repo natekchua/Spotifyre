@@ -8,6 +8,21 @@
   min-width: 81px;
 }
 
+.notification-bell {
+  margin-right: 18px;
+  cursor: pointer;
+}
+
+.noti-header {
+  padding: 6px;
+  justify-content: space-between;
+  margin: 3px;
+}
+
+.notification-container {
+  max-height: 200px;
+}
+
 /* Responsive Media Queries */
 
 @media only screen and (min-width: 1024px) {

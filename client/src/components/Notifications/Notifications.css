@@ -1,29 +1,17 @@
-.dash-playlists {
+.notification-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-}
-
-hr {
-  margin: 24px auto;
+  border: solid rgba(133, 0, 133, 0.253);
+  border-width: 1px 0 1px 0;
   width: 100%;
-  border: 1px solid rgba(214, 111, 228, 0.479);
-}
-h2 {
-  color: rgb(214, 111, 228);
-  font-weight: 700;
+  padding: 20px;
 }
 
-.showcase {
-  animation: fade-in 3s;
-}
-
-@keyframes fade-in {
-  from { 
-    opacity: 0;
-  }
-  to { 
-    opacity: 1; 
-  }
+.notification-row:hover {
+  cursor: pointer;
+  background-color: rgb(11, 0, 39);
+  opacity: 0.8;
 }
 
 /* Responsive Media Queries */
@@ -39,14 +27,14 @@ h2 {
 
 /* Small Devices (Phones, Tablets) */
 @media only screen and (min-width: 360px) and (max-width: 767px) {
-  h2 {
-    font-size: 18px;
+  .notification-row > p {
+    font-size: 14px;
   }
 }
 
 @media only screen and (max-width: 359px) {
-  h2 {
-    font-size: 14px;
+  .notification-row > p {
+    font-size: 12px;
   }
 }
 

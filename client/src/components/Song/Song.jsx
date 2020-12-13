@@ -17,6 +17,8 @@ function Song (props) {
     tab,
     user,
     curator,
+    curatorSettings,
+    curatorSuggestions,
     curatorPlaylist,
     settingsSetByCurator
   }, dispatch] = useProviderValue();
@@ -67,23 +69,57 @@ function Song (props) {
       }
     };
 
-    // TODO: check current entries with curator Settings to see if they satisfy conditions before posting API request.
     if (curator.id !== user.id) {
-      suggestSongToPlaylist(params).then(() => {
-        getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
-          dispatch({
-            type: 'SET_CURATOR_SUGGESTIONS',
-            curatorSuggestions: JSON.parse(res)
+      const currUserSuggestions = curatorSuggestions.filter(s => s?.suggested_by_username === user?.display_name);
+
+      // check current entries with curator Settings to see if they satisfy conditions before posting API request.
+      if (currUserSuggestions.length < curatorSettings.suggestionsPerUser 
+        && curatorSuggestions.length < curatorSettings.maxSuggestions) {
+        suggestSongToPlaylist(params).then(() => {
+          getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
+            dispatch({
+              type: 'SET_CURATOR_SUGGESTIONS',
+              curatorSuggestions: JSON.parse(res)
+            })
+            dispatch({
+              type: 'SET_NOTIFICATION',
+              notification: {
+                message: 'Song suggestion successfully submitted to playlist.',
+                type: 'success'
+              }
+            });
           })
+        }).catch(err => errorHandler(err));
+      } else {
+        if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser 
+          && curatorSuggestions.length >= curatorSettings.maxSuggestions) {
           dispatch({
             type: 'SET_NOTIFICATION',
             notification: {
-              message: 'Song suggestion successfully submitted to playlist.',
-              type: 'success'
+              message: 
+              `Sorry! You can't suggest more than ${curatorSettings.suggestionsPerUser} songs to this playlist.
+                This playlist has also reached its max number of suggestions.`,
+              type: 'error'
             }
           });
-        })
-      }).catch(err => errorHandler(err));
+        } else if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser) {
+          dispatch({
+            type: 'SET_NOTIFICATION',
+            notification: {
+              message: `Sorry! You can't suggest more than ${curatorSettings.suggestionsPerUser} songs to this playlist.`,
+              type: 'error'
+            }
+          });
+        } else {
+          dispatch({
+            type: 'SET_NOTIFICATION',
+            notification: {
+              message: `Sorry! This playlist has reached its max number of suggestions.`,
+              type: 'error'
+            }
+          });
+        }
+      }
     } else {
       dispatch({
         type: 'SET_NOTIFICATION',

@@ -57,12 +57,21 @@ function CuratorSuggestions () {
     }
   }
 
-  const refreshSuggestions = async () => {
+  const refreshSuggestions = async (manualRefresh = false) => {
     getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
       dispatch({
         type: 'SET_CURATOR_SUGGESTIONS',
         curatorSuggestions: JSON.parse(res)
       })
+      if (manualRefresh) {
+        dispatch({
+          type: 'SET_NOTIFICATION',
+          notification: {
+            message: `The curator playlist suggestions have been refreshed.`,
+            type: 'success'
+          }
+        });
+      }
     }) 
   }
 
@@ -90,7 +99,7 @@ function CuratorSuggestions () {
         <p>Suggested By</p>
       </div>
       <div className='refresh-icon'>
-        <RefreshIcon onClick={refreshSuggestions} /> 
+        <RefreshIcon onClick={() => refreshSuggestions(true)} /> 
       </div>
       <Droppable droppableId='songs'>
         {(provided, snapshot) => (

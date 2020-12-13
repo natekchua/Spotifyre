@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useProviderValue } from '../../../ContextState/Provider';
-import { removeSuggestionFromPlaylist, getSuggestionsForPlaylist } from '../../../../services/dbRequests';
+import { 
+  removeSuggestionFromPlaylist,
+  getSuggestionsForPlaylist
+} from '../../../../services/dbRequests';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 

@@ -164,4 +164,18 @@ app.post('/remove-suggestion', (req, res) => {
     });
 });
 
+app.get('/get-notifications/:userID', (req, res) => {
+  action
+    .getNotifications(req.params.userID)
+    .then((rtn) => {
+      console.log('notifications retrieved: ', rtn);
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
 module.exports = app;

@@ -13,7 +13,7 @@ import {
   getUserPlaylists,
   getPlaylist
 } from '../../services/apiRequests';
-import { getSettings } from '../../services/dbRequests';
+import { getNotifications, getSettings } from '../../services/dbRequests';
 
 import './AppContainer.css';
 
@@ -71,8 +71,14 @@ function AppContainer (props) {
           });
         }).catch(err => errorHandler(err));
 
-      }).catch(err => errorHandler(err));
+        getNotifications(me.id).then(res => {
+          dispatch({
+            type: 'SET_SUGGESTION_NOTIFICATIONS',
+            suggestionNotifications: res
+          });
+        }).catch(err => errorHandler(err));
 
+      }).catch(err => errorHandler(err));
     }
   }, []);
 

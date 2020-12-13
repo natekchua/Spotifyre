@@ -58,12 +58,21 @@ function UserSuggestions () {
     }
   }
 
-  const refreshSuggestions = () => {
+  const refreshSuggestions = (manualRefresh = false) => {
     getSuggestionsForPlaylist(currPlaylist.id).then(res => {
       dispatch({
         type: 'SET_USER_SUGGESTIONS',
         userSuggestions: JSON.parse(res)
-      })
+      });
+      if (manualRefresh) {
+        dispatch({
+          type: 'SET_NOTIFICATION',
+          notification: {
+            message: `The current playlist's suggestions have been refreshed.`,
+            type: 'success'
+          }
+        });
+      }
     }) 
   }
 
@@ -91,7 +100,7 @@ function UserSuggestions () {
         <p style={{ marginRight: '85px' }}>Suggested By</p>
       </div>
       <div className='refresh-icon'>
-        <RefreshIcon onClick={refreshSuggestions} /> 
+        <RefreshIcon onClick={() => refreshSuggestions(true)} /> 
       </div>
       <Droppable droppableId='songs'>
         {(provided, snapshot) => (

@@ -303,7 +303,7 @@ app.post('/api/search-for-playlists', async (req, res) => {
   const loggedInSpotify = new SpotifyWebApi();
   const userAccessToken = await actions.getUserToken(userID);
   loggedInSpotify.setAccessToken(userAccessToken);
-  loggedInSpotify.searchPlaylists(query).then(
+  loggedInSpotify.searchPlaylists(query, { limit: 50 }).then(
     (data) => {
       console.log('Found playlists are', data.body);
       res.send({ playlistSearchResults: data.body });
