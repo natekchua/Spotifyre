@@ -16,7 +16,7 @@ function Profile () {
     userSettings
   }, dispatch] = useProviderValue();
 
-  const [curatorMode, setCuratorMode] = useState(false);
+  const [curatorMode, setCuratorMode] = useState(userSettings.curatorMode);
   const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions);
   const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser);
 
