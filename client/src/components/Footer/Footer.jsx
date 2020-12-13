@@ -49,7 +49,7 @@ function Footer () {
       <PlaybackControl />
       <div className='volume-control'>
         <VolumeDownIcon className='outer-control-icon pr10' />
-        <Slider id='volume' />
+        <Slider id='volume' value={50} />
       </div>
     </div>
   );
