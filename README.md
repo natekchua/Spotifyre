@@ -45,12 +45,15 @@ npm install && npm start
 
 ## Technology Stack
 
-- [React](https://reactjs.org/) used for the front-end development to build our interface on the client side. 
+- [React](https://reactjs.org/) used for the front-end development to build our interface on the client side.
+- [Material-UI] (https://material-ui.com/) used for the majority of front-end components.
+- [AntD] (https://ant.design/) used for notification component.
 - [React Context](https://reactjs.org/docs/context.html) used for application state management.
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
 - [PostgreSQL](https://www.postgresql.org/) queries to interact with the database for storage and persistence.
-- [Heroku](https://heroku.com) used to host the server and PostgreSQL database.
+- [Netlify](https://www.netlify.com/) used for simple CI/CD and hosting the client.
+- [Heroku](https://heroku.com/) used to host the server and PostgreSQL database.
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node) universal wrapper/client for the Spotify Web API that runs on Node.JS.
 
 

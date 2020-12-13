@@ -71,7 +71,6 @@ function Song (props) {
     if (curator.id !== user.id) {
       suggestSongToPlaylist(params).then(() => {
         getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
-          console.log(res)
           dispatch({
             type: 'SET_CURATOR_SUGGESTIONS',
             curatorSuggestions: JSON.parse(res)

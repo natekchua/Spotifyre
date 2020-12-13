@@ -35,7 +35,6 @@ function CuratorSuggestionRow (props) {
       playlistID: suggestion?.playlistid
     }
     removeSuggestionFromPlaylist(params).then(res => {
-      console.log(res)
       getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
         dispatch({
           type: 'SET_CURATOR_SUGGESTIONS',

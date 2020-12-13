@@ -60,7 +60,6 @@ function UserSuggestions () {
 
   const refreshSuggestions = () => {
     getSuggestionsForPlaylist(currPlaylist.id).then(res => {
-      console.log(res)
       dispatch({
         type: 'SET_USER_SUGGESTIONS',
         userSuggestions: JSON.parse(res)

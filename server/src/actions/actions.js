@@ -183,7 +183,6 @@ const addUser = async (params) => {
 
   try {
     const { rows } = await SQL(query);
-    console.log('addUser query result: ', rows[0]);
     return rows[0];
   } catch (err) {
     console.error(err);

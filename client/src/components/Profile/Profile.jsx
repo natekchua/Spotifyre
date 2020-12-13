@@ -46,7 +46,6 @@ function Profile () {
 
     const params = { user, newCurationSettings };
     updateCurationSettings(params).then(res => {
-      console.log(res)
       dispatch({
         type: 'SET_USER_SETTINGS',
         userSettings: newCurationSettings

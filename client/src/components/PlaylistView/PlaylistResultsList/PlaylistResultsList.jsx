@@ -31,8 +31,18 @@ function PlaylistResultsList (props) {
       if (goBackToCuratorPlaylist) {
         goBackToCuratorPlaylist();
       }
-    }).catch(err => console.log(err))
+    }).catch(err => errorHandler(err))
   };
+
+  const errorHandler = (err) => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification: {
+        message: `Oops! ${err}`,
+        type: 'error'
+      }
+    });
+  }
 
   const playlistRows = playlistsFromQuery?.items?.map((p, idx) =>
     <PlaylistRow

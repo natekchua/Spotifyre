@@ -1,6 +1,6 @@
 // Reducer to listen for actions.
 const reducer = (state, action) => {
-  console.log(action);
+  // console.log(action);  used for debugging context state
 
   switch(action.type) {
     case 'SET_TOKEN':

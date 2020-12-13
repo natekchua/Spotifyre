@@ -39,7 +39,6 @@ function UserSuggestionRow (props) {
   }
 
   const acceptSuggestion = async () => {
-    console.log('accept suggestion');
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid,

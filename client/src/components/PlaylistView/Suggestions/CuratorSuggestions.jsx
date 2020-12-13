@@ -59,7 +59,6 @@ function CuratorSuggestions () {
 
   const refreshSuggestions = async () => {
     getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
-      console.log(res)
       dispatch({
         type: 'SET_CURATOR_SUGGESTIONS',
         curatorSuggestions: JSON.parse(res)
