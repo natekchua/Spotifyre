@@ -38,13 +38,15 @@ h2 {
 }
 
 /* Small Devices (Phones, Tablets) */
-@media only screen and (min-width: 280px) and (max-width: 767px) {
+@media only screen and (min-width: 360px) and (max-width: 767px) {
   h2 {
     font-size: 18px;
   }
-  
-  .showcase {
-    animation: fade-in 3s;
+}
+
+@media only screen and (min-width: 280px) and (max-width: 359px) {
+  h2 {
+    font-size: 14px;
   }
 }
 

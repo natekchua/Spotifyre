@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
-import { 
-  saveCurationSettings,
-  updateCurationSettings
-} from '../../services/dbRequests';
+import { updateCurationSettings } from '../../services/dbRequests';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
@@ -16,11 +13,10 @@ import './Profile.css';
 function Profile () {
   const [{
     user,
-    userSettings,
-    settingsSetByUser
+    userSettings
   }, dispatch] = useProviderValue();
 
-  const [curatorMode, setCuratorMode] = useState(userSettings.curatorMode);
+  const [curatorMode, setCuratorMode] = useState(false);
   const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions);
   const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser);
 

@@ -91,8 +91,12 @@ function UserSuggestionRow (props) {
         <div className='flex-basic'>
           <p className='p5'>{suggestion?.suggested_by_username}</p>
           <div className='flex-basic'>
-            <ClearIcon className='reject-suggestion' onClick={rejectSuggestion} />
-            <CheckIcon className='accept-suggestion' onClick={acceptSuggestion} />
+            <div className='reject-suggestion'>
+            <ClearIcon  onClick={rejectSuggestion} />
+            </div>
+            <div className='accept-suggestion'>
+              <CheckIcon onClick={acceptSuggestion} />
+            </div>
           </div>
         </div>
       </div>

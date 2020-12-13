@@ -6,7 +6,7 @@
   color: #fff;
   border: solid rgba(133, 0, 133, 0.253);
   border-width: 1px 0 1px 0;
-  width: 95%;
+  width: 100%;
 }
 
 .suggestion-row > div > img {
@@ -49,4 +49,87 @@
 
 .accept-suggestion:hover {
   background: #57b4f1; 
+}
+
+/* Responsive Media Queries */
+
+@media only screen and (min-width: 1024px) {
+
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+  .suggestion-row {
+    width: 100%;
+  }
+  
+  .suggestion-row > div > img {
+    height: 40px;
+    width: 40px;
+  }
+  
+  .suggestion-row > p {
+    font-size: 12px;
+  }
+
+  .suggestion-row .flex-basic > p {
+    font-size: 12px;
+  }
+  .suggestion-info {
+    margin-left: 12px;
+  }
+  
+  .suggestion-info > h1 {
+    font-size: 14px;
+    margin: 2px;
+  }
+
+  .suggestion-info > p {
+    font-size: 12px;
+  }
+  
+  .reject-suggestion {
+    background: #1c045e;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 2px;
+  }
+  
+  .reject-suggestion:hover {
+    background: #390ead;
+  }
+  
+  .accept-suggestion {
+    background: #017fd3;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 2px;
+  }
+  
+  .accept-suggestion:hover {
+    background: #57b4f1; 
+  }
+
+  .accept-suggestion > .MuiSvgIcon-root {
+    font-size: 1rem;
+  }
+
+  .reject-suggestion > .MuiSvgIcon-root {
+    font-size: 1rem;
+  }
+}
+
+/* Larger Phones and Tablets (Landscape) */
+@media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
+
+}
+
+/* XS / Smaller Phones (Landscape) */
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
+
 }

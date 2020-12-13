@@ -93,6 +93,11 @@ input[type=number] {
   #curator-settings-container {
     width: 100%;
   }
+
+  .profile-container > h2 {
+    font-size: 14px;
+    text-align: center;
+  }
 }
 
 /* Small Devices (Phones, Tablets) */

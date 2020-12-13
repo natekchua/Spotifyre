@@ -90,7 +90,9 @@ function CuratorSuggestions () {
         <p>Suggestion Details</p>
         <p>Suggested By</p>
       </div>
-      <RefreshIcon className='refresh-icon' onClick={refreshSuggestions} /> 
+      <div className='refresh-icon'>
+        <RefreshIcon onClick={refreshSuggestions} /> 
+      </div>
       <Droppable droppableId='songs'>
         {(provided, snapshot) => (
           <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
