@@ -5,9 +5,9 @@
 
 > Spotifyre is a Spotify application that acts as a Playlist Manager for curators. Our app focuses on making playlist collaboration and song sharing between listeners and curators super easy.
 
-### 🏠 [Homepage](https://github.com/natekchua/Spotifyre#readme)
+### ✨ [Use the App Here!](https://spotifyre-manager.netlify.app/)
 
-### ✨ [Demo](https://spotifyre.herokuapp.com/)
+### 🏠 [Homepage](https://github.com/natekchua/Spotifyre#readme)
 
 ## Install & Usage Locally
 
@@ -49,8 +49,8 @@ npm install && npm start
 - [Material-UI] (https://material-ui.com/) used for the majority of front-end components.
 - [AntD] (https://ant.design/) used for notification component.
 - [React Context](https://reactjs.org/docs/context.html) used for application state management.
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com/)
+- [Node.js](https://nodejs.org/) To handle backend requests.
+- [Express](https://expressjs.com/) Framework for Node Backend.
 - [PostgreSQL](https://www.postgresql.org/) queries to interact with the database for storage and persistence.
 - [Netlify](https://www.netlify.com/) used for simple CI/CD and hosting the client.
 - [Heroku](https://heroku.com/) used to host the server and PostgreSQL database.
