@@ -46,8 +46,8 @@ npm install && npm start
 ## Technology Stack
 
 - [React](https://reactjs.org/) used for the front-end development to build our interface on the client side.
-- [Material-UI] (https://material-ui.com/) used for the majority of front-end components.
-- [AntD] (https://ant.design/) used for notification component.
+- [Material-UI](https://material-ui.com/) used for the majority of front-end components.
+- [AntD](https://ant.design/) used for notification component.
 - [React Context](https://reactjs.org/docs/context.html) used for application state management.
 - [Node.js](https://nodejs.org/) To handle backend requests.
 - [Express](https://expressjs.com/) Framework for Node Backend.
