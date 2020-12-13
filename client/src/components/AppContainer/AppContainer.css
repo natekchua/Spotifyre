@@ -12,7 +12,9 @@
   padding: 30px;
   width: 100%;
   height: 105vh;
-  overflow-y: overlay;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
   align-items: right;
   color: #fff;
   background: linear-gradient(#552dc4, #1b0a35);
