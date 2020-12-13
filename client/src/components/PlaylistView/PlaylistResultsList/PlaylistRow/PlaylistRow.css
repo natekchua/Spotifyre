@@ -4,7 +4,7 @@
   color: #fff;
   border: solid rgba(32, 0, 32, 0.438);
   border-width: 1px 0 1px 0;
-  width: 95%;
+  width: 100%;
 }
 
 .playlist-row > img {
@@ -27,4 +27,65 @@
 .playlist-row-info > h1 {
   font-size: 24px;
   margin: 2px;
+}
+
+/* Responsive Media Queries */
+
+@media only screen and (min-width: 1024px) {
+
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+  .playlist-row {
+    display: flex;
+    z-index: 99;
+    color: #fff;
+    border: solid rgba(32, 0, 32, 0.438);
+    border-width: 1px 0 1px 0;
+    width: 95%;
+  }
+  
+  .playlist-row > img {
+    height: 32px;
+    width: 32px;
+  }
+  
+  .playlist-row:hover {
+    cursor: pointer;
+    background-color: rgb(11, 0, 39);
+    opacity: 0.8;
+  }
+  
+  .playlist-row-info {
+    margin-left: 12px;
+  }
+  
+  .playlist-row-info > h1 {
+    font-size: 14px;
+    margin: 2px;
+  }
+
+  .playlist-row-info > p {
+    font-size: 13px;
+  }
+
+  .playlist-row-info > div > p {
+    font-size: 13px;
+  }
+}
+
+/* Larger Phones and Tablets (Landscape) */
+@media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
+
+}
+
+/* XS / Smaller Phones (Landscape) */
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
+
 }

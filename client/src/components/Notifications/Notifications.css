@@ -1,18 +1,17 @@
-.songs-header {
+.notification-row {
   display: flex;
   align-items: center;
-  flex-direction: row;
   justify-content: space-between;
-  margin: 18px;
-  border-bottom: 1px solid rgba(115, 0, 138, 0.425);
+  border: solid rgba(133, 0, 133, 0.253);
+  border-width: 1px 0 1px 0;
+  width: 100%;
+  padding: 20px;
 }
 
-.songs-header > p {
-  color: rgb(214, 111, 228);
-  font-weight: 700;
-}
-.song-icons > .MuiSvg-root {
-  margin-right: 20px;
+.notification-row:hover {
+  cursor: pointer;
+  background-color: rgb(11, 0, 39);
+  opacity: 0.8;
 }
 
 /* Responsive Media Queries */
@@ -27,14 +26,15 @@
 }
 
 /* Small Devices (Phones, Tablets) */
-@media only screen and (min-width: 280px) and (max-width: 767px) {
-  .songs-header {
-    width: 100%;
-    margin: 8px;
-  }
-  
-  .songs-header > p {
+@media only screen and (min-width: 360px) and (max-width: 767px) {
+  .notification-row > p {
     font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 359px) {
+  .notification-row > p {
+    font-size: 12px;
   }
 }
 

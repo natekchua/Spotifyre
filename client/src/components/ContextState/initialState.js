@@ -1,6 +1,7 @@
 export const initialState = {
   token: null,
   notification: null,
+  suggestionNotifications: [],
   tab: 'Dashboard',
   user: null,
   settingsSetByUser: false,

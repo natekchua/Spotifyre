@@ -1,5 +1,5 @@
 // All api requests involving the Postgres database.
-import { apiPost } from './helperFunctions';
+import { apiGet, apiPost } from './helperFunctions';
 
 export const getSettings = async (id) => {
   return apiPost('/users/get-settings', id);
@@ -19,4 +19,8 @@ export const removeSuggestionFromPlaylist = async (params) => {
 
 export const getSuggestionsForPlaylist = async (params) => {
   return apiPost('/users/playlist-suggestions', params);
+}
+
+export const getNotifications = async (userID) => {
+  return apiGet(`/users/get-notifications/${userID}`);
 }

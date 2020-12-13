@@ -19,8 +19,18 @@ function ShowcasePlaylist (props) {
         type: 'SET_CURR_PLAYLIST',
         currPlaylist: JSON.parse(res).playlist
       })
-    }).catch(err => console.log(err))
+    }).catch(err => errorHandler(err))
   };
+
+  const errorHandler = (err) => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      notification: {
+        message: `Oops! ${err}`,
+        type: 'error'
+      }
+    });
+  }
 
   return (
     <>

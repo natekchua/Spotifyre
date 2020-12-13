@@ -22,7 +22,6 @@ const App = () => {
         const code = getCode();
         if (code) {
           getToken(code).then(res => {
-            console.log('access token returned to UI: ', JSON.parse(res).tokens.accessToken);
             dispatch({
               type: 'SET_TOKEN',
               token: JSON.parse(res).tokens.accessToken
@@ -30,7 +29,7 @@ const App = () => {
           }).catch(err => errorHandler(err));
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => errorHandler(err));
   }, [])
 
   const errorHandler = (err) => {

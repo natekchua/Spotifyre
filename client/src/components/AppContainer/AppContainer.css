@@ -12,7 +12,9 @@
   padding: 30px;
   width: 100%;
   height: 105vh;
-  overflow-y: overlay;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
   align-items: right;
   color: #fff;
   background: linear-gradient(#552dc4, #1b0a35);
@@ -23,4 +25,38 @@
   font-size: 18px;
   text-align: center;
   padding: 10px;
+}
+
+/* Responsive Media Queries */
+
+@media only screen and (min-width: 1024px) {
+
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  h1 {
+    font-size: 28px;
+  }
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+  .Content-container {
+    padding: 10px;
+  }
+  .notification {
+    font-size: 14px;
+    padding: 5px;
+  }
+}
+
+/* Larger Phones and Tablets (Landscape) */
+@media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
+
+}
+
+/* XS / Smaller Phones (Landscape) */
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
+
 }

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useProviderValue } from '../../../ContextState/Provider';
-import { removeSuggestionFromPlaylist, getSuggestionsForPlaylist } from '../../../../services/dbRequests';
+import { 
+  removeSuggestionFromPlaylist,
+  getSuggestionsForPlaylist
+} from '../../../../services/dbRequests';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -35,7 +38,6 @@ function CuratorSuggestionRow (props) {
       playlistID: suggestion?.playlistid
     }
     removeSuggestionFromPlaylist(params).then(res => {
-      console.log(res)
       getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
         dispatch({
           type: 'SET_CURATOR_SUGGESTIONS',

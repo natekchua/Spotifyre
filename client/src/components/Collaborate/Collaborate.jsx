@@ -20,7 +20,6 @@ function Collaborate () {
   }, [])
 
   const onDragEnd = (result) => {
-    console.log('drag end: ', result)
     // TODO: implement source destination for curator suggestions
   }
 

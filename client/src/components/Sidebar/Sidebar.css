@@ -27,11 +27,14 @@
 
 .sidebar-playlists {
   overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
   height: 60%;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
+  scrollbar-width: none;  /* Firefox */
 }
 
 ::-webkit-scrollbar-track {
@@ -50,4 +53,58 @@
   justify-content: left;
   margin-left: 20px;
   margin-top: 20px;
+}
+
+/* Responsive Media Queries */
+
+@media only screen and (min-width: 1024px) {
+
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+  .sidebar {
+    flex: 0.05;
+    padding: 0 5px 5px 0;
+    min-width: 120px;
+    max-width: 150px;
+  }
+
+  .sidebar-title h1 {
+    display: none;
+  }
+
+  .sidebar > p {
+    margin: 2px 5px;
+    font-size: 9px;
+  }
+  
+  .sidebar-logo {
+    width: 90%;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .sidebar-plist-title {
+    font-size: 10px;
+    margin-left: 8px;
+    margin-top: 8px;
+  }
+}
+
+/* Larger Phones and Tablets (Landscape) */
+@media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
+
+}
+
+/* XS / Smaller Phones (Landscape) */
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
+
 }

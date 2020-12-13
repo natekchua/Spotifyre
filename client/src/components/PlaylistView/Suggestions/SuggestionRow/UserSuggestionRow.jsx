@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useProviderValue } from '../../../ContextState/Provider';
-import { removeSuggestionFromPlaylist, getSuggestionsForPlaylist } from '../../../../services/dbRequests';
+import { 
+  removeSuggestionFromPlaylist, 
+  getSuggestionsForPlaylist,
+  getNotifications
+} from '../../../../services/dbRequests';
 import { addTrackToPlaylist } from '../../../../services/apiRequests';
 import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/Check';
@@ -13,15 +17,15 @@ function UserSuggestionRow (props) {
     currPlaylist
   }, dispatch] = useProviderValue();
   const { suggestion, onPlaySong } = props
-  const [safeToPlay, setSafeToPlay] = useState(false);
+  const [safeToPlay, setSafeToPlay] = useState(true);
 
   const rejectSuggestion = () => {
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid
     };
+    setSafeToPlay(false);
     removeSuggestionFromPlaylist(params).then(res => {
-      console.log(res)
       getSuggestionsForPlaylist(currPlaylist.id).then(res => {
         dispatch({
           type: 'SET_USER_SUGGESTIONS',
@@ -35,20 +39,25 @@ function UserSuggestionRow (props) {
           }
         });
       }).catch(err => errorHandler(err));
+      getNotifications(user.id).then(res => {
+        dispatch({
+          type: 'SET_SUGGESTION_NOTIFICATIONS',
+          suggestionNotifications: res
+        });
+      }).catch(err => errorHandler(err));
     }).catch(err => errorHandler(err));
   }
 
   const acceptSuggestion = async () => {
-    console.log('accept suggestion');
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid,
       userID: user.id
     };
+    setSafeToPlay(false);
     try {
       await addTrackToPlaylist(params);
       removeSuggestionFromPlaylist(params).then(res => {
-        console.log(res)
         getSuggestionsForPlaylist(currPlaylist.id).then(res => {
           dispatch({
             type: 'SET_USER_SUGGESTIONS',
@@ -62,8 +71,13 @@ function UserSuggestionRow (props) {
             }
           });
         }).catch(err => errorHandler(err));
+        getNotifications(user.id).then(res => {
+          dispatch({
+            type: 'SET_SUGGESTION_NOTIFICATIONS',
+            suggestionNotifications: res
+          });
+        }).catch(err => errorHandler(err));
       }).catch(err => errorHandler(err));
-      setSafeToPlay(true);
     } catch (err) {
       errorHandler(err);
     }
@@ -92,8 +106,12 @@ function UserSuggestionRow (props) {
         <div className='flex-basic'>
           <p className='p5'>{suggestion?.suggested_by_username}</p>
           <div className='flex-basic'>
-            <ClearIcon className='reject-suggestion' onClick={rejectSuggestion} />
-            <CheckIcon className='accept-suggestion' onClick={acceptSuggestion} />
+            <div className='reject-suggestion'>
+            <ClearIcon  onClick={rejectSuggestion} />
+            </div>
+            <div className='accept-suggestion'>
+              <CheckIcon onClick={acceptSuggestion} />
+            </div>
           </div>
         </div>
       </div>

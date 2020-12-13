@@ -183,7 +183,6 @@ const addUser = async (params) => {
 
   try {
     const { rows } = await SQL(query);
-    console.log('addUser query result: ', rows[0]);
     return rows[0];
   } catch (err) {
     console.error(err);
@@ -218,6 +217,20 @@ const updateUserSettings = async (params) => {
   }
 };
 
+const getNotifications = async (userID) => {
+  const query = `SELECT * FROM spotifyre.suggestions WHERE "playlistid" in (
+      SELECT "playlistid" FROM spotifyre.playlists WHERE "userid" = '${userID}'
+    );`;
+
+  try {
+    const { rows } = await SQL(query);
+    return rows;
+  } catch (err) {
+    console.error(err);
+    return `Failed to update user settings: ${err.message}`;
+  }
+};
+
 module.exports = {
   getAllCurators,
   getAllPlaylists,
@@ -233,4 +246,5 @@ module.exports = {
   addUser,
   getUserSettings,
   updateUserSettings,
+  getNotifications,
 };

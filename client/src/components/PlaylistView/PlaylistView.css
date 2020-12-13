@@ -13,6 +13,8 @@
   min-height: 90vh;
   max-height: 90vh;
   overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
   padding: 18px;
   box-shadow: 0px 0px 24px rgba(234, 0, 255, 0.466);
 }
@@ -82,4 +84,94 @@
 .play-playlist:hover {
   transition: 0.24s transform ease-in;
   transform: scale(1.1);
+}
+
+/* Responsive Media Queries */
+
+@media only screen and (min-width: 1024px) and (max-width: 1024px){
+  .collaborate-container {
+    flex-direction: column;
+  }
+
+  .playlist-container {
+    width: 100%;
+    margin: 4px;
+    padding: 8px;
+  }
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .collaborate-container {
+    flex-direction: column;
+  }
+
+  .playlist-container {
+    width: 100%;
+    margin: 4px;
+    padding: 8px;
+  }
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+  .playlist-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .playlist-container {
+    width: 100%;
+    margin: 4px;
+    padding: 8px;
+  }
+  
+  .playlist-container h1 {
+    justify-content: center;
+    font-size: 12px;
+  }
+  
+  .playlist-info > img {
+    height: 30vw;
+    max-width: 32vw;
+    margin: 0 10px;
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.342);
+  }
+  
+  .playlist-text {
+    margin-top: 20px;
+    flex: 1;
+  }
+  
+  .playlist-text > h2 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  
+  .playlist-text > p {
+    font-size: 12px;
+  }
+  
+  .back-button {
+    margin-left: 0;
+  }
+   
+  .play-playlist {
+    font-size: 32px !important;  margin-top: 10px;
+  }
+
+  .profile-name > strong{
+    font-size: 12px;
+  }
+}
+
+/* Larger Phones and Tablets (Landscape) */
+@media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
+
+}
+
+/* XS / Smaller Phones (Landscape) */
+@media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
+
 }
