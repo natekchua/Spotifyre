@@ -8,7 +8,7 @@ import AppContainer from './components/AppContainer/AppContainer';
 
 import './App.css';
 
-function App(): React.ReactElement {
+function App() {
   const [loginURL, setLoginURL] = useState('');
   const [{ token }, dispatch] = useProviderValue();
 
@@ -50,6 +50,6 @@ function App(): React.ReactElement {
       )}
     </Router>
   );
-};
+}
 
 export default App;
