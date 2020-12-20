@@ -89,7 +89,7 @@ function Header() {
           >
             <NotificationsIcon />
           </Badge>
-          <Avatar src={user?.images[0].url} alt="profile-pic" />
+          <Avatar src={user?.images[0]?.url} alt="profile-pic" />
           <h3 className="ml-10 p5">{user?.display_name}</h3>
         </div>
       </div>
