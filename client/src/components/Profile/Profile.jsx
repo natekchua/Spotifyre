@@ -6,9 +6,36 @@ import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
+import Badge from "@material-ui/core/Badge";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import { makeStyles } from "@material-ui/core/styles";
 
 import 'antd/lib/alert/style/index.css';
 import './Profile.css';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflowY: "scroll",
+    margin: "0 auto",
+  },
+  paper: {
+    backgroundColor: "#1A1741",
+    maxWidth: "800px",
+    maxHeight: "800px",
+    overflowY: "scroll",
+    color: "#fff",
+    border: "2px solid #000",
+    borderRadius: "12px",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 function Profile () {
   const [{
@@ -19,6 +46,7 @@ function Profile () {
   const [curatorMode, setCuratorMode] = useState(userSettings.curatorMode);
   const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions);
   const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser);
+  const classes = useStyles();
 
   useEffect(() => {
     dispatch({
@@ -89,6 +117,12 @@ function Profile () {
     }
   };
 
+  const [helpOpen, setHelpOpen] = useState(false);
+
+  const openHelp = () => { setHelpOpen(true); };
+
+  const handleClose = () => { setHelpOpen(false); };
+
   return (
     <div className='profile-container flex-basic'>
       <Avatar id='profile-settings-avatar' src={user?.images[0]?.url} />
@@ -99,12 +133,47 @@ function Profile () {
         </div>
       </div>
       <div className='curator-info p10'>
+        <Badge className="info-icon" onClick={openHelp} color="secondary">
+          <InfoOutlinedIcon />
+        </Badge>
         <h3 className='p5'>Curator Mode</h3>
         <Switch
           checked={curatorMode}
           onChange={toggleCuratorMode}
         />
       </div>
+      <Modal
+        className={classes.modal}
+        open={helpOpen}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={helpOpen}>
+          <div className={classes.paper}>
+            <div className="info-box flex-basic">
+              <h2 className="flex-basic" id="transition-modal-title">
+                Curator Settings
+              </h2>
+            </div>
+            <div id="transition-modal-description">
+              <p>
+                The curator mode allows other Spotifyre users to make
+                suggestions to your playlists.
+                <br />
+                Max suggestions is the number of suggestions you can have in
+                total for each of your playlist.
+                <br />
+                Suggestions per user is the max number of songs another user can
+                suggest for each of your playlists.
+              </p>
+            </div>
+          </div>
+        </Fade>
+      </Modal>
       {
         curatorMode
           ? <div id='curator-settings-container'>

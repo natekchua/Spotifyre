@@ -36,6 +36,17 @@ input[type=number] {
   text-align: center;
 }
 
+.info-icon {
+  display: flex;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+.info-box{
+  justify-content: space-between;
+  padding-bottom: 12px;
+}
+
 .curator-info {
   display: flex;
   align-items: center;
