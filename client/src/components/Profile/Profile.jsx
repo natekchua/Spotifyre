@@ -132,7 +132,7 @@ function Profile() {
 
   return (
     <div className="profile-container flex-basic">
-      <Avatar id="profile-settings-avatar" src={user?.images[0].url} />
+      <Avatar id="profile-settings-avatar" src={user?.images[0]?.url} />
       <div className="curator-info">
         <div id="avatar-info-container">
           <h3>{user?.display_name}</h3>
