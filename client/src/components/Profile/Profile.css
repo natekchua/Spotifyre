@@ -6,7 +6,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* get rid of some default items for firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -29,11 +29,22 @@ input[type=number] {
   margin: 12px;
 }
 
-#avatar-info-container p{
+#avatar-info-container p {
   padding-top: 1vh;
   font-size: 18px;
   font-weight: 700;
   text-align: center;
+}
+
+.help-icon {
+  display: flex;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+.help-box {
+  justify-content: space-between;
+  padding-bottom: 12px;
 }
 
 .curator-info {
@@ -59,7 +70,7 @@ input[type=number] {
   }
 }
 
-#curator-settings-container input[type=number] {
+#curator-settings-container input[type="number"] {
   border-radius: 34px;
   position: relative;
   display: inline-block;
@@ -102,7 +113,6 @@ input[type=number] {
 
 /* Small Devices (Phones, Tablets) */
 @media only screen and (min-width: 280px) and (max-width: 767px) {
-
   .profile-sliders {
     width: 200%;
   }
@@ -115,8 +125,8 @@ input[type=number] {
     display: none;
   }
 
-  #avatar-info-container p{
-    padding-top: .5vh;
+  #avatar-info-container p {
+    padding-top: 0.5vh;
     font-size: 14px;
   }
 
@@ -136,15 +146,12 @@ input[type=number] {
     width: 50%;
     align-items: center;
   }
-
 }
 
 /* Larger Phones and Tablets (Landscape) */
 @media only screen and (min-device-width: 769px) and (max-device-width: 1023px) and (orientation: landscape) {
-
 }
 
 /* XS / Smaller Phones (Landscape) */
 @media only screen and (min-device-width: 360px) and (max-device-width: 768px) and (orientation: landscape) {
-
 }
