@@ -44,7 +44,6 @@ function Header () {
   const [notiPopperOpen, setNotiPopperOpen] = useState(false);
 
   const openNotifications = () => {
-    console.log('open notis')
     setNotiPopperOpen(true);
   }
 
@@ -87,7 +86,7 @@ function Header () {
         <Badge className='notification-bell' badgeContent={suggestionNotifications.length} color='secondary'>
           <NotificationsIcon />
         </Badge>
-        <Avatar src={user?.images[0].url} alt='profile-pic' />
+        <Avatar src={user?.images[0]?.url} alt='profile-pic' />
         <h3 className='ml-10 p5'>{user?.display_name}</h3>
       </div>
     </div>
