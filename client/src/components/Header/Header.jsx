@@ -43,9 +43,9 @@ function Header () {
   }, dispatch] = useProviderValue();
   const [notiPopperOpen, setNotiPopperOpen] = useState(false);
 
-  const openNotifications = () => { setNotiPopperOpen(true); }
+  const openNotifications = () => setNotiPopperOpen(true);
 
-  const handleClose = () => { setNotiPopperOpen(false); }
+  const handleClose = () => setNotiPopperOpen(false);
 
   const refreshNotifications = () => {
     getNotifications(user.id).then(res => {

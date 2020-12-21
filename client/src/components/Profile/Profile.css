@@ -37,9 +37,17 @@ input[type=number] {
 }
 
 .info-icon {
+  background: rgba(38, 1, 63, 0.63);
+  border-radius: 12px;
+  padding: 4px;
   display: flex;
   cursor: pointer;
   margin-right: 2px;
+}
+
+.info-icon:hover {
+  background: rgba(247, 0, 255, 0.664);
+  border-radius: 24px;
 }
 
 .info-box{
