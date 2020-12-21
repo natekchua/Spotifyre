@@ -95,10 +95,10 @@ function PlaylistView (props) {
     <>
     { !isSongSearching
       ? <div className='playlist-container'>
-          <div className='playlist-info p20'>
-            <Badge className='info-icon' onClick={openHelp} color='secondary'>
-              <InfoOutlinedIcon />
-            </Badge>
+          <Badge className='info-icon' onClick={openHelp} color='secondary'>
+            <InfoOutlinedIcon />
+          </Badge>
+          <div className='playlist-info p10'>
             <img src={playlist?.images[0]?.url} alt='album-art' />
             <div className='playlist-text'>
               <h1>{playlist?.name}</h1>

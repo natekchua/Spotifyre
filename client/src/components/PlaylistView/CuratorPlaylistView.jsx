@@ -126,10 +126,10 @@ function CuratorPlaylistView (props) {
         ? <>{curatorProfile}</>
         : playlist && !isPlaylistSearching && !curatorPlaylists?.items?.length
             ? <div className='playlist-container'>
-              <div className="playlist-info p20">
                 <Badge className='info-icon' onClick={openHelp} color='secondary'>
                   <InfoOutlinedIcon />
                 </Badge>
+              <div className="playlist-info p10">
                 <img src={playlist?.images[0]?.url} alt='' />
                 <div className="playlist-text">
                   <h1>{playlist?.name}</h1>
