@@ -15,5 +15,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint', 'only-warn'],
-  rules: {},
+  rules: {
+    quotes: [2, 'single']
+  },
 };

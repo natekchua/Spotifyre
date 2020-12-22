@@ -1,7 +1,7 @@
 const { SQL } = require('../db/sql.js')
 
 const getAllCurators = async () => {
-  const query = "SELECT * FROM spotifyre.user WHERE user_type = 'curator';"
+  const query = 'SELECT * FROM spotifyre.user WHERE user_type = \'curator\';'
 
   try {
     const { rows } = await SQL(query)

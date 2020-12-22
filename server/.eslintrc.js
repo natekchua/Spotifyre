@@ -9,6 +9,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12
   },
-  rules: {},
+  rules: {
+    quotes: [2, 'single'],
+    semi: 'error'
+  },
   plugins: ['only-warn']
 }
