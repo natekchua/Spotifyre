@@ -32,8 +32,8 @@ export const getDuration = (ms) => {
 
 // Helpers for API requests.
 export const apiGet = async (path) => {
-  // const response = await fetch('https://spotifyre.herokuapp.com' + path);
-  const response = await fetch(path) // uncomment for local dev environment
+  const response = await fetch('https://spotifyre.herokuapp.com' + path);
+  // const response = await fetch(path) // uncomment for local dev environment
   const body = await response.json()
   if (response.status !== 200) throw Error(body.message)
 
@@ -41,9 +41,8 @@ export const apiGet = async (path) => {
 }
 
 export const apiPost = async (path, item) => {
-  // const response = await fetch('https://spotifyre.herokuapp.com' + path, {
-  const response = await fetch(path, {
-    // uncomment for local dev environment
+  const response = await fetch('https://spotifyre.herokuapp.com' + path, {
+  // const response = await fetch(path, { // uncomment for local dev environment
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
