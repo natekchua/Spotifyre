@@ -118,3 +118,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 .eslintcache
+# keep the settings to preserve eslint plugin config
+!.vscode/settings.json
