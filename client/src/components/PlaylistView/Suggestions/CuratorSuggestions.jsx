@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import CuratorSuggestionRow from './SuggestionRow/CuratorSuggestionRow';
+import { useStyles } from '../../InfoModal/styles'
+import InfoModal from '../../InfoModal/InfoModal';
 import { 
   getPlaybackState,
   playSong
@@ -9,6 +11,9 @@ import {
 import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
 import { wait } from '../../../services/helperFunctions';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import Badge from '@material-ui/core/Badge';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Fade from '@material-ui/core/Fade';
 
 import './Suggestions.css';
 
@@ -23,6 +28,7 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function CuratorSuggestions () {
+  const classes = useStyles();
   const [{ 
     curatorSuggestions,
     curatorPlaylist,
@@ -35,6 +41,11 @@ function CuratorSuggestions () {
       refreshSuggestions();
     }
   }, [])
+
+  const [suggestionsInfo, setSuggestionsInfo] = useState(false);
+
+  const openSuggestionsInfo = () => setSuggestionsInfo(true);
+  const closeSuggestionsInfo = () => setSuggestionsInfo(false);
   
   const onPlaySong = async (safeToPlay, id) => {
     if (safeToPlay) {
@@ -98,9 +109,30 @@ function CuratorSuggestions () {
         <p>Suggestion Details</p>
         <p>Suggested By</p>
       </div>
-      <div className='refresh-icon'>
-        <RefreshIcon onClick={() => refreshSuggestions(true)} /> 
+      <div className='icons'>
+        <div className='refresh-icon'>
+          <RefreshIcon onClick={() => refreshSuggestions(true)} /> 
+        </div>
+        <Badge className='suggestions-info-icon' onClick={openSuggestionsInfo} color='secondary'>
+          <InfoOutlinedIcon />
+        </Badge>
       </div>
+      <InfoModal isOpen={suggestionsInfo} closeInfo={closeSuggestionsInfo}>
+        <Fade in={suggestionsInfo}>
+          <div className={classes.paper}>
+            <div className='info-box flex-basic'>
+              <h2 className='flex-basic' id='transition-modal-title'>
+                Curator Suggestions
+              </h2>
+            </div>
+            <div id='transition-modal-description'>
+              <p>
+                To <strong>suggest a song</strong> to a Curator's playlist, right click on the song on the left playlist view and click Suggest. You will only be able to suggest to the playlist if the user has curator mode enabled.  
+              </p>
+            </div>
+          </div>
+        </Fade>  
+      </InfoModal>  
       <Droppable droppableId='songs'>
         {(provided, snapshot) => (
           <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>

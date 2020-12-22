@@ -92,23 +92,23 @@ function CuratorPlaylistView (props) {
         ? <>{curatorProfile}</>
         : playlist && !isPlaylistSearching && !curatorPlaylists?.items?.length
             ? <div className='playlist-container'>
-              <div className="playlist-info p20">
-                <img src={playlist?.images[0]?.url} alt='' />
-                <div className="playlist-text">
-                  <h1>{playlist?.name}</h1>
-                  <p>{he.decode(playlist?.description)}</p>
-                  <br />
-                  <div className='flex-basic'>
-                    <p>By:&nbsp;</p><div className='profile-name p10' onClick={seeCuratorsPlaylists}><strong>{playlist?.owner.display_name}</strong></div>
+                <div className="playlist-info p10">
+                  <img src={playlist?.images[0]?.url} alt='' />
+                  <div className="playlist-text">
+                    <h1>{playlist?.name}</h1>
+                    <p>{he.decode(playlist?.description)}</p>
+                    <br />
+                    <div className='flex-basic'>
+                      <p>By:&nbsp;</p><div className='profile-name p10' onClick={seeCuratorsPlaylists}><strong>{playlist?.owner.display_name}</strong></div>
+                    </div>
+                    <br />
+                    <p><strong>{playlist?.tracks.total}</strong> {playlist?.tracks.total === 1 ? 'Song' : 'Songs'}</p>
+                    <p><strong>{playlist?.followers.total}</strong> {playlist?.followers.total === 1 ? 'Follower' : 'Followers'}</p>
+                    <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
                   </div>
-                  <br />
-                  <p><strong>{playlist?.tracks.total}</strong> {playlist?.tracks.total === 1 ? 'Song' : 'Songs'}</p>
-                  <p><strong>{playlist?.followers.total}</strong> {playlist?.followers.total === 1 ? 'Follower' : 'Followers'}</p>
-                  <PlayCircleOutlineIcon onClick={onPlayPlaylist} fontSize='large' className='play-playlist' />
+                  <div className='back-button flex-basic p10' onClick={goBackToSearch}><ArrowBackIcon /></div>
                 </div>
-                <div className='back-button flex-basic p10' onClick={goBackToSearch}><ArrowBackIcon /></div>
-              </div>
-              <PlaylistPanelHandler playlist={playlist} curatorView={true} />
+                <PlaylistPanelHandler playlist={playlist} curatorView={true} />
             </div> 
             : <>{searchPage}</>
       }

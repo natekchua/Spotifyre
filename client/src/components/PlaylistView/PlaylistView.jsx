@@ -21,7 +21,6 @@ function PlaylistView (props) {
     isSongSearching,
     user
   }, dispatch] = useProviderValue();
-
   const onPlayPlaylist = async () => {
     const params = {
       playlistID: playlist.id,
@@ -62,8 +61,8 @@ function PlaylistView (props) {
     <>
     { !isSongSearching
       ? <div className='playlist-container'>
-          <div className='playlist-info p20'>
-            <img src={playlist?.images[0].url} alt='album-art' />
+          <div className='playlist-info p10'>
+            <img src={playlist?.images[0]?.url} alt='album-art' />
             <div className='playlist-text'>
               <h1>{playlist?.name}</h1>
               <p>{he.decode(playlist?.description)}</p>
@@ -79,7 +78,6 @@ function PlaylistView (props) {
         </div>
       : <>{searchPage}</>
     }
-      
     </>
   );
 }
