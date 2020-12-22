@@ -1,58 +1,58 @@
-import React, { useState } from 'react'
-import { useProviderValue } from '../../../ContextState/Provider'
+import React, { useState } from 'react';
+import { useProviderValue } from '../../../ContextState/Provider';
 import {
   removeSuggestionFromPlaylist,
   getSuggestionsForPlaylist
-} from '../../../../services/dbRequests'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+} from '../../../../services/dbRequests';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import './SuggestionRow.css'
+import './SuggestionRow.css';
 
 const initialState = {
   mouseX: null,
   mouseY: null
-}
+};
 
 function CuratorSuggestionRow (props) {
   const [{
     user,
     curatorPlaylist
-  }, dispatch] = useProviderValue()
-  const { suggestion, onPlaySong } = props
-  const [state, setState] = useState(initialState)
-  const [safeToPlay, setSafeToPlay] = useState(true)
+  }, dispatch] = useProviderValue();
+  const { suggestion, onPlaySong } = props;
+  const [state, setState] = useState(initialState);
+  const [safeToPlay, setSafeToPlay] = useState(true);
 
   const onRightClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setState({
       mouseX: e.clientX - 2,
       mouseY: e.clientY - 4
-    })
-    setSafeToPlay(false)
-  }
+    });
+    setSafeToPlay(false);
+  };
 
   const removeSuggestion = () => {
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid
-    }
+    };
     removeSuggestionFromPlaylist(params).then(res => {
       getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
         dispatch({
           type: 'SET_CURATOR_SUGGESTIONS',
           curatorSuggestions: JSON.parse(res)
-        })
+        });
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: {
             message: 'Suggestion successfully removed from playlist.',
             type: 'success'
           }
-        })
-      }).catch(err => errorHandler(err))
-    }).catch(err => errorHandler(err))
-  }
+        });
+      }).catch(err => errorHandler(err));
+    }).catch(err => errorHandler(err));
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -61,13 +61,13 @@ function CuratorSuggestionRow (props) {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    })
-  }
+    });
+  };
 
   const handleClose = () => {
-    setState(initialState)
-    setSafeToPlay(true)
-  }
+    setState(initialState);
+    setSafeToPlay(true);
+  };
 
   return (
     <>
@@ -100,7 +100,7 @@ function CuratorSuggestionRow (props) {
         : null
       }
     </>
-  )
+  );
 }
 
-export default CuratorSuggestionRow
+export default CuratorSuggestionRow;

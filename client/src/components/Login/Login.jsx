@@ -1,7 +1,7 @@
-import React from 'react'
-import spotifyreLogo from '../../icons/spotifyre.png'
+import React from 'react';
+import spotifyreLogo from '../../icons/spotifyre.png';
 
-import './Login.css'
+import './Login.css';
 
 function Login (props) {
   return (
@@ -13,7 +13,7 @@ function Login (props) {
       <h2>A Spotify Manager for Playlist Curators</h2>
       <a href={props.loginURL}>Login with Spotify</a>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

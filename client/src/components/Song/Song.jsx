@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import { getDuration } from '../../services/helperFunctions'
-import { useProviderValue } from '../ContextState/Provider'
-import { suggestSongToPlaylist, getSuggestionsForPlaylist } from '../../services/dbRequests'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import React, { useState } from 'react';
+import { getDuration } from '../../services/helperFunctions';
+import { useProviderValue } from '../ContextState/Provider';
+import { suggestSongToPlaylist, getSuggestionsForPlaylist } from '../../services/dbRequests';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import './Song.css'
+import './Song.css';
 
 const initialState = {
   mouseX: null,
   mouseY: null
-}
+};
 
 function Song (props) {
   const [{
@@ -21,24 +21,24 @@ function Song (props) {
     curatorSuggestions,
     curatorPlaylist,
     settingsSetByCurator
-  }, dispatch] = useProviderValue()
-  const { song, onPlaySong, curatorView } = props
-  const [state, setState] = useState(initialState)
-  const [safeToPlay, setSafeToPlay] = useState(true)
+  }, dispatch] = useProviderValue();
+  const { song, onPlaySong, curatorView } = props;
+  const [state, setState] = useState(initialState);
+  const [safeToPlay, setSafeToPlay] = useState(true);
 
   const onRightClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setState({
       mouseX: e.clientX - 2,
       mouseY: e.clientY - 4
-    })
-    setSafeToPlay(false)
-  }
+    });
+    setSafeToPlay(false);
+  };
 
   const handleClose = () => {
-    setState(initialState)
-    setSafeToPlay(true)
-  }
+    setState(initialState);
+    setSafeToPlay(true);
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -47,8 +47,8 @@ function Song (props) {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    })
-  }
+    });
+  };
 
   const suggestSong = () => {
     const params = {
@@ -67,10 +67,10 @@ function Song (props) {
         id: user.id,
         name: user.display_name.replace(/'/g, '')
       }
-    }
+    };
 
     if (curator.id !== user.id) {
-      const currUserSuggestions = curatorSuggestions.filter(s => s?.suggested_by_username === user?.display_name)
+      const currUserSuggestions = curatorSuggestions.filter(s => s?.suggested_by_username === user?.display_name);
 
       // check current entries with curator Settings to see if they satisfy conditions before posting API request.
       if (currUserSuggestions.length < curatorSettings.suggestionsPerUser &&
@@ -80,16 +80,16 @@ function Song (props) {
             dispatch({
               type: 'SET_CURATOR_SUGGESTIONS',
               curatorSuggestions: JSON.parse(res)
-            })
+            });
             dispatch({
               type: 'SET_NOTIFICATION',
               notification: {
                 message: 'Song suggestion successfully submitted to playlist.',
                 type: 'success'
               }
-            })
-          })
-        }).catch(err => errorHandler(err))
+            });
+          });
+        }).catch(err => errorHandler(err));
       } else {
         if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser &&
           curatorSuggestions.length >= curatorSettings.maxSuggestions) {
@@ -101,7 +101,7 @@ function Song (props) {
                 This playlist has also reached its max number of suggestions.`,
               type: 'error'
             }
-          })
+          });
         } else if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser) {
           dispatch({
             type: 'SET_NOTIFICATION',
@@ -109,7 +109,7 @@ function Song (props) {
               message: `Sorry! You can't suggest more than ${curatorSettings.suggestionsPerUser} songs to this playlist.`,
               type: 'error'
             }
-          })
+          });
         } else {
           dispatch({
             type: 'SET_NOTIFICATION',
@@ -117,7 +117,7 @@ function Song (props) {
               message: 'Sorry! This playlist has reached its max number of suggestions.',
               type: 'error'
             }
-          })
+          });
         }
       }
     } else {
@@ -127,9 +127,9 @@ function Song (props) {
           message: 'Nice try! You cannot suggest songs to your own playlist.',
           type: 'error'
         }
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className='flex-basic song-row' onClick={() => onPlaySong(safeToPlay, song.id)} onContextMenu={onRightClick}>
@@ -161,7 +161,7 @@ function Song (props) {
         : null
       }
     </div>
-  )
+  );
 }
 
-export default Song
+export default Song;

@@ -1,38 +1,38 @@
-import React from 'react'
-import { useProviderValue } from '../../ContextState/Provider'
-import { selectPlaylist } from '../../../services/apiRequests'
-import PlaylistRow from './PlaylistRow/PlaylistRow'
+import React from 'react';
+import { useProviderValue } from '../../ContextState/Provider';
+import { selectPlaylist } from '../../../services/apiRequests';
+import PlaylistRow from './PlaylistRow/PlaylistRow';
 
-import './PlaylistResultsList.css'
+import './PlaylistResultsList.css';
 
 function PlaylistResultsList (props) {
-  const { playlistsFromQuery, goBackToCuratorPlaylist } = props
+  const { playlistsFromQuery, goBackToCuratorPlaylist } = props;
   const [{
     playlistSearchQuery,
     isPlaylistSearching,
     curator,
     user
-  }, dispatch] = useProviderValue()
+  }, dispatch] = useProviderValue();
 
   const onSelectPlaylist = (id) => {
     const params = {
       playlistID: id,
       userID: user.id
-    }
+    };
     selectPlaylist(params).then(res => {
       dispatch({
         type: 'SET_CURATOR_PLAYLIST',
         curatorPlaylist: JSON.parse(res).playlist
-      })
+      });
       dispatch({
         type: 'SET_IS_PLAYLIST_SEARCHING',
         isPlaylistSearching: false
-      })
+      });
       if (goBackToCuratorPlaylist) {
-        goBackToCuratorPlaylist()
+        goBackToCuratorPlaylist();
       }
-    }).catch(err => errorHandler(err))
-  }
+    }).catch(err => errorHandler(err));
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -41,8 +41,8 @@ function PlaylistResultsList (props) {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    })
-  }
+    });
+  };
 
   const playlistRows = playlistsFromQuery?.items?.map((p, idx) =>
     <PlaylistRow
@@ -50,7 +50,7 @@ function PlaylistResultsList (props) {
       playlist={p}
       onSelectPlaylist={onSelectPlaylist}
     />
-  )
+  );
 
   return (
     <div className='playlist-query-results'>
@@ -60,7 +60,7 @@ function PlaylistResultsList (props) {
       }
       {playlistRows}
     </div>
-  )
+  );
 }
 
-export default PlaylistResultsList
+export default PlaylistResultsList;

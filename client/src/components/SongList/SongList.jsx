@@ -1,49 +1,49 @@
-import React from 'react'
-import { useProviderValue } from '../ContextState/Provider'
-import { Draggable, Droppable } from 'react-beautiful-dnd'
-import Song from '../Song/Song'
+import React from 'react';
+import { useProviderValue } from '../ContextState/Provider';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import Song from '../Song/Song';
 import {
   getPlaybackState,
   playSong
-} from '../../services/apiRequests'
-import { wait } from '../../services/helperFunctions'
+} from '../../services/apiRequests';
+import { wait } from '../../services/helperFunctions';
 
-import './SongList.css'
+import './SongList.css';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
   opacity: isDragging ? 0.8 : 1,
   ...draggableStyle
-})
+});
 
 const getListStyle = (isDraggingOver) => ({
   background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)'
-})
+});
 
-function SongList(props) {
-  const { playlist, curatorView } = props
-  const [{ user }, dispatch] = useProviderValue()
+function SongList (props) {
+  const { playlist, curatorView } = props;
+  const [{ user }, dispatch] = useProviderValue();
 
   const onPlaySong = async (safeToPlay, id) => {
     if (safeToPlay) {
       const params = {
         songID: id,
         userID: user.id
-      }
-      await playSong(params)
-      await wait(200)
+      };
+      await playSong(params);
+      await wait(200);
       getPlaybackState(user.id).then(res => {
         dispatch({
           type: 'SET_CURR_SONG',
           songObj: res.song?.item
-        })
+        });
         dispatch({
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
-        })
-      })
+        });
+      });
     }
-  }
+  };
 
   const songs = playlist?.tracks?.items.map((s, idx) => {
     return (
@@ -59,8 +59,8 @@ function SongList(props) {
           </li>
         )}
       </Draggable>
-    )
-  })
+    );
+  });
 
   return (
     <div>
@@ -77,7 +77,7 @@ function SongList(props) {
         )}
       </Droppable>
     </div>
-  )
+  );
 }
 
-export default SongList
+export default SongList;

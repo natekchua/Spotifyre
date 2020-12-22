@@ -1,48 +1,48 @@
-import React, { useState } from 'react'
-import { useProviderValue } from '../ContextState/Provider'
-import { getNotifications } from '../../services/dbRequests'
-import { useStyles } from '../InfoModal/styles'
-import InfoModal from '../InfoModal/InfoModal'
-import { Avatar } from '@material-ui/core'
-import NotificationList from '../Notifications/NotificationList'
-import Badge from '@material-ui/core/Badge'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-import Fade from '@material-ui/core/Fade'
-import RefreshIcon from '@material-ui/icons/Refresh'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
+import React, { useState } from 'react';
+import { useProviderValue } from '../ContextState/Provider';
+import { getNotifications } from '../../services/dbRequests';
+import { useStyles } from '../InfoModal/styles';
+import InfoModal from '../InfoModal/InfoModal';
+import { Avatar } from '@material-ui/core';
+import NotificationList from '../Notifications/NotificationList';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Fade from '@material-ui/core/Fade';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
-import './Header.css'
+import './Header.css';
 
 function Header () {
-  const classes = useStyles()
+  const classes = useStyles();
   const [{
     user,
     tab,
     suggestionNotifications
-  }, dispatch] = useProviderValue()
-  const [notiPopperOpen, setNotiPopperOpen] = useState(false)
-  const [collaborateInfo, setCollaborateInfo] = useState(false)
+  }, dispatch] = useProviderValue();
+  const [notiPopperOpen, setNotiPopperOpen] = useState(false);
+  const [collaborateInfo, setCollaborateInfo] = useState(false);
 
-  const openNotifications = () => setNotiPopperOpen(true)
-  const closeNotifications = () => setNotiPopperOpen(false)
-  const openCollaborateInfo = () => setCollaborateInfo(true)
-  const closeCollaborateInfo = () => setCollaborateInfo(false)
+  const openNotifications = () => setNotiPopperOpen(true);
+  const closeNotifications = () => setNotiPopperOpen(false);
+  const openCollaborateInfo = () => setCollaborateInfo(true);
+  const closeCollaborateInfo = () => setCollaborateInfo(false);
 
   const refreshNotifications = () => {
     getNotifications(user.id).then(res => {
       dispatch({
         type: 'SET_SUGGESTION_NOTIFICATIONS',
         suggestionNotifications: res
-      })
+      });
       dispatch({
         type: 'SET_NOTIFICATION',
         notification: {
           message: 'Your notifications are now up to date.',
           type: 'success'
         }
-      })
-    }).catch(err => errorHandler(err))
-  }
+      });
+    }).catch(err => errorHandler(err));
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -51,8 +51,8 @@ function Header () {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -106,7 +106,7 @@ function Header () {
       </Fade>
     </InfoModal>
     </>
-  )
+  );
 }
 
-export default Header
+export default Header;

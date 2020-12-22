@@ -1,51 +1,51 @@
-import React from 'react'
-import { useProviderValue } from '../ContextState/Provider'
-import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler'
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
-import SongResultsList from './SongsResultsList/SongsResultsList'
-import SongSearch from '../Search/SongSearch'
-import SearchIcon from '@material-ui/icons/Search'
-import he from 'he'
+import React from 'react';
+import { useProviderValue } from '../ContextState/Provider';
+import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import SongResultsList from './SongsResultsList/SongsResultsList';
+import SongSearch from '../Search/SongSearch';
+import SearchIcon from '@material-ui/icons/Search';
+import he from 'he';
 import {
   getPlaybackState,
   playPlaylist
-} from '../../services/apiRequests'
-import { wait } from '../../services/helperFunctions'
+} from '../../services/apiRequests';
+import { wait } from '../../services/helperFunctions';
 
-import './PlaylistView.css'
+import './PlaylistView.css';
 
 function PlaylistView (props) {
-  const { playlist } = props
+  const { playlist } = props;
   const [{
     songsSearchResults,
     isSongSearching,
     user
-  }, dispatch] = useProviderValue()
+  }, dispatch] = useProviderValue();
   const onPlayPlaylist = async () => {
     const params = {
       playlistID: playlist.id,
       userID: user.id
-    }
-    await playPlaylist(params)
-    await wait(200)
+    };
+    await playPlaylist(params);
+    await wait(200);
     getPlaybackState(user.id).then(res => {
       dispatch({
         type: 'SET_CURR_SONG',
         songObj: res.song?.item
-      })
+      });
       dispatch({
         type: 'SET_SONG_STATUS',
         isPlaying: res.isPlaying
-      })
-    })
-  }
+      });
+    });
+  };
 
   const goToSearch = () => {
     dispatch({
       type: 'SET_IS_SONG_SEARCHING',
       isSongSearching: true
-    })
-  }
+    });
+  };
 
   const searchPage = (
     <div className='playlist-container'>
@@ -55,7 +55,7 @@ function PlaylistView (props) {
         : <h1 className='flex-basic p20'>Search for a song!</h1>
       }
     </div>
-  )
+  );
 
   return (
     <>
@@ -79,7 +79,7 @@ function PlaylistView (props) {
       : <>{searchPage}</>
     }
     </>
-  )
+  );
 }
 
-export default PlaylistView
+export default PlaylistView;

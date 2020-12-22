@@ -1,80 +1,80 @@
-import React, { useState } from 'react'
-import { useProviderValue } from '../ContextState/Provider'
-import he from 'he'
-import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler'
-import PlaylistSearch from '../Search/PlaylistSearch'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import PlaylistResultsList from './PlaylistResultsList/PlaylistResultsList'
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
+import React, { useState } from 'react';
+import { useProviderValue } from '../ContextState/Provider';
+import he from 'he';
+import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
+import PlaylistSearch from '../Search/PlaylistSearch';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import PlaylistResultsList from './PlaylistResultsList/PlaylistResultsList';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import {
   getPlaybackState,
   playPlaylist,
   getCuratorPlaylists
-} from '../../services/apiRequests'
-import { wait } from '../../services/helperFunctions'
+} from '../../services/apiRequests';
+import { wait } from '../../services/helperFunctions';
 
-import './PlaylistView.css'
+import './PlaylistView.css';
 
 function CuratorPlaylistView (props) {
-  const { playlist } = props
+  const { playlist } = props;
   const [{
     playlistSearchResults,
     isPlaylistSearching,
     curator,
     user
-  }, dispatch] = useProviderValue()
-  const [curatorPlaylists, setCuratorPlaylists] = useState([])
+  }, dispatch] = useProviderValue();
+  const [curatorPlaylists, setCuratorPlaylists] = useState([]);
 
   const goBackToSearch = () => {
     dispatch({
       type: 'SET_CURATOR_PLAYLIST',
       curatorPlaylist: []
-    })
+    });
     dispatch({
       type: 'SET_IS_PLAYLIST_SEARCHING',
       isPlaylistSearching: true
-    })
-  }
+    });
+  };
 
   const goBackToCuratorPlaylist = () => {
-    setCuratorPlaylists([])
-  }
+    setCuratorPlaylists([]);
+  };
 
   const onPlayPlaylist = async () => {
     const params = {
       playlistID: playlist.id,
       userID: user.id
-    }
-    await playPlaylist(params)
-    await wait(200)
+    };
+    await playPlaylist(params);
+    await wait(200);
     getPlaybackState(user.id).then(res => {
       dispatch({
         type: 'SET_CURR_SONG',
         songObj: res.song?.item
-      })
+      });
       dispatch({
         type: 'SET_SONG_STATUS',
         isPlaying: res.isPlaying
-      })
-    })
-  }
+      });
+    });
+  };
 
   const seeCuratorsPlaylists = async () => {
     const params = {
       curatorID: curator.id,
       userID: user.id
-    }
+    };
     getCuratorPlaylists(params).then(res => {
-      setCuratorPlaylists(JSON.parse(res).curatorPlaylists)
-    })
-  }
+      setCuratorPlaylists(JSON.parse(res).curatorPlaylists);
+    });
+  };
 
   const curatorProfile = (
     <div className='playlist-container'>
       <div className='back-button flex-basic p10' onClick={goBackToCuratorPlaylist}><ArrowBackIcon /></div>
       <PlaylistResultsList playlistsFromQuery={curatorPlaylists} goBackToCuratorPlaylist={goBackToCuratorPlaylist} />
     </div>
-  )
+  );
 
   const searchPage = (
     <div className='playlist-container'>
@@ -84,7 +84,7 @@ function CuratorPlaylistView (props) {
         : <h1 className='flex-basic p20'>Search for a playlist!</h1>
       }
     </div>
-  )
+  );
 
   return (
     <>
@@ -113,7 +113,7 @@ function CuratorPlaylistView (props) {
           : <>{searchPage}</>
       }
     </>
-  )
+  );
 }
 
-export default CuratorPlaylistView
+export default CuratorPlaylistView;

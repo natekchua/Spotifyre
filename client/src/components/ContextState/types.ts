@@ -1,5 +1,5 @@
-import { Dispatch, ReactNode } from 'react'
-import { Tabs } from '../../types'
+import { Dispatch, ReactNode } from 'react';
+import { Tabs } from '../../types';
 
 export type ContextStateActionType =
   | 'SET_TOKEN'

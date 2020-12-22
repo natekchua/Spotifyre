@@ -1,87 +1,87 @@
-import React, { useState } from 'react'
-import { useProviderValue } from '../../../ContextState/Provider'
+import React, { useState } from 'react';
+import { useProviderValue } from '../../../ContextState/Provider';
 import {
   removeSuggestionFromPlaylist,
   getSuggestionsForPlaylist,
   getNotifications
-} from '../../../../services/dbRequests'
-import { addTrackToPlaylist } from '../../../../services/apiRequests'
-import ClearIcon from '@material-ui/icons/Clear'
-import CheckIcon from '@material-ui/icons/Check'
+} from '../../../../services/dbRequests';
+import { addTrackToPlaylist } from '../../../../services/apiRequests';
+import ClearIcon from '@material-ui/icons/Clear';
+import CheckIcon from '@material-ui/icons/Check';
 
-import './SuggestionRow.css'
+import './SuggestionRow.css';
 
 function UserSuggestionRow (props) {
   const [{
     user,
     currPlaylist
-  }, dispatch] = useProviderValue()
-  const { suggestion, onPlaySong } = props
-  const [safeToPlay, setSafeToPlay] = useState(true)
+  }, dispatch] = useProviderValue();
+  const { suggestion, onPlaySong } = props;
+  const [safeToPlay, setSafeToPlay] = useState(true);
 
   const rejectSuggestion = () => {
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid
-    }
-    setSafeToPlay(false)
+    };
+    setSafeToPlay(false);
     removeSuggestionFromPlaylist(params).then(res => {
       getSuggestionsForPlaylist(currPlaylist.id).then(res => {
         dispatch({
           type: 'SET_USER_SUGGESTIONS',
           userSuggestions: JSON.parse(res)
-        })
+        });
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: {
             message: `Rejected ${suggestion.suggested_by_username}'s suggestion '${suggestion.song_title}' for '${suggestion.playlist}'.`,
             type: 'success'
           }
-        })
-      }).catch(err => errorHandler(err))
+        });
+      }).catch(err => errorHandler(err));
       getNotifications(user.id).then(res => {
         dispatch({
           type: 'SET_SUGGESTION_NOTIFICATIONS',
           suggestionNotifications: res
-        })
-      }).catch(err => errorHandler(err))
-    }).catch(err => errorHandler(err))
-  }
+        });
+      }).catch(err => errorHandler(err));
+    }).catch(err => errorHandler(err));
+  };
 
   const acceptSuggestion = async () => {
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid,
       userID: user.id
-    }
-    setSafeToPlay(false)
+    };
+    setSafeToPlay(false);
     try {
-      await addTrackToPlaylist(params)
+      await addTrackToPlaylist(params);
       removeSuggestionFromPlaylist(params).then(res => {
         getSuggestionsForPlaylist(currPlaylist.id).then(res => {
           dispatch({
             type: 'SET_USER_SUGGESTIONS',
             userSuggestions: JSON.parse(res)
-          })
+          });
           dispatch({
             type: 'SET_NOTIFICATION',
             notification: {
               message: `Accepted ${suggestion.suggested_by_username}'s suggestion '${suggestion.song_title}' for '${suggestion.playlist}'!`,
               type: 'success'
             }
-          })
-        }).catch(err => errorHandler(err))
+          });
+        }).catch(err => errorHandler(err));
         getNotifications(user.id).then(res => {
           dispatch({
             type: 'SET_SUGGESTION_NOTIFICATIONS',
             suggestionNotifications: res
-          })
-        }).catch(err => errorHandler(err))
-      }).catch(err => errorHandler(err))
+          });
+        }).catch(err => errorHandler(err));
+      }).catch(err => errorHandler(err));
     } catch (err) {
-      errorHandler(err)
+      errorHandler(err);
     }
-  }
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -90,8 +90,8 @@ function UserSuggestionRow (props) {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -116,7 +116,7 @@ function UserSuggestionRow (props) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default UserSuggestionRow
+export default UserSuggestionRow;

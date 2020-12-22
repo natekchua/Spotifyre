@@ -1,10 +1,10 @@
-import React from 'react'
-import UserSuggestions from './UserSuggestions'
+import React from 'react';
+import UserSuggestions from './UserSuggestions';
 
-import './Suggestions.css'
+import './Suggestions.css';
 
 function UserSuggestionsContainer (props) {
-  const { userSettings } = props
+  const { userSettings } = props;
   return (
     <div>
       { userSettings?.curatorMode
@@ -14,7 +14,7 @@ function UserSuggestionsContainer (props) {
           </h3>
       }
     </div>
-  )
+  );
 }
 
-export default UserSuggestionsContainer
+export default UserSuggestionsContainer;

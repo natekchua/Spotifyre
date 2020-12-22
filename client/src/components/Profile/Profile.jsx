@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react'
-import { useProviderValue } from '../ContextState/Provider'
-import { Avatar } from '@material-ui/core'
-import { updateCurationSettings } from '../../services/dbRequests'
-import { useStyles } from '../InfoModal/styles'
-import InfoModal from '../InfoModal/InfoModal'
-import Slider from '@material-ui/core/Slider'
-import Input from '@material-ui/core/Input'
-import Switch from '@material-ui/core/Switch'
-import Button from '@material-ui/core/Button'
-import Badge from '@material-ui/core/Badge'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import Fade from '@material-ui/core/Fade'
+import React, { useState, useEffect } from 'react';
+import { useProviderValue } from '../ContextState/Provider';
+import { Avatar } from '@material-ui/core';
+import { updateCurationSettings } from '../../services/dbRequests';
+import { useStyles } from '../InfoModal/styles';
+import InfoModal from '../InfoModal/InfoModal';
+import Slider from '@material-ui/core/Slider';
+import Input from '@material-ui/core/Input';
+import Switch from '@material-ui/core/Switch';
+import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Fade from '@material-ui/core/Fade';
 
-import 'antd/lib/alert/style/index.css'
-import './Profile.css'
+import 'antd/lib/alert/style/index.css';
+import './Profile.css';
 
 function Profile () {
-  const classes = useStyles()
+  const classes = useStyles();
   const [{
     user,
     userSettings
-  }, dispatch] = useProviderValue()
+  }, dispatch] = useProviderValue();
 
-  const [curatorMode, setCuratorMode] = useState(userSettings.curatorMode)
-  const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions)
-  const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser)
-  const [curatorInfo, setCuratorInfo] = useState(false)
+  const [curatorMode, setCuratorMode] = useState(userSettings.curatorMode);
+  const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions);
+  const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser);
+  const [curatorInfo, setCuratorInfo] = useState(false);
 
-  const openCuratorInfo = () => setCuratorInfo(true)
-  const closeCuratorInfo = () => setCuratorInfo(false)
+  const openCuratorInfo = () => setCuratorInfo(true);
+  const closeCuratorInfo = () => setCuratorInfo(false);
 
   useEffect(() => {
     dispatch({
       type: 'SET_TAB',
       tab: 'Profile'
-    })
-  }, [])
+    });
+  }, []);
 
   const errorHandler = (err) => {
     dispatch({
@@ -44,59 +44,59 @@ function Profile () {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    })
-  }
+    });
+  };
 
   const saveSettings = () => {
     const newCurationSettings = {
       curatorMode: curatorMode,
       maxSuggestions: maxSuggestions,
       suggestionsPerUser: suggestionsPerUser
-    }
+    };
 
-    const params = { user, newCurationSettings }
+    const params = { user, newCurationSettings };
     updateCurationSettings(params).then(res => {
       dispatch({
         type: 'SET_USER_SETTINGS',
         userSettings: newCurationSettings
-      })
+      });
       dispatch({
         type: 'SET_NOTIFICATION',
         notification: {
           message: 'Settings successfully updated.',
           type: 'success'
         }
-      })
-    }).catch(err => errorHandler(err))
-  }
+      });
+    }).catch(err => errorHandler(err));
+  };
 
   const toggleCuratorMode = () => {
-    setCuratorMode(true) // user can't disable curator mode once it is enabled (for now).
-  }
+    setCuratorMode(true); // user can't disable curator mode once it is enabled (for now).
+  };
 
   const handleSliderChange = (event, newValue) => {
-    setMaxSuggestions(newValue)
-  }
+    setMaxSuggestions(newValue);
+  };
 
   const handleBlur = () => {
     if (maxSuggestions < 0) {
-      setMaxSuggestions(0)
+      setMaxSuggestions(0);
     } else if (maxSuggestions > 100) {
-      setMaxSuggestions(100)
+      setMaxSuggestions(100);
     }
-  }
+  };
 
   const handleSliderChangeV2 = (event, newValue) => {
-    setSuggestionsPerUser(newValue)
-  }
+    setSuggestionsPerUser(newValue);
+  };
 
   const handleBlurV2 = () => {
     if (suggestionsPerUser < 0) {
-      setSuggestionsPerUser(0)
+      setSuggestionsPerUser(0);
     } else if (suggestionsPerUser > 100) {
-      setSuggestionsPerUser(100)
+      setSuggestionsPerUser(100);
     }
-  }
+  };
 
   return (
     <div className='profile-container flex-basic'>
@@ -191,7 +191,7 @@ function Profile () {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

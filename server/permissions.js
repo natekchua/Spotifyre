@@ -5,6 +5,6 @@ const permissions = [
   'user-top-read',
   'user-modify-playback-state',
   'playlist-modify-public'
-]
+];
 
-module.exports = permissions
+module.exports = permissions;

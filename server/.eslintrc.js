@@ -11,7 +11,7 @@ module.exports = {
   },
   rules: {
     quotes: [2, 'single'],
-    semi: 'error'
+    semi: [2, 'always']
   },
   plugins: ['only-warn']
-}
+};

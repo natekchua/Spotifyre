@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-import './PlaylistRow.css'
+import './PlaylistRow.css';
 
 function PlaylistRow (props) {
-  const { playlist, onSelectPlaylist } = props
+  const { playlist, onSelectPlaylist } = props;
 
   return (
     <div className='playlist-row p20 flex-basic' onClick={() => onSelectPlaylist(playlist.id)}>
@@ -16,7 +16,7 @@ function PlaylistRow (props) {
         <p className='ml5'>{playlist.tracks.total} Songs</p>
       </div>
     </div>
-  )
+  );
 }
 
-export default PlaylistRow
+export default PlaylistRow;
