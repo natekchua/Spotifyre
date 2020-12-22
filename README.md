@@ -55,10 +55,11 @@ npm install && npm start
 - Website: https://raksdewji.github.io/
 
 ### Community Contributors
+
 👤 **Artem Golovin**
 
-- Github: [@raksdewji](https://github.com/raksdewji)
-- Website: https://raksdewji.github.io/
+- Github: [@awave1](https://github.com/awave1)
+- Website: https://temagolovin.dev/
 
 ## Technology Stack
 
