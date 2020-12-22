@@ -20,7 +20,7 @@ const getListStyle = (isDraggingOver) => ({
   background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)'
 })
 
-function SongList (props) {
+function SongList(props) {
   const { playlist, curatorView } = props
   const [{ user }, dispatch] = useProviderValue()
 
@@ -49,14 +49,14 @@ function SongList (props) {
     return (
       <Draggable key={s?.track?.id} draggableId={s?.track?.id} index={idx}>
         {(provided, snapshot) => (
-        <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
-          style={getItemStyle(
-            snapshot.isDragging,
-            provided.draggableProps.style
-          )
-        }>
-          <Song song={s?.track} onPlaySong={onPlaySong} curatorView={curatorView} />
-        </li>
+          <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
+            style={getItemStyle(
+              snapshot.isDragging,
+              provided.draggableProps.style
+            )
+            }>
+            <Song song={s?.track} onPlaySong={onPlaySong} curatorView={curatorView} />
+          </li>
         )}
       </Draggable>
     )
