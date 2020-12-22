@@ -1,10 +1,10 @@
-import React from 'react';
-import CuratorSuggestions from './CuratorSuggestions';
+import React from 'react'
+import CuratorSuggestions from './CuratorSuggestions'
 
-import './Suggestions.css';
+import './Suggestions.css'
 
 function CuratorSuggestionsContainer (props) {
-  const { curatorView, hasCuratorSettings } = props;
+  const { curatorView, hasCuratorSettings } = props
 
   return (
     <div>
@@ -15,7 +15,7 @@ function CuratorSuggestionsContainer (props) {
           </h3>
       }
     </div>
-  );
+  )
 }
 
-export default CuratorSuggestionsContainer;
+export default CuratorSuggestionsContainer

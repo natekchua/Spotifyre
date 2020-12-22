@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import './Option.css';
+import './Option.css'
 
 function PlaylistOption (props) {
   const {
@@ -9,7 +9,7 @@ function PlaylistOption (props) {
     Icon,
     playlist,
     onSelectPlaylist
-  } = props;
+  } = props
 
   return (
     <Link to='/collaborate' className='option-link'>
@@ -18,7 +18,7 @@ function PlaylistOption (props) {
         { Icon ? <h4>{optionName}</h4> : <h5>{optionName}</h5> }
       </div>
     </Link>
-  );
+  )
 }
 
-export default PlaylistOption;
+export default PlaylistOption

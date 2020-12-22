@@ -22,7 +22,7 @@ function App () {
             .then(res => {
               dispatch({
                 type: 'SET_TOKEN',
-                token: JSON.parse(res).tokens.accessToken,
+                token: JSON.parse(res).tokens.accessToken
               })
             })
             .catch(err => errorHandler(err))
@@ -36,8 +36,8 @@ function App () {
       type: 'SET_NOTIFICATION',
       notification: {
         message: `Oops! ${err}`,
-        type: 'error',
-      },
+        type: 'error'
+      }
     })
   }
 

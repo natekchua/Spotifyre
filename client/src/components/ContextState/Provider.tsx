@@ -3,18 +3,18 @@ import { initialState } from './initialState'
 import {
   ContextStateReducer,
   ContextProviderProps,
-  ProviderProps,
+  ProviderProps
 } from './types'
 
 export const Context = createContext<ContextProviderProps>([
   initialState,
-  () => initialState,
+  () => initialState
 ])
 
 export const Provider: React.FC<ProviderProps> = ({
   children,
   initialState,
-  reducer,
+  reducer
 }: ProviderProps) => {
   const value = useReducer<ContextStateReducer>(reducer, initialState)
 

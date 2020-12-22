@@ -1,31 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useProviderValue } from '../ContextState/Provider';
-import spotifyreLogo from '../../icons/spotifyre.png';
-import TabOption from './Option/TabOption';
-import PlaylistOption from './Option/PlaylistOption';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import FaceIcon from '@material-ui/icons/Face';
-import { selectPlaylist } from '../../services/apiRequests';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useProviderValue } from '../ContextState/Provider'
+import spotifyreLogo from '../../icons/spotifyre.png'
+import TabOption from './Option/TabOption'
+import PlaylistOption from './Option/PlaylistOption'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import PeopleIcon from '@material-ui/icons/People'
+import FaceIcon from '@material-ui/icons/Face'
+import { selectPlaylist } from '../../services/apiRequests'
 
-import './Sidebar.css';
+import './Sidebar.css'
 
 function Sidebar () {
-  const [{ playlists, user }, dispatch] = useProviderValue();
+  const [{ playlists, user }, dispatch] = useProviderValue()
 
   const onSelectPlaylist = (id) => {
     const params = {
       playlistID: id,
       userID: user.id
-    };
+    }
     selectPlaylist(params).then(res => {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
         currPlaylist: JSON.parse(res).playlist
       })
     }).catch(err => errorHandler(err))
-  };
+  }
 
   const errorHandler = (err) => {
     dispatch({
@@ -34,7 +34,7 @@ function Sidebar () {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    });
+    })
   }
 
   const playlistOptions = playlists?.items?.map((p, idx) =>
@@ -44,7 +44,7 @@ function Sidebar () {
       playlist={p}
       onSelectPlaylist={onSelectPlaylist}
     />
-  );
+  )
 
   return (
     <div className='sidebar'>
@@ -62,7 +62,7 @@ function Sidebar () {
         {playlistOptions}
       </div>
     </div>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar

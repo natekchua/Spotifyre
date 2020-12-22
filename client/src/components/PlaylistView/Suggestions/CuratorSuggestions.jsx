@@ -1,69 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import { useProviderValue } from '../../ContextState/Provider';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
-import CuratorSuggestionRow from './SuggestionRow/CuratorSuggestionRow';
+import React, { useState, useEffect } from 'react'
+import { useProviderValue } from '../../ContextState/Provider'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
+import CuratorSuggestionRow from './SuggestionRow/CuratorSuggestionRow'
 import { useStyles } from '../../InfoModal/styles'
-import InfoModal from '../../InfoModal/InfoModal';
-import { 
+import InfoModal from '../../InfoModal/InfoModal'
+import {
   getPlaybackState,
   playSong
-} from '../../../services/apiRequests';
-import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
-import { wait } from '../../../services/helperFunctions';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import Badge from '@material-ui/core/Badge';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import Fade from '@material-ui/core/Fade';
+} from '../../../services/apiRequests'
+import { getSuggestionsForPlaylist } from '../../../services/dbRequests'
+import { wait } from '../../../services/helperFunctions'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import Badge from '@material-ui/core/Badge'
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
+import Fade from '@material-ui/core/Fade'
 
-import './Suggestions.css';
+import './Suggestions.css'
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
   opacity: isDragging ? 0.8 : 1,
   ...draggableStyle
-});
+})
 
 const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)',
-});
+  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)'
+})
 
 function CuratorSuggestions () {
-  const classes = useStyles();
-  const [{ 
+  const classes = useStyles()
+  const [{
     curatorSuggestions,
     curatorPlaylist,
     user
-  }, dispatch] = useProviderValue();
+  }, dispatch] = useProviderValue()
 
   useEffect(() => {
     // get suggestions from DB if playlist suggestion isn't loaded or new playlist suggestions are generated.
-    if (!curatorSuggestions?.length || curatorSuggestions[0]?.playlistid !== curatorPlaylist?.id) { 
-      refreshSuggestions();
+    if (!curatorSuggestions?.length || curatorSuggestions[0]?.playlistid !== curatorPlaylist?.id) {
+      refreshSuggestions()
     }
   }, [])
 
-  const [suggestionsInfo, setSuggestionsInfo] = useState(false);
+  const [suggestionsInfo, setSuggestionsInfo] = useState(false)
 
-  const openSuggestionsInfo = () => setSuggestionsInfo(true);
-  const closeSuggestionsInfo = () => setSuggestionsInfo(false);
-  
+  const openSuggestionsInfo = () => setSuggestionsInfo(true)
+  const closeSuggestionsInfo = () => setSuggestionsInfo(false)
+
   const onPlaySong = async (safeToPlay, id) => {
     if (safeToPlay) {
       const params = {
         songID: id,
         userID: user.id
-      };
-      await playSong(params);
-      await wait(200);
+      }
+      await playSong(params)
+      await wait(200)
       getPlaybackState(user.id).then(res => {
         dispatch({
           type: 'SET_CURR_SONG',
           songObj: res.song?.item
-        });
+        })
         dispatch({
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
-        });
+        })
       })
     }
   }
@@ -78,12 +78,12 @@ function CuratorSuggestions () {
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: {
-            message: `The curator playlist suggestions have been refreshed.`,
+            message: 'The curator playlist suggestions have been refreshed.',
             type: 'success'
           }
-        });
+        })
       }
-    }) 
+    })
   }
 
   const suggestionsList = curatorSuggestions?.map((s, idx) => {
@@ -100,7 +100,7 @@ function CuratorSuggestions () {
         </li>
         )}
       </Draggable>
-    );
+    )
   })
 
   return (
@@ -111,7 +111,7 @@ function CuratorSuggestions () {
       </div>
       <div className='icons'>
         <div className='refresh-icon'>
-          <RefreshIcon onClick={() => refreshSuggestions(true)} /> 
+          <RefreshIcon onClick={() => refreshSuggestions(true)} />
         </div>
         <Badge className='suggestions-info-icon' onClick={openSuggestionsInfo} color='secondary'>
           <InfoOutlinedIcon />
@@ -127,12 +127,12 @@ function CuratorSuggestions () {
             </div>
             <div id='transition-modal-description'>
               <p>
-                To <strong>suggest a song</strong> to a Curator's playlist, right click on the song on the left playlist view and click Suggest. You will only be able to suggest to the playlist if the user has curator mode enabled.  
+                To <strong>suggest a song</strong> to a Curator's playlist, right click on the song on the left playlist view and click Suggest. You will only be able to suggest to the playlist if the user has curator mode enabled.
               </p>
             </div>
           </div>
-        </Fade>  
-      </InfoModal>  
+        </Fade>
+      </InfoModal>
       <Droppable droppableId='songs'>
         {(provided, snapshot) => (
           <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
@@ -141,9 +141,9 @@ function CuratorSuggestions () {
             {provided.placeholder}
           </ul>
         )}
-      </Droppable>  
+      </Droppable>
     </div>
-  );
+  )
 }
 
-export default CuratorSuggestions;
+export default CuratorSuggestions

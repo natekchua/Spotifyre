@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme) => ({
   modal: {
@@ -17,6 +17,6 @@ export const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     borderRadius: '12px',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+    padding: theme.spacing(2, 4, 3)
+  }
+}))

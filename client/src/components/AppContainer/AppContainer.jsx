@@ -11,7 +11,7 @@ import Header from '../Header/Header'
 import {
   getMe,
   getUserPlaylists,
-  getPlaylist,
+  getPlaylist
 } from '../../services/apiRequests'
 import { getNotifications, getSettings } from '../../services/dbRequests'
 
@@ -24,7 +24,7 @@ function AppContainer (props) {
   const closeNotification = () => {
     dispatch({
       type: 'SET_NOTIFICATION',
-      notification: null,
+      notification: null
     })
   }
 
@@ -36,7 +36,7 @@ function AppContainer (props) {
           const me = JSON.parse(res).me
           dispatch({
             type: 'SET_USER',
-            user: me,
+            user: me
           })
 
           getSettings(me.id)
@@ -45,11 +45,11 @@ function AppContainer (props) {
                 const resultObj = JSON.parse(res).curator_settings
                 dispatch({
                   type: 'SET_USER_SETTINGS',
-                  userSettings: JSON.parse(resultObj),
+                  userSettings: JSON.parse(resultObj)
                 })
                 dispatch({
                   type: 'CHECK_USER_SETTINGS',
-                  settingsSetByUser: true,
+                  settingsSetByUser: true
                 })
               }
             })
@@ -60,7 +60,7 @@ function AppContainer (props) {
             .then(res => {
               dispatch({
                 type: 'SET_PLAYLISTS',
-                playlists: res.playlists,
+                playlists: res.playlists
               })
             })
             .catch(err => errorHandler(err))
@@ -70,7 +70,7 @@ function AppContainer (props) {
             .then(res => {
               dispatch({
                 type: 'SET_CURR_PLAYLIST',
-                currPlaylist: res.playlist,
+                currPlaylist: res.playlist
               })
             })
             .catch(err => errorHandler(err))
@@ -79,7 +79,7 @@ function AppContainer (props) {
             .then(res => {
               dispatch({
                 type: 'SET_SUGGESTION_NOTIFICATIONS',
-                suggestionNotifications: res,
+                suggestionNotifications: res
               })
             })
             .catch(err => errorHandler(err))
@@ -93,8 +93,8 @@ function AppContainer (props) {
       type: 'SET_NOTIFICATION',
       notification: {
         message: `Oops! ${err}`,
-        type: 'error',
-      },
+        type: 'error'
+      }
     })
   }
 

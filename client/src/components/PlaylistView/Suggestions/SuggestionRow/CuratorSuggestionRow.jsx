@@ -1,35 +1,35 @@
-import React, { useState } from 'react';
-import { useProviderValue } from '../../../ContextState/Provider';
-import { 
+import React, { useState } from 'react'
+import { useProviderValue } from '../../../ContextState/Provider'
+import {
   removeSuggestionFromPlaylist,
   getSuggestionsForPlaylist
-} from '../../../../services/dbRequests';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+} from '../../../../services/dbRequests'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
-import './SuggestionRow.css';
+import './SuggestionRow.css'
 
 const initialState = {
   mouseX: null,
-  mouseY: null,
-};
+  mouseY: null
+}
 
 function CuratorSuggestionRow (props) {
-  const [{ 
+  const [{
     user,
     curatorPlaylist
-  }, dispatch] = useProviderValue();
+  }, dispatch] = useProviderValue()
   const { suggestion, onPlaySong } = props
-  const [state, setState] = useState(initialState);
-  const [safeToPlay, setSafeToPlay] = useState(true);
+  const [state, setState] = useState(initialState)
+  const [safeToPlay, setSafeToPlay] = useState(true)
 
   const onRightClick = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setState({
       mouseX: e.clientX - 2,
-      mouseY: e.clientY - 4,
-    });
-    setSafeToPlay(false);
+      mouseY: e.clientY - 4
+    })
+    setSafeToPlay(false)
   }
 
   const removeSuggestion = () => {
@@ -49,9 +49,9 @@ function CuratorSuggestionRow (props) {
             message: 'Suggestion successfully removed from playlist.',
             type: 'success'
           }
-        });
-      }).catch(err => errorHandler(err));
-    }).catch(err => errorHandler(err));
+        })
+      }).catch(err => errorHandler(err))
+    }).catch(err => errorHandler(err))
   }
 
   const errorHandler = (err) => {
@@ -61,12 +61,12 @@ function CuratorSuggestionRow (props) {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    });
+    })
   }
 
   const handleClose = () => {
-    setState(initialState);
-    setSafeToPlay(true);
+    setState(initialState)
+    setSafeToPlay(true)
   }
 
   return (
@@ -82,7 +82,7 @@ function CuratorSuggestionRow (props) {
         <p className='p5'>{suggestion?.suggested_by_username}</p>
       </div>
       { suggestion.suggested_by_userid === user.id
-        ? <Menu     
+        ? <Menu
             keepMounted
             open={state.mouseY !== null}
             onClose={handleClose}
@@ -100,7 +100,7 @@ function CuratorSuggestionRow (props) {
         : null
       }
     </>
-  );
+  )
 }
 
-export default CuratorSuggestionRow;
+export default CuratorSuggestionRow

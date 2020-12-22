@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
 function PlaylistPanel (props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, ...other } = props
 
   return (
     <div
@@ -13,7 +13,7 @@ function PlaylistPanel (props) {
     >
       {value === index && (<div>{children}</div>)}
     </div>
-  );
+  )
 }
 
-export default PlaylistPanel;
+export default PlaylistPanel

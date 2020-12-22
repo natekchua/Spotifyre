@@ -10,7 +10,7 @@ export const initialState: ContextProviderState = {
   userSettings: {
     curatorMode: false,
     maxSuggestions: 100,
-    suggestionsPerUser: 10,
+    suggestionsPerUser: 10
   },
   userSuggestions: [],
   curator: null,
@@ -18,7 +18,7 @@ export const initialState: ContextProviderState = {
   curatorSettings: {
     curatorMode: false,
     maxSuggestions: 100,
-    suggestionsPerUser: 10,
+    suggestionsPerUser: 10
   },
   curatorSuggestions: [],
   playlists: [],
@@ -35,5 +35,5 @@ export const initialState: ContextProviderState = {
   recentSongs: null,
   isPlaying: false,
   songObj: null,
-  spotify: null,
+  spotify: null
 }

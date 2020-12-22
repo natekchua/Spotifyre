@@ -1,70 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { useProviderValue } from '../../ContextState/Provider';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
-import InfoModal from '../../InfoModal/InfoModal';
-import ReactEmoji from 'react-emoji';
-import Badge from '@material-ui/core/Badge';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import Fade from '@material-ui/core/Fade';
-import UserSuggestionRow from './SuggestionRow/UserSuggestionRow';
-import { 
+import React, { useState, useEffect } from 'react'
+import { useProviderValue } from '../../ContextState/Provider'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
+import InfoModal from '../../InfoModal/InfoModal'
+import ReactEmoji from 'react-emoji'
+import Badge from '@material-ui/core/Badge'
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
+import Fade from '@material-ui/core/Fade'
+import UserSuggestionRow from './SuggestionRow/UserSuggestionRow'
+import {
   getPlaybackState,
   playSong
-} from '../../../services/apiRequests';
-import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
-import { wait } from '../../../services/helperFunctions';
+} from '../../../services/apiRequests'
+import { getSuggestionsForPlaylist } from '../../../services/dbRequests'
+import { wait } from '../../../services/helperFunctions'
 import { useStyles } from '../../InfoModal/styles'
-import RefreshIcon from '@material-ui/icons/Refresh';
+import RefreshIcon from '@material-ui/icons/Refresh'
 
-import './Suggestions.css';
+import './Suggestions.css'
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
   opacity: isDragging ? 0.8 : 1,
   ...draggableStyle
-});
+})
 
 const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)',
-});
+  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)'
+})
 
 function UserSuggestions () {
-  const classes = useStyles();
-  const [{ 
+  const classes = useStyles()
+  const [{
     userSuggestions,
     currPlaylist,
     user
-  }, dispatch] = useProviderValue();
+  }, dispatch] = useProviderValue()
 
   useEffect(() => {
     // get suggestions from DB if playlist suggestion isn't loaded or new playlist suggestions are generated.
-    if (!userSuggestions?.length || userSuggestions[0]?.playlistid !== currPlaylist?.id) { 
-      refreshSuggestions();
+    if (!userSuggestions?.length || userSuggestions[0]?.playlistid !== currPlaylist?.id) {
+      refreshSuggestions()
     }
   }, [])
 
-  const [suggestionsInfo, setSuggestionsInfo] = useState(false);
+  const [suggestionsInfo, setSuggestionsInfo] = useState(false)
 
-  const openSuggestionsInfo = () => setSuggestionsInfo(true);
-  const closeSuggestionsInfo = () => setSuggestionsInfo(false);
-  
+  const openSuggestionsInfo = () => setSuggestionsInfo(true)
+  const closeSuggestionsInfo = () => setSuggestionsInfo(false)
+
   const onPlaySong = async (safeToPlay = false, id) => {
     if (safeToPlay) {
       const params = {
         songID: id,
         userID: user.id
-      };
-      await playSong(params);
-      await wait(200);
+      }
+      await playSong(params)
+      await wait(200)
       getPlaybackState(user.id).then(res => {
         dispatch({
           type: 'SET_CURR_SONG',
           songObj: res.song?.item
-        });
+        })
         dispatch({
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
-        });
+        })
       })
     }
   }
@@ -74,17 +74,17 @@ function UserSuggestions () {
       dispatch({
         type: 'SET_USER_SUGGESTIONS',
         userSuggestions: JSON.parse(res)
-      });
+      })
       if (manualRefresh) {
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: {
-            message: `The current playlist's suggestions have been refreshed.`,
+            message: 'The current playlist\'s suggestions have been refreshed.',
             type: 'success'
           }
-        });
+        })
       }
-    }) 
+    })
   }
 
   const suggestionsList = userSuggestions?.map((s, idx) => {
@@ -101,7 +101,7 @@ function UserSuggestions () {
         </li>
         )}
       </Draggable>
-    );
+    )
   })
 
   return (
@@ -112,7 +112,7 @@ function UserSuggestions () {
       </div>
       <div className='icons'>
         <div className='refresh-icon'>
-          <RefreshIcon onClick={() => refreshSuggestions(true)} /> 
+          <RefreshIcon onClick={() => refreshSuggestions(true)} />
         </div>
         <Badge className='suggestions-info-icon' onClick={openSuggestionsInfo} color='secondary'>
           <InfoOutlinedIcon />
@@ -128,7 +128,7 @@ function UserSuggestions () {
             </div>
             <div id='transition-modal-description'>
               <p>
-                Here you can view suggestions that have been suggested to your playlist. Clicking on <strong>Approve</strong> will automatically add the song to the playlist whereas <strong>Decline</strong> will deny the suggestion. 
+                Here you can view suggestions that have been suggested to your playlist. Clicking on <strong>Approve</strong> will automatically add the song to the playlist whereas <strong>Decline</strong> will deny the suggestion.
               </p>
             </div>
           </div>
@@ -142,9 +142,9 @@ function UserSuggestions () {
             {provided.placeholder}
           </ul>
         )}
-      </Droppable>  
+      </Droppable>
     </div>
-  );
+  )
 }
 
-export default UserSuggestions;
+export default UserSuggestions

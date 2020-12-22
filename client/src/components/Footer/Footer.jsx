@@ -1,38 +1,38 @@
-import React, { useEffect } from 'react';
-import { useProviderValue } from '../ContextState/Provider';
-import { Slider } from '@material-ui/core';
-import VolumeDownIcon from '@material-ui/icons/VolumeDown';
-import PlaybackControl from './PlaybackControl/PlaybackControl';
-import { 
+import React, { useEffect } from 'react'
+import { useProviderValue } from '../ContextState/Provider'
+import { Slider } from '@material-ui/core'
+import VolumeDownIcon from '@material-ui/icons/VolumeDown'
+import PlaybackControl from './PlaybackControl/PlaybackControl'
+import {
   getPlaybackState
-} from '../../services/apiRequests';
+} from '../../services/apiRequests'
 
-import './Footer.css';
+import './Footer.css'
 
 function Footer () {
   const [{
     currSong,
     songStatus,
     user
-  }, dispatch] = useProviderValue();
+  }, dispatch] = useProviderValue()
 
   useEffect(() => {
     getPlaybackState(user.id).then(res => {
-        dispatch({
+      dispatch({
         type: 'SET_CURR_SONG',
         songObj: res.song?.item
-      });
+      })
       dispatch({
         type: 'SET_SONG_STATUS',
         isPlaying: res.isPlaying
-      });
+      })
     })
-  }, []);
+  }, [])
 
   return (
     <div className='footer'>
       <div className='album-desc'>
-        { 
+        {
           songStatus && currSong
             ? <>
                 <img src={currSong.album.images[1].url} alt='Current Album Art' />
@@ -44,7 +44,7 @@ function Footer () {
             : <div className='song-info'>
                 <h3>Click Play!</h3>
               </div>
-        }     
+        }
       </div>
       <PlaybackControl />
       <div className='volume-control'>
@@ -52,7 +52,7 @@ function Footer () {
         <Slider id='volume' value={50} />
       </div>
     </div>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

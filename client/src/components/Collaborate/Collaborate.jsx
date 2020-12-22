@@ -12,7 +12,7 @@ function Collaborate () {
   useEffect(() => {
     dispatch({
       type: 'SET_TAB',
-      tab: 'Collaborate',
+      tab: 'Collaborate'
     })
   }, [])
 

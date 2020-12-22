@@ -1,17 +1,17 @@
-import React from 'react';
-import NotificationRow from './NotificationRow';
-import { selectPlaylist } from '../../services/apiRequests';
-import { useProviderValue } from '../ContextState/Provider';
+import React from 'react'
+import NotificationRow from './NotificationRow'
+import { selectPlaylist } from '../../services/apiRequests'
+import { useProviderValue } from '../ContextState/Provider'
 
 function NotificationList (props) {
-  const { notifications } = props;
-  const [{ user, tab }, dispatch] = useProviderValue();
+  const { notifications } = props
+  const [{ user, tab }, dispatch] = useProviderValue()
 
   const onSelectPlaylist = (id) => {
     const params = {
       playlistID: id,
       userID: user.id
-    };
+    }
     selectPlaylist(params).then(res => {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
@@ -24,7 +24,7 @@ function NotificationList (props) {
         tab: 'Collaborate'
       })
     }
-  };
+  }
 
   const errorHandler = (err) => {
     dispatch({
@@ -33,7 +33,7 @@ function NotificationList (props) {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    });
+    })
   }
 
   const notiDisplay = notifications?.map((n, idx) => {
@@ -46,9 +46,9 @@ function NotificationList (props) {
         ? <>{notiDisplay}</>
         : <h3>You have no song suggestions.</h3>
       }
-      
+
     </div>
-  );    
+  )
 }
 
-export default NotificationList;
+export default NotificationList

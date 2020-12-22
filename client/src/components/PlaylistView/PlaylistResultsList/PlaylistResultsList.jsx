@@ -1,24 +1,24 @@
-import React from 'react';
-import { useProviderValue } from '../../ContextState/Provider';
-import { selectPlaylist } from '../../../services/apiRequests';
-import PlaylistRow from './PlaylistRow/PlaylistRow';
+import React from 'react'
+import { useProviderValue } from '../../ContextState/Provider'
+import { selectPlaylist } from '../../../services/apiRequests'
+import PlaylistRow from './PlaylistRow/PlaylistRow'
 
-import './PlaylistResultsList.css';
+import './PlaylistResultsList.css'
 
 function PlaylistResultsList (props) {
-  const { playlistsFromQuery, goBackToCuratorPlaylist } = props;
-  const [{ 
+  const { playlistsFromQuery, goBackToCuratorPlaylist } = props
+  const [{
     playlistSearchQuery,
     isPlaylistSearching,
     curator,
     user
-  }, dispatch] = useProviderValue();
+  }, dispatch] = useProviderValue()
 
   const onSelectPlaylist = (id) => {
     const params = {
       playlistID: id,
       userID: user.id
-    };
+    }
     selectPlaylist(params).then(res => {
       dispatch({
         type: 'SET_CURATOR_PLAYLIST',
@@ -29,10 +29,10 @@ function PlaylistResultsList (props) {
         isPlaylistSearching: false
       })
       if (goBackToCuratorPlaylist) {
-        goBackToCuratorPlaylist();
+        goBackToCuratorPlaylist()
       }
     }).catch(err => errorHandler(err))
-  };
+  }
 
   const errorHandler = (err) => {
     dispatch({
@@ -41,7 +41,7 @@ function PlaylistResultsList (props) {
         message: `Oops! ${err}`,
         type: 'error'
       }
-    });
+    })
   }
 
   const playlistRows = playlistsFromQuery?.items?.map((p, idx) =>
@@ -50,17 +50,17 @@ function PlaylistResultsList (props) {
       playlist={p}
       onSelectPlaylist={onSelectPlaylist}
     />
-  );
+  )
 
   return (
     <div className='playlist-query-results'>
-      { isPlaylistSearching 
-        ? <h3>Results found for "{playlistSearchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3> 
+      { isPlaylistSearching
+        ? <h3>Results found for "{playlistSearchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3>
         : <h2 className='center-text p5'>{curator.display_name}'s Public Playlists</h2>
       }
       {playlistRows}
     </div>
-  );
+  )
 }
 
-export default PlaylistResultsList;
+export default PlaylistResultsList
