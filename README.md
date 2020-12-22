@@ -11,7 +11,13 @@
 
 ## Install & Usage Locally
 
+```sh
+npm install
+npm run dev
+```
+
 ### Server
+
 ```sh
 cd server
 npm install && npm start
@@ -27,19 +33,24 @@ npm install && npm start
 ## Authors
 
 👤 **Afrah Ahmed**
+
 - Github: [@afrahahmed1](https://github.com/afrahahmed1)
 
 👤 **Daniel Artuso**
+
 - Github: [@dartuso](https://github.com/dartuso)
 
 👤 **Nathan Chua**
+
 - Github: [@natekchua](https://github.com/natekchua)
 - Website: https://natekchua.me
 
 👤 **Naweed Anwari**
+
 - Github: [@naweedanwari](https://github.com/naweedanwari)
 
 👤 **Rakheem Dewji**
+
 - Github: [@raksdewji](https://github.com/raksdewji)
 - Website: https://raksdewji.github.io/
 
@@ -56,10 +67,9 @@ npm install && npm start
 - [Heroku](https://heroku.com/) used to host the server and PostgreSQL database.
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node) universal wrapper/client for the Spotify Web API that runs on Node.JS.
 
-
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/natekchua/Spotifyre/issues). 
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/natekchua/Spotifyre/issues).
 
 ## Show your support
 
@@ -70,5 +80,6 @@ Give a ⭐️ if this project helped you!
 Copyright © 2020 Spotifyre<br />
 This project is ISC licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
