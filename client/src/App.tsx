@@ -43,11 +43,9 @@ function App () {
 
   return (
     <Router>
-      {token ? (
-        <AppContainer token={token} />
-      ) : (
-        <Route path='/' exact render={() => <Login loginURL={loginURL} />} />
-      )}
+      {token
+        ? (<AppContainer token={token} />)
+        : (<Route path='/' exact render={() => <Login loginURL={loginURL} />} />)}
     </Router>
   );
 }

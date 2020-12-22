@@ -19,6 +19,6 @@ module.exports = {
     quotes: [2, 'single'],
     semi: [2, 'always'],
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error']
+    '@typescript-eslint/no-use-before-define': [2, { functions: false, variables: false }]
   }
 };
