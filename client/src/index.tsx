@@ -7,8 +7,8 @@ import { initialState } from './components/ContextState/initialState';
 import reducer from './components/ContextState/reducer';
 
 ReactDOM.render(
-    <Provider initialState={initialState} reducer={reducer}>
-      <App />
-    </Provider>,
+  <Provider initialState={initialState} reducer={reducer}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
