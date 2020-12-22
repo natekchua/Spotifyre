@@ -7,7 +7,7 @@ const config = {
   database: process.env.DB,
   password: process.env.DB_password,
   host: process.env.DB_host,
-  // ssl: { rejectUnauthorized: false }, // uncomment in local dev environment
+  ssl: { rejectUnauthorized: false }, // uncomment in local dev environment
   port: 5432,
   poolSize: 5,
   poolIdleTimeout: 30000,

@@ -1,4 +1,4 @@
-import { ContextProviderState } from './types';
+import { ContextProviderState } from './types'
 
 export const initialState: ContextProviderState = {
   token: null,
@@ -36,4 +36,4 @@ export const initialState: ContextProviderState = {
   isPlaying: false,
   songObj: null,
   spotify: null,
-};
+}

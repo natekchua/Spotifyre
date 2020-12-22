@@ -54,6 +54,12 @@ npm install && npm start
 - Github: [@raksdewji](https://github.com/raksdewji)
 - Website: https://raksdewji.github.io/
 
+### Community Contributors
+👤 **Artem Golovin**
+
+- Github: [@raksdewji](https://github.com/raksdewji)
+- Website: https://raksdewji.github.io/
+
 ## Technology Stack
 
 - [React](https://reactjs.org/) used for the front-end development to build our interface on the client side.
