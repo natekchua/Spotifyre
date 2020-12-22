@@ -23,16 +23,6 @@
   justify-content: center;
 }
 
-.info-icon {
-  display: flex;
-  cursor: pointer;
-}
-
-.info-box{
-  justify-content: space-between;
-  padding-bottom: 12px;
-}
-
 .playlist-info > img {
   height: 16vw;
   max-width: 23vw;
@@ -173,6 +163,10 @@
 
   .profile-name > strong{
     font-size: 12px;
+  }
+
+  .info-icon > .MuiSvgIcon-root {
+    font-size: 70%;
   }
 }
 
