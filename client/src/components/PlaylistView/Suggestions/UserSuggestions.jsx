@@ -29,6 +29,7 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function UserSuggestions () {
+  const classes = useStyles();
   const [{ 
     userSuggestions,
     currPlaylist,
@@ -41,8 +42,7 @@ function UserSuggestions () {
       refreshSuggestions();
     }
   }, [])
-  
-  const classes = useStyles();
+
   const [suggestionsInfo, setSuggestionsInfo] = useState(false);
 
   const openSuggestionsInfo = () => setSuggestionsInfo(true);

@@ -16,6 +16,7 @@ import 'antd/lib/alert/style/index.css';
 import './Profile.css';
 
 function Profile () {
+  const classes = useStyles();
   const [{
     user,
     userSettings
@@ -25,7 +26,6 @@ function Profile () {
   const [maxSuggestions, setMaxSuggestions] = useState(userSettings.maxSuggestions);
   const [suggestionsPerUser, setSuggestionsPerUser] = useState(userSettings.suggestionsPerUser);
   const [curatorInfo, setCuratorInfo] = useState(false);
-  const classes = useStyles();
 
   const openCuratorInfo = () => setCuratorInfo(true);
   const closeCuratorInfo = () => setCuratorInfo(false);
@@ -130,9 +130,9 @@ function Profile () {
               <p>
                 Curator mode allows other Spotifyre users to make
                 suggestions to your playlists.
-                <br style={{ marginBottom: '3px' }}/>
+                <br style={{ marginBottom: '3px' }} />
                 <strong>Max suggestions</strong> is the number of suggestions you can have in total for each of your playlist.
-                <br style={{ marginBottom: '3px' }}/>
+                <br style={{ marginBottom: '3px' }} />
                 <strong>Suggestions per user</strong> is the max number of songs another user can suggest for each of your playlists.
               </p>
             </div>

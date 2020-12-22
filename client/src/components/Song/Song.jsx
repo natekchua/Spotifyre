@@ -56,7 +56,7 @@ function Song (props) {
         id: song.id,
         name: song.name.replace(/'/g, ''),
         artist: song.artists.map(a => a.name).join(', ').replace(/'/g, ''),
-        albumArt: song.album.images[0].url
+        albumArt: song.album.images[0]?.url
       },
       playlistInfo: { 
         id: curatorPlaylist.id,

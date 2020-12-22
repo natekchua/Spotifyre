@@ -28,6 +28,7 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function CuratorSuggestions () {
+  const classes = useStyles();
   const [{ 
     curatorSuggestions,
     curatorPlaylist,
@@ -41,7 +42,6 @@ function CuratorSuggestions () {
     }
   }, [])
 
-  const classes = useStyles();
   const [suggestionsInfo, setSuggestionsInfo] = useState(false);
 
   const openSuggestionsInfo = () => setSuggestionsInfo(true);

@@ -14,6 +14,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import './Header.css';
 
 function Header () {
+  const classes = useStyles();
   const [{
     user,
     tab,
@@ -21,7 +22,6 @@ function Header () {
   }, dispatch] = useProviderValue();
   const [notiPopperOpen, setNotiPopperOpen] = useState(false);
   const [collaborateInfo, setCollaborateInfo] = useState(false);
-  const classes = useStyles();
 
   const openNotifications = () => setNotiPopperOpen(true);
   const closeNotifications = () => setNotiPopperOpen(false);
@@ -85,8 +85,7 @@ function Header () {
           <div id='transition-modal-description'>
             <p>
               Collaboration mode allows you to view your <strong>playlist suggestions</strong>, <strong>search for songs</strong> and <strong>suggest songs</strong> to a curator's playlist. 
-              <br />
-              <br style={{ marginBottom: '4px' }}/>
+              <br style={{ marginBottom: '4px' }} />
               On <strong>right side</strong> of the collaboration mode you can view the <strong>Curator's playlist</strong> where you want to suggest songs to. To view already submitted suggestions click on the <strong>Make a Suggestion</strong> tab.
             </p>
           </div>
