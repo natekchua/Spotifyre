@@ -10,7 +10,7 @@ const redirectURI = 'http://localhost:3000/'; // local dev environment
 const clientID = process.env.clientID;
 const clientSecret = process.env.clientSecret;
 
-let spotify = new SpotifyWebApi({
+const spotify = new SpotifyWebApi({
   clientId: clientID,
   clientSecret: clientSecret,
   redirectUri: redirectURI,

@@ -28,13 +28,13 @@ app.post('/api/handle-token', (req, res) => {
   spotify.authorizationCodeGrant(req.body.post).then(
     async (data) => {
       // Set the access token on the API object to use it in later calls
-      spotify.setAccessToken(data.body['access_token']);
-      spotify.setRefreshToken(data.body['refresh_token']);
+      spotify.setAccessToken(data.body.access_token);
+      spotify.setRefreshToken(data.body.refresh_token);
       const user = await spotify.getMe();
       await actions.setTokens(data.body, user.body);
       const tokens = {
-        accessToken: data.body['access_token'],
-        refreshToken: data.body['refresh_token'],
+        accessToken: data.body.access_token,
+        refreshToken: data.body.refresh_token,
       };
       res.send({ tokens });
     },
