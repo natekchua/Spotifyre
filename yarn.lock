@@ -1089,6 +1089,11 @@ html-tag-names@1.1.5:
   resolved "https://registry.yarnpkg.com/html-tag-names/-/html-tag-names-1.1.5.tgz#f537420c16769511283f8ae1681785fbc89ee0a9"
   integrity sha512-aI5tKwNTBzOZApHIynaAwecLBv8TlZTEy/P4Sj2SzzAhBrGuI8yGZ0UIXVPQzOHGS+to2mjb04iy6VWt/8+d8A==
 
+husky@^5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-5.0.6.tgz#27dbefe8603c6c0912fd89a3a67edfed9fac8bb9"
+  integrity sha512-SM+evfvcHT3rAYJKvPlatz3L5RqzgeM6xIvDjhs8VuhKj6iKqFDOt/Ov8sPjvWuE4FDB385gJBwWXRj7G3c1hg==
+
 iconv-lite@^0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
