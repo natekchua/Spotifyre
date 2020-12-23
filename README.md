@@ -48,7 +48,6 @@ To have `eslint` running in VS Code, create a `.vscode/settings.json` file with 
         "source.fixAll.eslint": true
     }
 }
-
 ```
 
 ## Authors
