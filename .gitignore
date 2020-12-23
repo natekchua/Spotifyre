@@ -120,3 +120,5 @@ fabric.properties
 .eslintcache
 # keep the settings to preserve eslint plugin config
 .vscode/settings.json
+
+.env
