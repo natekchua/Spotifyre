@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
     "lint": "eslint --fix --ext .js ."
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
     "concurrently": "^4.0.1",
+    "cross-env": "^7.0.3",
     "eslint": "^7.16.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",

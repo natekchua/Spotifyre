@@ -20,14 +20,14 @@ yarn run dev
 
 ```sh
 cd server
-yarn install && yarn start
+yarn install && yarn dev
 ```
 
 ### Client
 
 ```sh
 cd client
-yarn install && yarn start
+yarn install && yarn dev
 ```
 
 ### Editor Setup
