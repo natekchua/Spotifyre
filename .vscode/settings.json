@@ -1,9 +1,0 @@
-{
-    "eslint.workingDirectories": [
-        "client/",
-        "server/"
-    ],
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    }
-}

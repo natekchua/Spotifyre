@@ -14,7 +14,6 @@
     "lint:client": "yarn workspace client lint",
     "lint:server": "yarn workspace server lint",
     "lint": "npm-run-all --parallel lint:*",
-    "postinstall": "husky install",
     "clean": "rimraf node_modules/ server/node_modules client/node_modules "
   },
   "devDependencies": {

@@ -12,22 +12,43 @@
 ## Install & Usage Locally
 
 ```sh
-npm install
-npm run dev
+yarn install
+yarn run dev
 ```
 
 ### Server
 
 ```sh
 cd server
-npm install && npm start
+yarn install && yarn start
 ```
 
 ### Client
 
 ```sh
 cd client
-npm install && npm start
+yarn install && yarn start
+```
+
+### Editor Setup
+
+#### VS Code
+
+To have `eslint` running in VS Code, create a `.vscode/settings.json` file with following content:
+
+> Note: this assumes you have eslint extension installed.
+
+```json
+{
+    "eslint.workingDirectories": [
+        "client/",
+        "server/"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
+}
+
 ```
 
 ## Authors
