@@ -15,30 +15,30 @@ function TopTracks () {
     getTopTracks(user.id).then(res => {
       setSongs(res.topTracks);
     }).catch(() => {
-      setError('Error: Problem fetching top tracks.')
-    })
-  }, [])
+      setError('Error: Problem fetching top tracks.');
+    });
+  }, []);
 
   const onPlaySong = async (safeToPlay = true, id) => {
     if (safeToPlay) {
       const params = {
         songID: id,
         userID: user.id
-      }
+      };
       await playSong(params);
       await wait(200);
       getPlaybackState(user.id).then(res => {
         dispatch({
           type: 'SET_CURR_SONG',
           songObj: res.song?.item
-        })
+        });
         dispatch({
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
-        })
-      })
+        });
+      });
     }
-  }
+  };
 
   const songItems = songs?.map((s, idx) => <Song key={idx} song={s} onPlaySong={onPlaySong} />);
 
@@ -47,7 +47,7 @@ function TopTracks () {
       <div className='songs-header p20'>
         <h2>Your Top 10 Tracks</h2>
       </div>
-      <>{error ? error : songItems}</>
+      <>{error || songItems}</>
     </div>
   );
 }

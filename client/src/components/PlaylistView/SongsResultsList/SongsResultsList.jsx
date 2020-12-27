@@ -8,7 +8,7 @@ import './SongsResultsList.css';
 
 function SongsResultsList (props) {
   const { songsFromQuery } = props;
-  const [{ 
+  const [{
     songsSearchQuery,
     isSongSearching,
     user
@@ -31,9 +31,9 @@ function SongsResultsList (props) {
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
         });
-      })
+      });
     }
-  }
+  };
 
   const songs = songsFromQuery?.items?.map((s, idx) =>
     <Song song={s} key={idx} onPlaySong={onPlaySong} />
@@ -41,9 +41,9 @@ function SongsResultsList (props) {
 
   return (
     <div className='songs-query-results'>
-      { isSongSearching 
+      { isSongSearching
         ? <>
-            <h3>Results found for "{songsSearchQuery}". {songsFromQuery.items.length} songs returned.</h3> 
+            <h3>Results found for "{songsSearchQuery}". {songsFromQuery.items.length} songs returned.</h3>
             {songs}
           </>
         : null

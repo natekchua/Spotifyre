@@ -7,7 +7,7 @@ function UserSuggestionsContainer (props) {
   const { userSettings } = props;
   return (
     <div>
-      { userSettings?.curatorMode 
+      { userSettings?.curatorMode
         ? <UserSuggestions />
         : <h3 className='flex-basic m30'>
             Enable Curator Mode in your Profile Settings to allow playlist suggestions!

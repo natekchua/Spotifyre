@@ -25,27 +25,27 @@ function PlaylistSearch ({ query }) {
         playlistSearchResults: JSON.parse(res).playlistSearchResults
       });
     });
-  }
+  };
 
   const clearSearchResults = () => {
     dispatch({
       type: 'SET_PLAYLIST_SEARCH_RESULTS',
       playlistSearchResults: []
     });
-  }
-  
+  };
+
   return (
     <div className='search-container flex-basic p5'>
-      <TextField 
+      <TextField
         className='search-text-field'
         id='filled-basic' label={'Search Playlists'} variant='filled' value={query}
         onKeyPress={event => event.key === 'Enter' ? sendQuery(event) : null}
         InputProps={{
-          endAdornment: 
+          endAdornment:
             <InputAdornment className='search-icon' position='end'>
               <SearchIcon onClick={event => sendQuery(event)}/>
             </InputAdornment>
-          }}
+        }}
       />
       <div className='search-clear flex-basic m5' onClick={clearSearchResults}>Clear</div>
     </div>

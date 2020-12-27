@@ -7,7 +7,7 @@ import './PlaylistResultsList.css';
 
 function PlaylistResultsList (props) {
   const { playlistsFromQuery, goBackToCuratorPlaylist } = props;
-  const [{ 
+  const [{
     playlistSearchQuery,
     isPlaylistSearching,
     curator,
@@ -23,15 +23,15 @@ function PlaylistResultsList (props) {
       dispatch({
         type: 'SET_CURATOR_PLAYLIST',
         curatorPlaylist: JSON.parse(res).playlist
-      })
+      });
       dispatch({
         type: 'SET_IS_PLAYLIST_SEARCHING',
         isPlaylistSearching: false
-      })
+      });
       if (goBackToCuratorPlaylist) {
         goBackToCuratorPlaylist();
       }
-    }).catch(err => errorHandler(err))
+    }).catch(err => errorHandler(err));
   };
 
   const errorHandler = (err) => {
@@ -42,7 +42,7 @@ function PlaylistResultsList (props) {
         type: 'error'
       }
     });
-  }
+  };
 
   const playlistRows = playlistsFromQuery?.items?.map((p, idx) =>
     <PlaylistRow
@@ -54,8 +54,8 @@ function PlaylistResultsList (props) {
 
   return (
     <div className='playlist-query-results'>
-      { isPlaylistSearching 
-        ? <h3>Results found for "{playlistSearchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3> 
+      { isPlaylistSearching
+        ? <h3>Results found for "{playlistSearchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3>
         : <h2 className='center-text p5'>{curator.display_name}'s Public Playlists</h2>
       }
       {playlistRows}

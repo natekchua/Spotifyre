@@ -6,7 +6,7 @@ import SongResultsList from './SongsResultsList/SongsResultsList';
 import SongSearch from '../Search/SongSearch';
 import SearchIcon from '@material-ui/icons/Search';
 import he from 'he';
-import { 
+import {
   getPlaybackState,
   playPlaylist
 } from '../../services/apiRequests';
@@ -16,8 +16,8 @@ import './PlaylistView.css';
 
 function PlaylistView (props) {
   const { playlist } = props;
-  const [{ 
-    songsSearchResults, 
+  const [{
+    songsSearchResults,
     isSongSearching,
     user
   }, dispatch] = useProviderValue();
@@ -25,7 +25,7 @@ function PlaylistView (props) {
     const params = {
       playlistID: playlist.id,
       userID: user.id
-    }
+    };
     await playPlaylist(params);
     await wait(200);
     getPlaybackState(user.id).then(res => {
@@ -37,7 +37,7 @@ function PlaylistView (props) {
         type: 'SET_SONG_STATUS',
         isPlaying: res.isPlaying
       });
-    })
+    });
   };
 
   const goToSearch = () => {
@@ -45,7 +45,7 @@ function PlaylistView (props) {
       type: 'SET_IS_SONG_SEARCHING',
       isSongSearching: true
     });
-  }
+  };
 
   const searchPage = (
     <div className='playlist-container'>

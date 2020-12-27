@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
 import { updateCurationSettings } from '../../services/dbRequests';
-import { useStyles } from '../InfoModal/styles'
-import InfoModal from '../InfoModal/InfoModal'
+import { useStyles } from '../InfoModal/styles';
+import InfoModal from '../InfoModal/InfoModal';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
@@ -35,7 +35,7 @@ function Profile () {
       type: 'SET_TAB',
       tab: 'Profile'
     });
-  }, [])
+  }, []);
 
   const errorHandler = (err) => {
     dispatch({
@@ -45,7 +45,7 @@ function Profile () {
         type: 'error'
       }
     });
-  }
+  };
 
   const saveSettings = () => {
     const newCurationSettings = {
@@ -68,11 +68,11 @@ function Profile () {
         }
       });
     }).catch(err => errorHandler(err));
-  }
+  };
 
   const toggleCuratorMode = () => {
-    setCuratorMode(true);             // user can't disable curator mode once it is enabled (for now).
-  }
+    setCuratorMode(true); // user can't disable curator mode once it is enabled (for now).
+  };
 
   const handleSliderChange = (event, newValue) => {
     setMaxSuggestions(newValue);
@@ -89,7 +89,6 @@ function Profile () {
   const handleSliderChangeV2 = (event, newValue) => {
     setSuggestionsPerUser(newValue);
   };
-
 
   const handleBlurV2 = () => {
     if (suggestionsPerUser < 0) {
@@ -117,7 +116,7 @@ function Profile () {
           checked={curatorMode}
           onChange={toggleCuratorMode}
         />
-      </div>   
+      </div>
       <InfoModal isOpen={curatorInfo} closeInfo={closeCuratorInfo}>
       <Fade in={curatorInfo}>
           <div className={classes.paper}>
@@ -138,7 +137,7 @@ function Profile () {
             </div>
           </div>
         </Fade>
-      </InfoModal>   
+      </InfoModal>
       {
         curatorMode
           ? <div id='curator-settings-container'>
@@ -148,7 +147,7 @@ function Profile () {
                   <Slider
                     value={typeof maxSuggestions === 'number' ? maxSuggestions : 0}
                     onChange={handleSliderChange}
-                    style={{ width: '200px',  color: '#f516e2' }}
+                    style={{ width: '200px', color: '#f516e2' }}
                   />
                   <Input
                     value={maxSuggestions}
@@ -181,10 +180,10 @@ function Profile () {
                       type: 'number'
                     }}
                   />
-                </div>    
+                </div>
               </div>
           </div>
-        : <h2>Enable Curator Mode to adjust your playlist suggestion settings.</h2>
+          : <h2>Enable Curator Mode to adjust your playlist suggestion settings.</h2>
       }
       <div className='p20'>
         <Button onClick={saveSettings} variant='contained' color='secondary'>

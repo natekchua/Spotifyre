@@ -8,24 +8,24 @@ import AppContainer from './components/AppContainer/AppContainer';
 
 import './App.css';
 
-function App() {
+function App () {
   const [loginURL, setLoginURL] = useState('');
   const [{ token }, dispatch] = useProviderValue();
 
   useEffect(() => {
     getAuthURL()
-      .then((res) => {
+      .then(res => {
         setLoginURL(res.loginURL);
         const code = getCode();
         if (code) {
           getToken(code)
-            .then((res) => {
+            .then(res => {
               dispatch({
                 type: 'SET_TOKEN',
-                token: JSON.parse(res).tokens.accessToken,
+                token: JSON.parse(res).tokens.accessToken
               });
             })
-            .catch((err) => errorHandler(err));
+            .catch(err => errorHandler(err));
         }
       })
       .catch((err: Error) => errorHandler(err));
@@ -36,18 +36,16 @@ function App() {
       type: 'SET_NOTIFICATION',
       notification: {
         message: `Oops! ${err}`,
-        type: 'error',
-      },
+        type: 'error'
+      }
     });
   };
 
   return (
     <Router>
-      {token ? (
-        <AppContainer token={token} />
-      ) : (
-        <Route path="/" exact render={() => <Login loginURL={loginURL} />} />
-      )}
+      {token
+        ? (<AppContainer token={token} />)
+        : (<Route path='/' exact render={() => <Login loginURL={loginURL} />} />)}
     </Router>
   );
 }

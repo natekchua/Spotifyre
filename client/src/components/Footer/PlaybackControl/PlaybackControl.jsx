@@ -6,7 +6,7 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import RepeatIcon from '@material-ui/icons/Repeat';
-import { 
+import {
   pause,
   play,
   goPrevious,
@@ -29,8 +29,8 @@ function PlaybackControl () {
     await wait(200);
     getPlaybackState(user.id).then(res => {
       dispatch({
-      type: 'SET_CURR_SONG',
-      songObj: res.song?.item
+        type: 'SET_CURR_SONG',
+        songObj: res.song?.item
       });
       dispatch({
         type: 'SET_SONG_STATUS',
@@ -66,8 +66,8 @@ function PlaybackControl () {
     await wait(200);
     getPlaybackState(user.id).then(res => {
       dispatch({
-      type: 'SET_CURR_SONG',
-      songObj: res.song?.item
+        type: 'SET_CURR_SONG',
+        songObj: res.song?.item
       });
       dispatch({
         type: 'SET_SONG_STATUS',

@@ -23,8 +23,8 @@ function Sidebar () {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
         currPlaylist: JSON.parse(res).playlist
-      })
-    }).catch(err => errorHandler(err))
+      });
+    }).catch(err => errorHandler(err));
   };
 
   const errorHandler = (err) => {
@@ -35,7 +35,7 @@ function Sidebar () {
         type: 'error'
       }
     });
-  }
+  };
 
   const playlistOptions = playlists?.items?.map((p, idx) =>
     <PlaylistOption

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { getNotifications } from '../../services/dbRequests';
-import { useStyles } from '../InfoModal/styles'
-import InfoModal from '../InfoModal/InfoModal'
+import { useStyles } from '../InfoModal/styles';
+import InfoModal from '../InfoModal/InfoModal';
 import { Avatar } from '@material-ui/core';
-import NotificationList from '../Notifications/NotificationList'
+import NotificationList from '../Notifications/NotificationList';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Fade from '@material-ui/core/Fade';
@@ -37,12 +37,12 @@ function Header () {
       dispatch({
         type: 'SET_NOTIFICATION',
         notification: {
-          message: `Your notifications are now up to date.`,
+          message: 'Your notifications are now up to date.',
           type: 'success'
         }
       });
     }).catch(err => errorHandler(err));
-  }
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -52,14 +52,14 @@ function Header () {
         type: 'error'
       }
     });
-  }
+  };
 
   return (
     <>
     <div className='header'>
       <div className='middle-header flex-basic'>
         <h1>{tab}</h1>
-        { tab === 'Collaborate' 
+        { tab === 'Collaborate'
           ? <Badge className='info-icon' onClick={openCollaborateInfo} color='secondary'>
               <InfoOutlinedIcon />
             </Badge>
@@ -84,7 +84,7 @@ function Header () {
           </div>
           <div id='transition-modal-description'>
             <p>
-              Collaboration mode allows you to view your <strong>playlist suggestions</strong>, <strong>search for songs</strong> and <strong>suggest songs</strong> to a curator's playlist. 
+              Collaboration mode allows you to view your <strong>playlist suggestions</strong>, <strong>search for songs</strong> and <strong>suggest songs</strong> to a curator's playlist.
               <br style={{ marginBottom: '4px' }} />
               On <strong>right side</strong> of the collaboration mode you can view the <strong>Curator's playlist</strong> where you want to suggest songs to. To view already submitted suggestions click on the <strong>Make a Suggestion</strong> tab.
             </p>
@@ -100,13 +100,13 @@ function Header () {
           <div className='refresh-icon'><RefreshIcon onClick={refreshNotifications} /></div>
         </div>
         <div id="transition-modal-description">
-          <NotificationList notifications={suggestionNotifications} />  
+          <NotificationList notifications={suggestionNotifications} />
         </div>
       </div>
       </Fade>
     </InfoModal>
     </>
-  )
+  );
 }
 
 export default Header;

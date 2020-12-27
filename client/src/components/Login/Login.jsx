@@ -13,7 +13,7 @@ function Login (props) {
       <h2>A Spotify Manager for Playlist Curators</h2>
       <a href={props.loginURL}>Login with Spotify</a>
     </div>
-  )
+  );
 }
 
 export default Login;

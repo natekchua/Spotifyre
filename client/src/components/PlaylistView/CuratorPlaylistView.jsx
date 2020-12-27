@@ -17,7 +17,7 @@ import './PlaylistView.css';
 
 function CuratorPlaylistView (props) {
   const { playlist } = props;
-  const [{ 
+  const [{
     playlistSearchResults,
     isPlaylistSearching,
     curator,
@@ -34,17 +34,17 @@ function CuratorPlaylistView (props) {
       type: 'SET_IS_PLAYLIST_SEARCHING',
       isPlaylistSearching: true
     });
-  }
+  };
 
   const goBackToCuratorPlaylist = () => {
     setCuratorPlaylists([]);
-  }
+  };
 
   const onPlayPlaylist = async () => {
     const params = {
       playlistID: playlist.id,
       userID: user.id
-    }
+    };
     await playPlaylist(params);
     await wait(200);
     getPlaybackState(user.id).then(res => {
@@ -56,7 +56,7 @@ function CuratorPlaylistView (props) {
         type: 'SET_SONG_STATUS',
         isPlaying: res.isPlaying
       });
-    })
+    });
   };
 
   const seeCuratorsPlaylists = async () => {
@@ -65,9 +65,9 @@ function CuratorPlaylistView (props) {
       userID: user.id
     };
     getCuratorPlaylists(params).then(res => {
-      setCuratorPlaylists(JSON.parse(res).curatorPlaylists)
-    })      
-  }
+      setCuratorPlaylists(JSON.parse(res).curatorPlaylists);
+    });
+  };
 
   const curatorProfile = (
     <div className='playlist-container'>
@@ -88,10 +88,10 @@ function CuratorPlaylistView (props) {
 
   return (
     <>
-      { curatorPlaylists?.items?.length > 0 
+      { curatorPlaylists?.items?.length > 0
         ? <>{curatorProfile}</>
         : playlist && !isPlaylistSearching && !curatorPlaylists?.items?.length
-            ? <div className='playlist-container'>
+          ? <div className='playlist-container'>
                 <div className="playlist-info p10">
                   <img src={playlist?.images[0]?.url} alt='' />
                   <div className="playlist-text">
@@ -109,8 +109,8 @@ function CuratorPlaylistView (props) {
                   <div className='back-button flex-basic p10' onClick={goBackToSearch}><ArrowBackIcon /></div>
                 </div>
                 <PlaylistPanelHandler playlist={playlist} curatorView={true} />
-            </div> 
-            : <>{searchPage}</>
+            </div>
+          : <>{searchPage}</>
       }
     </>
   );

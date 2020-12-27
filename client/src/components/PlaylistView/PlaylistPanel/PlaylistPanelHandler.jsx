@@ -22,9 +22,9 @@ const useStyles = makeStyles(() => ({
 const tabProps = (index) => {
   return {
     id: `tab-${index}`,
-    'aria-controls': `tabpanel-${index}`,
+    'aria-controls': `tabpanel-${index}`
   };
-}
+};
 
 const StyledTabs = withStyles({
   indicator: {
@@ -34,9 +34,9 @@ const StyledTabs = withStyles({
     '& > span': {
       maxWidth: 200,
       width: '100%',
-      backgroundColor: '#d66fe4',
-    },
-  },
+      backgroundColor: '#d66fe4'
+    }
+  }
 })(props => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
 const StyledTab = withStyles((theme) => ({
@@ -46,16 +46,16 @@ const StyledTab = withStyles((theme) => ({
     fontFamily: 'Raleway',
     fontSize: theme.typography.pxToRem(16),
     '&:focus': {
-      opacity: 1,
-    },
-  },
+      opacity: 1
+    }
+  }
 }))(props => <Tab disableRipple {...props} />);
 
 // *** MATERIAL UI TAB STYLING END *** //
 
 function PlaylistPanelHandler (props) {
-  const [{ 
-    userSettings, 
+  const [{
+    userSettings,
     settingsSetByCurator
   }, dispatch] = useProviderValue();
   const { playlist, curatorView } = props;
@@ -67,7 +67,7 @@ function PlaylistPanelHandler (props) {
       dispatch({
         type: 'SET_CURATOR',
         curator: playlist.owner
-      })
+      });
       getSettings(playlist.owner.id).then(res => {
         if (res) {
           const resultObj = JSON.parse(res).curator_settings;
@@ -89,9 +89,9 @@ function PlaylistPanelHandler (props) {
             settingsSetByCurator: false
           });
         }
-      })
+      });
     }
-  }, [])
+  }, []);
 
   const onChangeTab = (event, tab) => {
     setTab(tab);

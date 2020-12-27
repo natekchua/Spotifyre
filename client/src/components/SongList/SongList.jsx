@@ -2,7 +2,7 @@ import React from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Song from '../Song/Song';
-import { 
+import {
   getPlaybackState,
   playSong
 } from '../../services/apiRequests';
@@ -17,9 +17,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)',
+  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)'
 });
-
 
 function SongList (props) {
   const { playlist, curatorView } = props;
@@ -42,7 +41,7 @@ function SongList (props) {
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
         });
-      })
+      });
     }
   };
 
@@ -50,18 +49,18 @@ function SongList (props) {
     return (
       <Draggable key={s?.track?.id} draggableId={s?.track?.id} index={idx}>
         {(provided, snapshot) => (
-        <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} 
-          style={getItemStyle(
-            snapshot.isDragging,
-            provided.draggableProps.style
-          )
-        }>
-          <Song song={s?.track} onPlaySong={onPlaySong} curatorView={curatorView} />
-        </li>
+          <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
+            style={getItemStyle(
+              snapshot.isDragging,
+              provided.draggableProps.style
+            )
+            }>
+            <Song song={s?.track} onPlaySong={onPlaySong} curatorView={curatorView} />
+          </li>
         )}
       </Draggable>
-    )
-  })
+    );
+  });
 
   return (
     <div>
@@ -78,7 +77,7 @@ function SongList (props) {
         )}
       </Droppable>
     </div>
-  )
+  );
 }
 
 export default SongList;

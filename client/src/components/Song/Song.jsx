@@ -9,7 +9,7 @@ import './Song.css';
 
 const initialState = {
   mouseX: null,
-  mouseY: null,
+  mouseY: null
 };
 
 function Song (props) {
@@ -30,16 +30,16 @@ function Song (props) {
     e.preventDefault();
     setState({
       mouseX: e.clientX - 2,
-      mouseY: e.clientY - 4,
+      mouseY: e.clientY - 4
     });
     setSafeToPlay(false);
-  }
+  };
 
   const handleClose = () => {
     setState(initialState);
     setSafeToPlay(true);
-  }
-  
+  };
+
   const errorHandler = (err) => {
     dispatch({
       type: 'SET_NOTIFICATION',
@@ -48,19 +48,19 @@ function Song (props) {
         type: 'error'
       }
     });
-  }
+  };
 
   const suggestSong = () => {
-    const params = { 
+    const params = {
       songInfo: {
         id: song.id,
         name: song.name.replace(/'/g, ''),
         artist: song.artists.map(a => a.name).join(', ').replace(/'/g, ''),
         albumArt: song.album.images[0]?.url
       },
-      playlistInfo: { 
+      playlistInfo: {
         id: curatorPlaylist.id,
-        name: curatorPlaylist.name, 
+        name: curatorPlaylist.name,
         ownerID: curator.id
       },
       suggestedByUserInfo: {
@@ -73,14 +73,14 @@ function Song (props) {
       const currUserSuggestions = curatorSuggestions.filter(s => s?.suggested_by_username === user?.display_name);
 
       // check current entries with curator Settings to see if they satisfy conditions before posting API request.
-      if (currUserSuggestions.length < curatorSettings.suggestionsPerUser 
-        && curatorSuggestions.length < curatorSettings.maxSuggestions) {
+      if (currUserSuggestions.length < curatorSettings.suggestionsPerUser &&
+        curatorSuggestions.length < curatorSettings.maxSuggestions) {
         suggestSongToPlaylist(params).then(() => {
           getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
             dispatch({
               type: 'SET_CURATOR_SUGGESTIONS',
               curatorSuggestions: JSON.parse(res)
-            })
+            });
             dispatch({
               type: 'SET_NOTIFICATION',
               notification: {
@@ -88,15 +88,15 @@ function Song (props) {
                 type: 'success'
               }
             });
-          })
+          });
         }).catch(err => errorHandler(err));
       } else {
-        if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser 
-          && curatorSuggestions.length >= curatorSettings.maxSuggestions) {
+        if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser &&
+          curatorSuggestions.length >= curatorSettings.maxSuggestions) {
           dispatch({
             type: 'SET_NOTIFICATION',
             notification: {
-              message: 
+              message:
               `Sorry! You can't suggest more than ${curatorSettings.suggestionsPerUser} songs to this playlist.
                 This playlist has also reached its max number of suggestions.`,
               type: 'error'
@@ -114,7 +114,7 @@ function Song (props) {
           dispatch({
             type: 'SET_NOTIFICATION',
             notification: {
-              message: `Sorry! This playlist has reached its max number of suggestions.`,
+              message: 'Sorry! This playlist has reached its max number of suggestions.',
               type: 'error'
             }
           });
@@ -129,7 +129,7 @@ function Song (props) {
         }
       });
     }
-  }
+  };
 
   return (
     <div className='flex-basic song-row' onClick={() => onPlaySong(safeToPlay, song.id)} onContextMenu={onRightClick}>
@@ -143,7 +143,7 @@ function Song (props) {
       </div>
       <p className='p5'>{getDuration(song?.duration_ms)}</p>
       { curatorPlaylist?.name && !curatorView && tab === 'Collaborate' && settingsSetByCurator
-        ? <Menu     
+        ? <Menu
             keepMounted
             open={state.mouseY !== null}
             onClose={handleClose}
@@ -158,10 +158,10 @@ function Song (props) {
               Suggest '{song?.name}' to Playlist '{curatorPlaylist?.name}'
             </MenuItem>
           </Menu>
-        : null 
+        : null
       }
     </div>
-  )
+  );
 }
 
 export default Song;

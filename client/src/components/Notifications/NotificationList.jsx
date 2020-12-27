@@ -16,13 +16,13 @@ function NotificationList (props) {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
         currPlaylist: JSON.parse(res).playlist
-      })
-    }).catch(err => errorHandler(err))
+      });
+    }).catch(err => errorHandler(err));
     if (tab !== 'Collaborate') {
       dispatch({
         type: 'SET_TAB',
         tab: 'Collaborate'
-      })
+      });
     }
   };
 
@@ -34,11 +34,11 @@ function NotificationList (props) {
         type: 'error'
       }
     });
-  }
+  };
 
   const notiDisplay = notifications?.map((n, idx) => {
-    return <NotificationRow notification={n} key={idx} onSelectPlaylist={onSelectPlaylist} />
-  })
+    return <NotificationRow notification={n} key={idx} onSelectPlaylist={onSelectPlaylist} />;
+  });
 
   return (
     <div>
@@ -46,9 +46,9 @@ function NotificationList (props) {
         ? <>{notiDisplay}</>
         : <h3>You have no song suggestions.</h3>
       }
-      
+
     </div>
-  );    
+  );
 }
 
 export default NotificationList;

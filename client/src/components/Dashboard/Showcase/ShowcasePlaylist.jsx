@@ -1,12 +1,12 @@
 import React from 'react';
-import { selectPlaylist} from '../../../services/apiRequests';
+import { selectPlaylist } from '../../../services/apiRequests';
 import { useProviderValue } from '../../ContextState/Provider';
 import { Link } from 'react-router-dom';
 
 import './ShowcasePlaylist.css';
 
 function ShowcasePlaylist (props) {
-  const { playlist } = props
+  const { playlist } = props;
   const [{ user }, dispatch] = useProviderValue();
 
   const onSelectPlaylist = (id) => {
@@ -18,8 +18,8 @@ function ShowcasePlaylist (props) {
       dispatch({
         type: 'SET_CURR_PLAYLIST',
         currPlaylist: JSON.parse(res).playlist
-      })
-    }).catch(err => errorHandler(err))
+      });
+    }).catch(err => errorHandler(err));
   };
 
   const errorHandler = (err) => {
@@ -30,11 +30,11 @@ function ShowcasePlaylist (props) {
         type: 'error'
       }
     });
-  }
+  };
 
   return (
     <>
-      <Link to={'/collaborate'}> 
+      <Link to={'/collaborate'}>
         <img className='dash-playlist-info' src={playlist?.images[0]?.url} alt='album-art' onClick={() => onSelectPlaylist(playlist.id)} />
       </Link>
     </>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStyles } from './styles'
+import { useStyles } from './styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 
@@ -15,7 +15,7 @@ function InfoModal (props) {
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500,
+        timeout: 500
       }}
     >
       {props.children}
