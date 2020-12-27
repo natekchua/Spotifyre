@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
 import { updateCurationSettings } from '../../services/dbRequests';
-import { useStyles } from '../InfoModal/styles';
+import { useInfoStyles } from '../../MUIStyles';
 import InfoModal from '../InfoModal/InfoModal';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
@@ -16,7 +16,7 @@ import 'antd/lib/alert/style/index.css';
 import './Profile.css';
 
 function Profile () {
-  const classes = useStyles();
+  const classes = useInfoStyles();
   const [{
     user,
     userSettings

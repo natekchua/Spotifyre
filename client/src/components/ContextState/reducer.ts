@@ -70,6 +70,11 @@ const reducer: ContextStateReducer = (state, action) => {
         ...state,
         curatorSuggestions: action.curatorSuggestions
       };
+    case 'SET_CURATORS':
+      return {
+        ...state,
+        curators: action.curators
+      };
     case 'SET_PLAYLISTS':
       return {
         ...state,

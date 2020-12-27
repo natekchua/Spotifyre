@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import CuratorSuggestionRow from './SuggestionRow/CuratorSuggestionRow';
-import { useStyles } from '../../InfoModal/styles';
+import { useInfoStyles } from '../../../MUIStyles';
 import InfoModal from '../../InfoModal/InfoModal';
 import {
   getPlaybackState,
@@ -28,7 +28,7 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function CuratorSuggestions () {
-  const classes = useStyles();
+  const classes = useInfoStyles();
   const [{
     curatorSuggestions,
     curatorPlaylist,

@@ -21,6 +21,7 @@ export const initialState: ContextProviderState = {
     suggestionsPerUser: 10
   },
   curatorSuggestions: [],
+  curators: [],
   playlists: [],
   currPlaylist: null,
   curatorPlaylist: null,

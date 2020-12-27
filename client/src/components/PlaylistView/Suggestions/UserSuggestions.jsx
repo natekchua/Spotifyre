@@ -13,7 +13,7 @@ import {
 } from '../../../services/apiRequests';
 import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
 import { wait } from '../../../services/helperFunctions';
-import { useStyles } from '../../InfoModal/styles';
+import { useInfoStyles } from '../../../MUIStyles';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 import './Suggestions.css';
@@ -29,7 +29,7 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function UserSuggestions () {
-  const classes = useStyles();
+  const classes = useInfoStyles();
   const [{
     userSuggestions,
     currPlaylist,

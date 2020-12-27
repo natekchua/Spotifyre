@@ -1,11 +1,11 @@
 import React from 'react';
-import { useStyles } from './styles';
+import { useInfoStyles } from '../../MUIStyles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 
 function InfoModal (props) {
   const { isOpen, closeInfo } = props;
-  const classes = useStyles();
+  const classes = useInfoStyles();
 
   return (
     <Modal

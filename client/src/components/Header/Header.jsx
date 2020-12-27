@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { getNotifications } from '../../services/dbRequests';
-import { useStyles } from '../InfoModal/styles';
+import { useInfoStyles } from '../../MUIStyles';
 import InfoModal from '../InfoModal/InfoModal';
 import { Avatar } from '@material-ui/core';
 import NotificationList from '../Notifications/NotificationList';
@@ -14,7 +14,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import './Header.css';
 
 function Header () {
-  const classes = useStyles();
+  const classes = useInfoStyles();
   const [{
     user,
     tab,

@@ -1,10 +1,9 @@
 const { SQL } = require('../db/sql.js');
 
-const getAllCurators = async () => {
-  const query = 'SELECT * FROM spotifyre.user WHERE user_type = \'curator\';';
-
+const getCurators = async (searchString) => {
+  const curatorsQuery = `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`;
   try {
-    const { rows } = await SQL(query);
+    const { rows } = await SQL(curatorsQuery);
     return rows;
   } catch (err) {
     console.error(err);
@@ -232,7 +231,7 @@ const getNotifications = async (userID) => {
 };
 
 module.exports = {
-  getAllCurators,
+  getCurators,
   getAllPlaylists,
   getPlaylistID,
   getPlaylistSuggestions,

@@ -15,6 +15,7 @@ export type ContextStateActionType =
   | 'CHECK_CURATOR_SETTINGS'
   | 'SET_CURATOR_SETTINGS'
   | 'SET_CURATOR_SUGGESTIONS'
+  | 'SET_CURATORS'
   | 'SET_PLAYLISTS'
   | 'SET_CURR_PLAYLIST'
   | 'SET_CURATOR_PLAYLIST'
@@ -68,6 +69,7 @@ export interface ContextProviderState {
     suggestionsPerUser: number;
   };
   curatorSuggestions: any[];
+  curators: any[];
   playlists: any[];
   currPlaylist: any;
   curatorPlaylist: any;
