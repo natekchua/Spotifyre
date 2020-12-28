@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -6,45 +6,77 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import PlaylistResultsList from '../PlaylistResultsList/PlaylistResultsList';
 import { getCurators } from '../../../services/dbRequests';
 import { useCuratorShowcaseStyles } from '../../../MUIStyles';
+import { getCuratorPlaylists } from '../../../services/apiRequests';
 
 import './CuratorShowcase.css';
 
 function CuratorShowcase () {
   const classes = useCuratorShowcaseStyles();
-  const [{ curators }, dispatch] = useProviderValue();
+  const [curatorPlaylists, setCuratorPlaylists] = useState([]);
+  const [{ curators, curatorPlaylist, user }, dispatch] = useProviderValue();
   useEffect(() => {
     getCurators().then(res => {
       dispatch({
         type: 'SET_CURATORS',
-        curators: res.curators
+        curators: res
       });
     });
   }, []);
 
+  const goBackToCuratorMenu = () => {
+    setCuratorPlaylists([]);
+  };
+
+  const goToCuratorProfile = async (c) => {
+    const params = {
+      curatorID: c?.userid,
+      userID: user.id
+    };
+    getCuratorPlaylists(params).then(res => {
+      setCuratorPlaylists(JSON.parse(res).curatorPlaylists);
+      dispatch({
+        type: 'SET_CURATOR',
+        curator: { display_name: c?.name }
+      });
+    });
+  };
+
+  const curatorProfile = (
+    <div>
+      <div className='back-button flex-basic p10' onClick={goBackToCuratorMenu}><ArrowBackIcon /></div>
+      <PlaylistResultsList playlistsFromQuery={curatorPlaylists} goBackToCuratorPlaylist={goBackToCuratorMenu} fromCuratorMenu={true} />
+    </div>
+  );
+
   return (
-    <div className={classes.root}>
-    <GridList cellHeight={180} className={classes.gridList}>
-      <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-        <ListSubheader component="div">December</ListSubheader>
-      </GridListTile>
-      {curators.map(c => (
-        <GridListTile key={c.img}>
-          <img src={c.img} alt={c.title} />
-          <GridListTileBar
-            title={c.title}
-            subtitle={<span>by: {c.author}</span>}
-            actionIcon={
-              <IconButton aria-label={`info about ${c.title}`} className={classes.icon}>
-                <InfoIcon />
-              </IconButton>
-            }
-          />
-        </GridListTile>
-      ))}
-    </GridList>
-  </div>
+    <>
+      {
+        curatorPlaylists?.items?.length > 0
+          ? <>{curatorProfile}</>
+          : <div className={classes.root}>
+              <GridList className={classes.gridList}>
+                {curators.map(c => (
+                  <GridListTile key={c?.userid} onClick={() => goToCuratorProfile(c)}>
+                    <img src={c?.profile_pic} alt={`${c?.name}'s Profile Pic`} />
+                    <GridListTileBar
+                      title={c?.name}
+                      subtitle={<span>Followers: {c?.followers}</span>}
+                      actionIcon={
+                        <IconButton aria-label={`info about ${c?.name}`} className={classes.icon}>
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </GridListTile>
+                ))}
+              </GridList>
+          </div>
+      }
+    </>
   );
 }
 

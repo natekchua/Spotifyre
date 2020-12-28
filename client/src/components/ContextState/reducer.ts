@@ -2,7 +2,7 @@ import { ContextStateReducer } from './types';
 
 // Reducer to listen for actions.
 const reducer: ContextStateReducer = (state, action) => {
-  // console.log(action); //  used for debugging context state
+  console.log(action); //  used for debugging context state
 
   switch (action.type) {
     case 'SET_TOKEN':

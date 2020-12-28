@@ -1,9 +1,13 @@
 const { SQL } = require('../db/sql.js');
 
 const getCurators = async (searchString) => {
-  const curatorsQuery = `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`;
+  const query =
+    searchString
+      ? `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`
+      : 'SELECT * FROM spotifyre.user WHERE "curator_settings" != \'null\' AND "name" ILIKE \'%%\'';
+
   try {
-    const { rows } = await SQL(curatorsQuery);
+    const { rows } = await SQL(query);
     return rows;
   } catch (err) {
     console.error(err);
@@ -127,8 +131,11 @@ const decreaseCount = async (playlistID) => {
 const setTokens = async (data, user) => {
   const { access_token, refresh_token } = data;
   const selectQuery = `SELECT COUNT(*) FROM spotifyre.user WHERE "userid" = '${user.id}';`;
-  const updateQuery = `UPDATE spotifyre.user SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}'
-    WHERE "userid" = '${user.id}';`;
+  const updateQuery =
+    `UPDATE spotifyre.user 
+      SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}', "profile_pic" = '${user.images[0].url}', "followers" = '${user.followers.total}'
+      WHERE "userid" = '${user.id}';`;
+
   try {
     const { rows } = await SQL(selectQuery);
     if (Number(rows[0].count) <= 0) {
@@ -136,6 +143,8 @@ const setTokens = async (data, user) => {
       const params = {
         userID: user.id,
         name: user.display_name,
+        profilePic: user.images[0].url,
+        followers: user.followers.total,
         curatorSettings: null,
         accessToken: access_token,
         refreshToken: refresh_token
@@ -176,9 +185,9 @@ const getUser = async (id) => {
 };
 
 const addUser = async (params) => {
-  const { userID, name, curatorSettings, accessToken, refreshToken } = params;
-  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings, access_token, refresh_token)
-  VALUES('${userID}', '${name}', '${curatorSettings}', '${accessToken}', '${refreshToken}');`;
+  const { userID, name, curatorSettings, profilePic, followers, accessToken, refreshToken } = params;
+  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings, access_token, refresh_token, profile_pic, followers)
+  VALUES('${userID}', '${name}', '${curatorSettings}', '${accessToken}', '${refreshToken}', '${profilePic}', '${followers}');`;
 
   try {
     const { rows } = await SQL(query);

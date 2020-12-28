@@ -64,17 +64,19 @@ export const usePanelEffectStyles = withStyles((theme) => ({
 // *** PLAYLIST PANEL STYLES END *** //
 
 // *** CURATOR SHOWCASE STYLES START *** //
-export const useCuratorShowcaseStyles = makeStyles((theme) => ({
+export const useCuratorShowcaseStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    flexDirection: 'row',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: 'transparent'
   },
   gridList: {
-    width: 500,
-    height: 450
+    padding: '15px',
+    margin: '10px',
+    height: '100vh'
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)'
