@@ -126,9 +126,9 @@ const decreaseCount = async (playlistID) => {
 // ****** SETTINGS ****** //
 
 const setTokens = async (data, user) => {
-  const { access_token, refresh_token } = data;
+  const { access_token: accessToken, refresh_token: refreshToken } = data;
   const selectQuery = `SELECT COUNT(*) FROM spotifyre.user WHERE "userid" = '${user.id}';`;
-  const updateQuery = `UPDATE spotifyre.user SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}'
+  const updateQuery = `UPDATE spotifyre.user SET "access_token" = '${accessToken}', "refresh_token" = '${refreshToken}'
     WHERE "userid" = '${user.id}';`;
   try {
     const { rows } = await SQL(selectQuery);

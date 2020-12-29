@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { getCode } from './services/helperFunctions';
 import { useProviderValue } from './components/ContextState/Provider';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { getAuthURL, getToken } from './services/apiRequests';
 import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
@@ -13,22 +13,29 @@ function App () {
   const [{ token }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    getAuthURL()
-      .then(res => {
-        setLoginURL(res.loginURL);
+    async function cb () {
+      try {
+        const { loginURL } = await getAuthURL();
+        setLoginURL(loginURL);
         const code = getCode();
+        console.log({ code });
         if (code) {
-          getToken(code)
-            .then(res => {
-              dispatch({
-                type: 'SET_TOKEN',
-                token: JSON.parse(res).tokens.accessToken
-              });
-            })
-            .catch(err => errorHandler(err));
+          const resp = await getToken(code);
+          const {
+            tokens: { accessToken: token }
+          } = JSON.parse(resp);
+          dispatch({
+            type: 'SET_TOKEN',
+            token
+          });
         }
-      })
-      .catch((err: Error) => errorHandler(err));
+      } catch (err) {
+        errorHandler(err);
+        console.error(err);
+      }
+    }
+
+    cb();
   }, []);
 
   const errorHandler = (err: Error) => {
@@ -43,9 +50,11 @@ function App () {
 
   return (
     <Router>
-      {token
-        ? (<AppContainer token={token} />)
-        : (<Route path='/' exact render={() => <Login loginURL={loginURL} />} />)}
+      {token ? (
+        <AppContainer token={token} />
+      ) : (
+        <Route path="/" exact render={() => <Login loginURL={loginURL} />} />
+      )}
     </Router>
   );
 }
