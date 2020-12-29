@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { messaging, getPushToken } from '../../firebase';
-import { PushContextProviderProps } from './types';
+import { PushContextProviderProps, PushContextProviderValue } from './types';
 
-const PushContext = createContext({} as PushContextProviderProps);
+const PushContext = createContext({} as PushContextProviderValue);
 
-export const PushContextProvider: React.FC = ({ children }) => {
+export const PushContextProvider: React.FC = ({ children }: PushContextProviderProps) => {
   const [token, setToken] = useState('');
 
   useEffect(() => {
@@ -26,10 +26,10 @@ export const PushContextProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <PushContext.Provider value={{token}}>
+    <PushContext.Provider value={{ token }}>
       {children}
     </PushContext.Provider>
   );
 };
 
-const usePushContext = () => useContext(PushContext);
+export const usePushContext = () => useContext(PushContext);
