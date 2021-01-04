@@ -3,6 +3,7 @@ import { useProviderValue } from '../ContextState/Provider';
 import he from 'he';
 import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
 import PlaylistSearch from '../Search/PlaylistSearch';
+import CuratorSearch from '../Search/CuratorSearch';
 import PlaylistPanel from '../PlaylistView/PlaylistPanel/PlaylistPanel';
 import CuratorShowcase from './CuratorShowcase/CuratorShowcase';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -34,7 +35,8 @@ function CuratorPlaylistView (props) {
     playlistSearchResults,
     isPlaylistSearching,
     curator,
-    user
+    user,
+    isCuratorSearching
   }, dispatch] = useProviderValue();
   const [curatorPlaylists, setCuratorPlaylists] = useState([]);
   const classes = usePlaylistViewStyles();
@@ -115,6 +117,7 @@ function CuratorPlaylistView (props) {
         }
         </PlaylistPanel>
       <PlaylistPanel value={tab} index={1}>
+        {isCuratorSearching ? <CuratorSearch /> : null}
         <CuratorShowcase />
       </PlaylistPanel>
     </div>

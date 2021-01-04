@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlaylistResultsList from '../PlaylistResultsList/PlaylistResultsList';
 import { getCurators } from '../../../services/dbRequests';
@@ -17,7 +13,7 @@ import './CuratorShowcase.css';
 function CuratorShowcase () {
   const classes = useCuratorShowcaseStyles();
   const [curatorPlaylists, setCuratorPlaylists] = useState([]);
-  const [{ curators, curatorPlaylist, user }, dispatch] = useProviderValue();
+  const [{ curators, user }, dispatch] = useProviderValue();
   useEffect(() => {
     getCurators().then(res => {
       dispatch({
@@ -29,6 +25,10 @@ function CuratorShowcase () {
 
   const goBackToCuratorMenu = () => {
     setCuratorPlaylists([]);
+    dispatch({
+      type: 'SET_IS_CURATOR_SEARCHING',
+      isCuratorSearching: true
+    });
   };
 
   const goToCuratorProfile = async (c) => {
@@ -41,6 +41,10 @@ function CuratorShowcase () {
       dispatch({
         type: 'SET_CURATOR',
         curator: { display_name: c?.name }
+      });
+      dispatch({
+        type: 'SET_IS_CURATOR_SEARCHING',
+        isCuratorSearching: false
       });
     });
   };
@@ -55,26 +59,30 @@ function CuratorShowcase () {
   return (
     <>
       {
-        curatorPlaylists?.items?.length > 0
+        curatorPlaylists?.items?.length >= 0
           ? <>{curatorProfile}</>
           : <div className={classes.root}>
-              <GridList className={classes.gridList}>
-                {curators.map(c => (
-                  <GridListTile key={c?.userid} onClick={() => goToCuratorProfile(c)}>
-                    <img src={c?.profile_pic} alt={`${c?.name}'s Profile Pic`} />
-                    <GridListTileBar
-                      title={c?.name}
-                      subtitle={<span>Followers: {c?.followers}</span>}
-                      actionIcon={
-                        <IconButton aria-label={`info about ${c?.name}`} className={classes.icon}>
-                          <InfoIcon />
-                        </IconButton>
-                      }
-                    />
-                  </GridListTile>
+              <Grid
+                container
+                spacing={3}
+                direction='row'
+                justify='center'
+                alignItems='center'
+              >
+                {curators.map((c, idx) => (
+                  <Grid
+                    className={classes.avatarContainer}
+                    item
+                    xs={12} sm={6} md={3}
+                    key={idx}
+                  >
+                    <Avatar alt={`${c?.name}'s Profile Pic`} src={c?.profile_pic}className={classes.avatar} onClick={() => goToCuratorProfile(c)} />
+                    <h4>{c?.name}</h4>
+                    <h5>Followers: {c?.followers}</h5>
+                  </Grid>
                 ))}
-              </GridList>
-          </div>
+              </Grid>
+            </div>
       }
     </>
   );

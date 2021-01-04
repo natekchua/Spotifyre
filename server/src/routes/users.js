@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/get-curators/:query', (req, res) => {
   action
-    .getCurators(req.body.post)
+    .getCurators(req.params.query)
     .then((rtn) => {
       console.log('curators retrieved: ', rtn);
       res.send(rtn);

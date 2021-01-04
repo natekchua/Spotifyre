@@ -2,7 +2,7 @@ const { SQL } = require('../db/sql.js');
 
 const getCurators = async (searchString) => {
   const query =
-    searchString
+    searchString !== 'undefined'
       ? `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`
       : 'SELECT * FROM spotifyre.user WHERE "curator_settings" != \'null\' AND "name" ILIKE \'%%\'';
 
