@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import spotifyreLogo from '../../icons/spotifyre.png';
 
 import './Login.css';
@@ -15,5 +16,9 @@ function Login (props) {
     </div>
   );
 }
+
+Login.propTypes = {
+  loginURL: PropTypes.string
+};
 
 export default Login;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { searchForSongs } from '../../services/apiRequests';
 import { useProviderValue } from '../ContextState/Provider';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +9,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import './Search.css';
 
-function SongSearch ({ query }) {
+function SongSearch (props) {
+  const { query } = props;
   const [{ user }, dispatch] = useProviderValue();
 
   const sendQuery = (q) => {
@@ -60,5 +62,9 @@ function SongSearch ({ query }) {
     </div>
   );
 }
+
+SongSearch.propTypes = {
+  query: PropTypes.string
+};
 
 export default SongSearch;

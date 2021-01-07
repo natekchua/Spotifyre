@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../../../ContextState/Provider';
 import {
   removeSuggestionFromPlaylist,
@@ -118,5 +119,10 @@ function UserSuggestionRow (props) {
     </>
   );
 }
+
+UserSuggestionRow.propTypes = {
+  suggestion: PropTypes.string,
+  onPlaySong: PropTypes.func
+};
 
 export default UserSuggestionRow;

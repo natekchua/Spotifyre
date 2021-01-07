@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { selectPlaylist } from '../../../services/apiRequests';
 import { useProviderValue } from '../../ContextState/Provider';
 import { Link } from 'react-router-dom';
@@ -40,5 +41,9 @@ function ShowcasePlaylist (props) {
     </>
   );
 }
+
+ShowcasePlaylist.propTypes = {
+  playlist: PropTypes.object
+};
 
 export default ShowcasePlaylist;

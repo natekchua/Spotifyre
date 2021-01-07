@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../ContextState/Provider';
 import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
@@ -81,5 +82,9 @@ function PlaylistView (props) {
     </>
   );
 }
+
+PlaylistView.propTypes = {
+  playlist: PropTypes.object
+};
 
 export default PlaylistView;

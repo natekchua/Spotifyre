@@ -84,9 +84,9 @@ function Header () {
           </div>
           <div id='transition-modal-description'>
             <p>
-              Collaboration mode allows you to view your <strong>playlist suggestions</strong>, <strong>search for songs</strong> and <strong>suggest songs</strong> to a curator's playlist.
+              Collaboration mode allows you to view your <strong>playlist suggestions</strong>, <strong>search for songs</strong> and <strong>suggest songs</strong> to a curator&lsquo;s playlist.
               <br style={{ marginBottom: '4px' }} />
-              On <strong>right side</strong> of the collaboration mode you can view the <strong>Curator's playlist</strong> where you want to suggest songs to. To view already submitted suggestions click on the <strong>Make a Suggestion</strong> tab.
+              On <strong>right side</strong> of the collaboration mode you can view the <strong>Curator&lsquo;s playlist</strong> where you want to suggest songs to. To view already submitted suggestions click on the <strong>Make a Suggestion</strong> tab.
             </p>
           </div>
         </div>

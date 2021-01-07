@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Option.css';
 
@@ -15,5 +16,10 @@ function TabOption (props) {
     </div>
   );
 }
+
+TabOption.propTypes = {
+  optionName: PropTypes.string,
+  Icon: PropTypes.element
+};
 
 export default TabOption;

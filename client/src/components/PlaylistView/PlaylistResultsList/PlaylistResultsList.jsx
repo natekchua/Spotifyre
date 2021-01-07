@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../../ContextState/Provider';
 import { selectPlaylist } from '../../../services/apiRequests';
 import PlaylistRow from './PlaylistRow/PlaylistRow';
@@ -55,12 +56,18 @@ function PlaylistResultsList (props) {
   return (
     <div className='playlist-query-results'>
       { isPlaylistSearching && !fromCuratorMenu
-        ? <h3>Results found for "{playlistSearchQuery}". {playlistsFromQuery?.items?.length} playlists returned.</h3>
-        : <h2 className='center-text p5'>{curator?.display_name}'s Public Playlists</h2>
+        ? <h3>Results found for &quot;{playlistSearchQuery}&quot;. {playlistsFromQuery?.items?.length} playlists returned.</h3>
+        : <h2 className='center-text p5'>{curator?.display_name}&lsquo;s Public Playlists</h2>
       }
       {playlistRows}
     </div>
   );
 }
+
+PlaylistResultsList.propTypes = {
+  playlistsFromQuery: PropTypes.object,
+  goBackToCuratorPlaylist: PropTypes.func,
+  fromCuratorMenu: PropTypes.bool
+};
 
 export default PlaylistResultsList;

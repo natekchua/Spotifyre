@@ -127,7 +127,7 @@ function CuratorSuggestions () {
             </div>
             <div id='transition-modal-description'>
               <p>
-                To <strong>suggest a song</strong> to a Curator's playlist, right click on the song on the left playlist view and click Suggest. You will only be able to suggest to the playlist if the user has curator mode enabled.
+                To <strong>suggest a song</strong> to a Curator&lsquo;s playlist, right click on the song on the left playlist view and click Suggest. You will only be able to suggest to the playlist if the user has curator mode enabled.
               </p>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../ContextState/Provider';
 import { Route, Redirect } from 'react-router-dom';
 import { Alert } from 'antd';
@@ -100,33 +101,39 @@ function AppContainer (props) {
 
   return (
     <div className='AppContainer-container'>
-      {notification ? (
-        <Alert
-          className='notification'
-          showIcon
-          onClose={closeNotification}
-          message={notification.message}
-          type={notification.type}
-          closable
-        />
-      ) : null}
-      {user ? (
-        <>
-          <div className='AppContainer'>
-            <Sidebar />
-            <div className='Content-container'>
-              <Header />
-              {props.token ? <Redirect to='/dashboard' /> : null}
-              <Route path='/dashboard' render={() => <Dashboard />} />
-              <Route path='/collaborate' render={() => <Collaborate />} />
-              <Route path='/profile' render={() => <Profile />} />
+      {notification
+        ? <Alert
+            className='notification'
+            showIcon
+            onClose={closeNotification}
+            message={notification.message}
+            type={notification.type}
+            closable
+          />
+        : null
+      }
+      {user
+        ? <>
+            <div className='AppContainer'>
+              <Sidebar />
+              <div className='Content-container'>
+                <Header />
+                {props.token ? <Redirect to='/dashboard' /> : null}
+                <Route path='/dashboard' render={() => <Dashboard />} />
+                <Route path='/collaborate' render={() => <Collaborate />} />
+                <Route path='/profile' render={() => <Profile />} />
+              </div>
             </div>
-          </div>
-          <Footer />
-        </>
-      ) : null}
+            <Footer />
+          </>
+        : null
+      }
     </div>
   );
 }
+
+AppContainer.propTypes = {
+  token: PropTypes.string
+};
 
 export default AppContainer;

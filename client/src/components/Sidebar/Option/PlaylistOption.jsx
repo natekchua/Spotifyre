@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './Option.css';
@@ -20,5 +21,12 @@ function PlaylistOption (props) {
     </Link>
   );
 }
+
+PlaylistOption.propTypes = {
+  optionName: PropTypes.string,
+  Icon: PropTypes.element,
+  playlist: PropTypes.object,
+  onSelectPlaylist: PropTypes.func
+};
 
 export default PlaylistOption;

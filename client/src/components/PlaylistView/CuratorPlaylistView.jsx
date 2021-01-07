@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../ContextState/Provider';
 import he from 'he';
 import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
@@ -152,5 +153,9 @@ function CuratorPlaylistView (props) {
     </>
   );
 }
+
+CuratorPlaylistView.propTypes = {
+  playlist: PropTypes.object
+};
 
 export default CuratorPlaylistView;
