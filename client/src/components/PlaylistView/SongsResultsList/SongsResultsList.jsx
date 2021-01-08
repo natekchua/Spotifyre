@@ -44,7 +44,7 @@ function SongsResultsList (props) {
     <div className='songs-query-results'>
       { isSongSearching
         ? <>
-            <h3>Results found for &quot;{songsSearchQuery}&quot;. {songsFromQuery.items.length} songs returned.</h3>
+            <h3>Results found for &quot;{songsSearchQuery}&quot;. {songsFromQuery?.items?.length} songs returned.</h3>
             {songs}
           </>
         : null
