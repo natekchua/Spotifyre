@@ -10,7 +10,7 @@ import { getCuratorPlaylists } from '../../../services/apiRequests';
 import './CuratorShowcase.css';
 
 function CuratorShowcase () {
-  const [curatorPlaylists, setCuratorPlaylists] = useState([]);
+  const [curatorPlaylists, setCuratorPlaylists] = useState<any>([]);
   const [{ curators, user }, dispatch] = useProviderValue();
   useEffect(() => {
     getCurators().then(res => {
@@ -29,7 +29,7 @@ function CuratorShowcase () {
     });
   };
 
-  const goToCuratorProfile = async (c) => {
+  const goToCuratorProfile = async (c: any) => {
     const params = {
       curatorID: c?.userid,
       userID: user.id

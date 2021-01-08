@@ -1,27 +1,27 @@
 /* eslint-disable no-empty-pattern */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getCurators } from '../../services/dbRequests';
 import { useProviderValue } from '../ContextState/Provider';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { CuratorSearchProps } from './types';
 
 import './Search.css';
 
-function CuratorSearch (props) {
+function CuratorSearch (props: CuratorSearchProps) {
   const { query } = props;
   const [{ }, dispatch] = useProviderValue();
 
-  const sendQuery = (q) => {
+  const sendQuery = (q: any) => {
     if (q.target.value) {
       getCurators(q.target.value).then(res => {
         dispatch({
-          type: 'SET_CURATOR_SEARCH_QUERY',
+          type: 'SET_CURATORS_SEARCH_QUERY',
           curatorsSearchQuery: q.target.value
         });
         dispatch({
-          type: 'SET_CURATOR_SEARCH_RESULTS',
+          type: 'SET_CURATORS_SEARCH_RESULTS',
           curatorsSearchResults: res
         });
         dispatch({
@@ -58,9 +58,5 @@ function CuratorSearch (props) {
     </div>
   );
 }
-
-CuratorSearch.propTypes = {
-  query: PropTypes.string
-};
 
 export default CuratorSearch;
