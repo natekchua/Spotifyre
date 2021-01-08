@@ -5,13 +5,11 @@ import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PlaylistResultsList from '../PlaylistResultsList/PlaylistResultsList';
 import { getCurators } from '../../../services/dbRequests';
-import { useCuratorShowcaseStyles } from '../../../MUIStyles';
 import { getCuratorPlaylists } from '../../../services/apiRequests';
 
 import './CuratorShowcase.css';
 
 function CuratorShowcase () {
-  const classes = useCuratorShowcaseStyles();
   const [curatorPlaylists, setCuratorPlaylists] = useState([]);
   const [{ curators, user }, dispatch] = useProviderValue();
   useEffect(() => {
@@ -61,7 +59,7 @@ function CuratorShowcase () {
       {
         curatorPlaylists?.items?.length >= 0
           ? <>{curatorProfile}</>
-          : <div className={classes.root}>
+          : <div className='root'>
               <Grid
                 container
                 spacing={3}
@@ -71,12 +69,14 @@ function CuratorShowcase () {
               >
                 {curators.map((c, idx) => (
                   <Grid
-                    className={classes.avatarContainer}
+                    className='avatar-container'
                     item
-                    xs={12} sm={6} md={3}
+                    xs={12}
+                    sm={6}
+                    md={3}
                     key={idx}
                   >
-                    <Avatar alt={`${c?.name}'s Profile Pic`} src={c?.profile_pic}className={classes.avatar} onClick={() => goToCuratorProfile(c)} />
+                    <Avatar alt={`${c?.name}'s Profile Pic`} src={c?.profile_pic} className='avatar' onClick={() => goToCuratorProfile(c)} />
                     <h4>{c?.name}</h4>
                     <h5>Followers: {c?.followers}</h5>
                   </Grid>

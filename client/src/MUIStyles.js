@@ -62,35 +62,3 @@ export const usePanelEffectStyles = withStyles((theme) => ({
   }
 }));
 // *** PLAYLIST PANEL STYLES END *** //
-
-// *** CURATOR SHOWCASE STYLES START *** //
-export const useCuratorShowcaseStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexGrow: 1,
-    overflow: 'hidden',
-    backgroundColor: 'transparent'
-  },
-  avatar: {
-    width: theme.spacing(16),
-    height: theme.spacing(16),
-    margin: theme.spacing(1),
-    boxShadow: theme.shadows[4],
-    cursor: 'pointer',
-    '&:hover, &:focus': {
-      transform: 'scale(1.1)'
-    }
-  },
-  avatarContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: '5px',
-    margin: '5px'
-  }
-}));
-// *** CURATOR SHOWCASE STYLES END *** //

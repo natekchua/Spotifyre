@@ -82,7 +82,7 @@ function SongList (props) {
 }
 
 SongList.propTypes = {
-  playlist: PropTypes.object,
+  playlist: PropTypes.any,
   curatorView: PropTypes.any
 };
 

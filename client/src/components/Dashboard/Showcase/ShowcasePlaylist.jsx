@@ -43,7 +43,7 @@ function ShowcasePlaylist (props) {
 }
 
 ShowcasePlaylist.propTypes = {
-  playlist: PropTypes.object
+  playlist: PropTypes.any
 };
 
 export default ShowcasePlaylist;

@@ -155,7 +155,7 @@ function CuratorPlaylistView (props) {
 }
 
 CuratorPlaylistView.propTypes = {
-  playlist: PropTypes.object
+  playlist: PropTypes.any
 };
 
 export default CuratorPlaylistView;

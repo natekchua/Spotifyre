@@ -1,0 +1,75 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  flex-grow: 1;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+.avatar {
+  width: 135px;
+  height: 135px;
+  margin: 5px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.342);
+  cursor: pointer;
+}
+
+.avatar:hover {
+  transform: scale(1.1);
+}
+
+.avatar-container .MuiAvatar-root {
+  width: 125px;
+  height: 125px;
+}
+
+.root .MuiGrid-spacing-xs-3 {
+  margin: 0;
+  width: 95%;
+}
+
+/* Larger Devices (Desktops, Laptops) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .avatar-container .MuiAvatar-root {
+    width: 100px;
+    height: 100px;
+  }
+
+  .avatar-container h4, h5 {
+    font-size: 90%;
+  }
+}
+
+/* Small Devices (Phones, Tablets) */
+@media only screen and (min-width: 360px) and (max-width: 767px) {
+  .avatar-container .MuiAvatar-root {
+    width: 90px;
+    height: 90px;
+  }
+
+  .avatar-container > h4, .avatar-container h5 {
+    font-size: 85%;
+  }
+}
+
+@media only screen and (max-width: 359px) {
+  .avatar-container .MuiAvatar-root {
+    width: 60px;
+    height: 60px;
+  }
+
+  .avatar-container > h4, .avatar-container h5 {
+    font-size: 75%;
+  }
+}

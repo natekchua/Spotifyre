@@ -24,7 +24,7 @@ function PlaylistOption (props) {
 
 PlaylistOption.propTypes = {
   optionName: PropTypes.string,
-  Icon: PropTypes.element,
+  Icon: PropTypes.any,
   playlist: PropTypes.object,
   onSelectPlaylist: PropTypes.func
 };

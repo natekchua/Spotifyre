@@ -84,7 +84,7 @@ function PlaylistView (props) {
 }
 
 PlaylistView.propTypes = {
-  playlist: PropTypes.object
+  playlist: PropTypes.any
 };
 
 export default PlaylistView;

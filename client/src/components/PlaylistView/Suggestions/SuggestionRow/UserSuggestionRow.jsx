@@ -121,7 +121,7 @@ function UserSuggestionRow (props) {
 }
 
 UserSuggestionRow.propTypes = {
-  suggestion: PropTypes.string,
+  suggestion: PropTypes.object,
   onPlaySong: PropTypes.func
 };
 

@@ -97,7 +97,7 @@ function PlaylistPanelHandler (props) {
 }
 
 PlaylistPanelHandler.propTypes = {
-  playlist: PropTypes.object,
+  playlist: PropTypes.any,
   curatorView: PropTypes.any
 };
 

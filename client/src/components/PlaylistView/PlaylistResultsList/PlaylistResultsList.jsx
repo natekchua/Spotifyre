@@ -65,7 +65,7 @@ function PlaylistResultsList (props) {
 }
 
 PlaylistResultsList.propTypes = {
-  playlistsFromQuery: PropTypes.object,
+  playlistsFromQuery: PropTypes.any,
   goBackToCuratorPlaylist: PropTypes.func,
   fromCuratorMenu: PropTypes.bool
 };

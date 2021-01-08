@@ -19,7 +19,7 @@ function TabOption (props) {
 
 TabOption.propTypes = {
   optionName: PropTypes.string,
-  Icon: PropTypes.element
+  Icon: PropTypes.any
 };
 
 export default TabOption;
