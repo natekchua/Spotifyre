@@ -9,12 +9,12 @@ dotenv.config();
 // Client ID, Client Secret and Redirect URI of the Spotifyre app.
 // Prod environment
 const prod = {
-  url: { redirectURI: 'https://spotifyre-manager.netlify.app/' },
+  url: { redirectURI: 'https://spotifyre-manager.netlify.app/' }
 };
 
 // local dev environment
 const dev = {
-  url: { redirectURI: 'http://localhost:3000/' },
+  url: { redirectURI: 'http://localhost:3000/' }
 };
 
 const config = process.env.NODE_ENV === 'development' ? dev : prod;
@@ -25,5 +25,5 @@ const clientSecret = process.env.clientSecret;
 export const spotify = new SpotifyWebApi({
   clientId: clientID,
   clientSecret: clientSecret,
-  redirectUri: config.url.redirectURI,
+  redirectUri: config.url.redirectURI
 });

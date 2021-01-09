@@ -6,7 +6,7 @@ export const getCurators = async (searchString: string) => {
   const query =
     searchString !== 'undefined'
       ? `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`
-      : `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%%'`;
+      : 'SELECT * FROM spotifyre.user WHERE "curator_settings" != \'null\' AND "name" ILIKE \'%%\'';
 
   try {
     const { rows } = await SQL(query);

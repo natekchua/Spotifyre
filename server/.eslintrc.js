@@ -14,6 +14,5 @@ module.exports = {
   rules: {
     quotes: [2, 'single'],
     semi: [2, 'always'],
-    "@"
-  },
+  }
 };

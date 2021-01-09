@@ -6,7 +6,7 @@
     "start": "ts-node ./src/index.ts",
     "dev": "cross-env NODE_ENV=development nodemon",
     "build": "tsc",
-    "lint": "eslint --fix --ext .js,.ts ./src"
+    "lint": "eslint --fix --ext .ts ./src"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

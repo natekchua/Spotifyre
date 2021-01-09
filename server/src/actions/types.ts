@@ -1,4 +1,4 @@
-import { User, Followers } from "../models";
+import { User, Followers } from '../models';
 
 export type AddSongSuggestionParams = {
   songInfo: SongInfo;
