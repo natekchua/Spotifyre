@@ -34,16 +34,15 @@ function CuratorShowcase () {
       curatorID: c?.userid,
       userID: user.id
     };
-    getCuratorPlaylists(params).then(res => {
-      setCuratorPlaylists(JSON.parse(res).curatorPlaylists);
-      dispatch({
-        type: 'SET_CURATOR',
-        curator: { display_name: c?.name }
-      });
-      dispatch({
-        type: 'SET_IS_CURATOR_SEARCHING',
-        isCuratorSearching: false
-      });
+    const res = await getCuratorPlaylists(params);
+    setCuratorPlaylists(JSON.parse(res).curatorPlaylists);
+    dispatch({
+      type: 'SET_CURATOR',
+      curator: { display_name: c?.name }
+    });
+    dispatch({
+      type: 'SET_IS_CURATOR_SEARCHING',
+      isCuratorSearching: false
     });
   };
 

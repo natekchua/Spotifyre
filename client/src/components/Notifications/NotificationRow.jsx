@@ -7,7 +7,7 @@ function NotificationRow (props) {
 
   return (
     <div className='notification-row' onClick={() => onSelectPlaylist(notification.playlistid)}>
-      <p>{notification?.suggested_by_username}&nbsp;suggested the song &quot;{notification?.song_title}&quot; to your playlist &quot;{notification?.playlist}&quot;.</p>
+      <p>{`${notification?.suggested_by_username} suggested the song "${notification?.song_title}" to your playlist "${notification?.playlist}".`}</p>
     </div>
   );
 }

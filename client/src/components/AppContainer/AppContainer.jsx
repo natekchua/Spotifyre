@@ -101,32 +101,30 @@ function AppContainer (props) {
 
   return (
     <div className='AppContainer-container'>
-      {notification
-        ? <Alert
-            className='notification'
-            showIcon
-            onClose={closeNotification}
-            message={notification.message}
-            type={notification.type}
-            closable
-          />
-        : null
+      {notification &&
+       <Alert
+          className='notification'
+          showIcon
+          onClose={closeNotification}
+          message={notification.message}
+          type={notification.type}
+          closable
+        />
       }
-      {user
-        ? <>
-            <div className='AppContainer'>
-              <Sidebar />
-              <div className='Content-container'>
-                <Header />
-                {props.token ? <Redirect to='/dashboard' /> : null}
-                <Route path='/dashboard' render={() => <Dashboard />} />
-                <Route path='/collaborate' render={() => <Collaborate />} />
-                <Route path='/profile' render={() => <Profile />} />
-              </div>
+      {user &&
+        <>
+          <div className='AppContainer'>
+            <Sidebar />
+            <div className='Content-container'>
+              <Header />
+              {props.token ? <Redirect to='/dashboard' /> : null}
+              <Route path='/dashboard' render={() => <Dashboard />} />
+              <Route path='/collaborate' render={() => <Collaborate />} />
+              <Route path='/profile' render={() => <Profile />} />
             </div>
-            <Footer />
-          </>
-        : null
+          </div>
+          <Footer />
+        </>
       }
     </div>
   );
