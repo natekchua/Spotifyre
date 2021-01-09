@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const spotifyUtils = require('../../spotifyUtils.js');
+const spotifyUtils = require('../spotifyUtils.js');
 const actions = require('../actions/actions.js');
 const SpotifyWebApi = require('spotify-web-api-node');
-const permissions = require('../../permissions.js');
+const permissions = require('../permissions.js');
 const app = express.Router();
 
 const { spotify } = spotifyUtils;
