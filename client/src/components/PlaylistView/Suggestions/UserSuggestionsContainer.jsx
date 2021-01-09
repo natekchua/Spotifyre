@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import UserSuggestions from './UserSuggestions';
 
 import './Suggestions.css';
@@ -16,5 +17,9 @@ function UserSuggestionsContainer (props) {
     </div>
   );
 }
+
+UserSuggestionsContainer.propTypes = {
+  userSettings: PropTypes.object
+};
 
 export default UserSuggestionsContainer;

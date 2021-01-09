@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../ContextState/Provider';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Song from '../Song/Song';
@@ -79,5 +80,10 @@ function SongList (props) {
     </div>
   );
 }
+
+SongList.propTypes = {
+  playlist: PropTypes.any,
+  curatorView: PropTypes.any
+};
 
 export default SongList;

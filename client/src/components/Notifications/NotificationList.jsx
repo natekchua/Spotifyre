@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import NotificationRow from './NotificationRow';
 import { selectPlaylist } from '../../services/apiRequests';
 import { useProviderValue } from '../ContextState/Provider';
@@ -50,5 +51,9 @@ function NotificationList (props) {
     </div>
   );
 }
+
+NotificationList.propTypes = {
+  notifications: PropTypes.array
+};
 
 export default NotificationList;

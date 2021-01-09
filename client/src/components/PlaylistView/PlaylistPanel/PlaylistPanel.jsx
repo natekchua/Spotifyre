@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function PlaylistPanel (props) {
   const { children, value, index, ...other } = props;
@@ -15,5 +16,11 @@ function PlaylistPanel (props) {
     </div>
   );
 }
+
+PlaylistPanel.propTypes = {
+  children: PropTypes.any,
+  value: PropTypes.any,
+  index: PropTypes.any
+};
 
 export default PlaylistPanel;

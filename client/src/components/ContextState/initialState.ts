@@ -21,6 +21,7 @@ export const initialState: ContextProviderState = {
     suggestionsPerUser: 10
   },
   curatorSuggestions: [],
+  curators: [],
   playlists: [],
   currPlaylist: null,
   curatorPlaylist: null,
@@ -30,6 +31,9 @@ export const initialState: ContextProviderState = {
   isSongSearching: false,
   songsSearchQuery: null,
   songsSearchResults: [],
+  isCuratorSearching: true,
+  curatorsSearchQuery: null,
+  curatorsSearchResults: [],
   songStatus: false,
   currSong: null,
   recentSongs: null,

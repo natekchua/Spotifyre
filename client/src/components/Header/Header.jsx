@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { getNotifications } from '../../services/dbRequests';
-import { useStyles } from '../InfoModal/styles';
+import { useInfoStyles } from '../../MUIStyles';
 import InfoModal from '../InfoModal/InfoModal';
 import { Avatar } from '@material-ui/core';
 import NotificationList from '../Notifications/NotificationList';
@@ -14,7 +14,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import './Header.css';
 
 function Header () {
-  const classes = useStyles();
+  const classes = useInfoStyles();
   const [{
     user,
     tab,
@@ -84,9 +84,9 @@ function Header () {
           </div>
           <div id='transition-modal-description'>
             <p>
-              Collaboration mode allows you to view your <strong>playlist suggestions</strong>, <strong>search for songs</strong> and <strong>suggest songs</strong> to a curator's playlist.
+              Collaboration mode allows you to view your <strong>playlist suggestions</strong>, <strong>search for songs</strong> and <strong>suggest songs</strong> to a curator&lsquo;s playlist.
               <br style={{ marginBottom: '4px' }} />
-              On <strong>right side</strong> of the collaboration mode you can view the <strong>Curator's playlist</strong> where you want to suggest songs to. To view already submitted suggestions click on the <strong>Make a Suggestion</strong> tab.
+              On <strong>right side</strong> of the collaboration mode you can view the <strong>Curator&lsquo;s playlist</strong> where you want to suggest songs to. To view already submitted suggestions click on the <strong>Make a Suggestion</strong> tab.
             </p>
           </div>
         </div>

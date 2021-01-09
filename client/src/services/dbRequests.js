@@ -24,3 +24,7 @@ export const getSuggestionsForPlaylist = async (params) => {
 export const getNotifications = async (userID) => {
   return apiGet(`/users/get-notifications/${userID}`);
 };
+
+export const getCurators = async (query) => {
+  return apiGet(`/users/get-curators/${query}`);
+};

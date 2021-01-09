@@ -70,6 +70,11 @@ const reducer: ContextStateReducer = (state, action) => {
         ...state,
         curatorSuggestions: action.curatorSuggestions
       };
+    case 'SET_CURATORS':
+      return {
+        ...state,
+        curators: action.curators
+      };
     case 'SET_PLAYLISTS':
       return {
         ...state,
@@ -114,6 +119,21 @@ const reducer: ContextStateReducer = (state, action) => {
       return {
         ...state,
         songsSearchResults: action.songsSearchResults
+      };
+    case 'SET_IS_CURATOR_SEARCHING':
+      return {
+        ...state,
+        isCuratorSearching: action.isCuratorSearching
+      };
+    case 'SET_CURATORS_SEARCH_QUERY':
+      return {
+        ...state,
+        curatorsSearchQuery: action.curatorsSearchQuery
+      };
+    case 'SET_CURATORS_SEARCH_RESULTS':
+      return {
+        ...state,
+        curatorsSearchResults: action.curatorsSearchResults
       };
     case 'SET_SONG_STATUS':
       return {

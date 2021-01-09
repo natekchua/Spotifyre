@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './PlaylistRow.css';
 
@@ -18,5 +19,10 @@ function PlaylistRow (props) {
     </div>
   );
 }
+
+PlaylistRow.propTypes = {
+  playlist: PropTypes.object,
+  onSelectPlaylist: PropTypes.func
+};
 
 export default PlaylistRow;

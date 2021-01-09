@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { getDuration } from '../../services/helperFunctions';
 import { useProviderValue } from '../ContextState/Provider';
 import { suggestSongToPlaylist, getSuggestionsForPlaylist } from '../../services/dbRequests';
@@ -155,7 +156,7 @@ function Song (props) {
             }
           >
             <MenuItem onClick={suggestSong}>
-              Suggest '{song?.name}' to Playlist '{curatorPlaylist?.name}'
+              Suggest &lsquo;{song?.name}&lsquo; to Playlist &lsquo;{curatorPlaylist?.name}&lsquo;
             </MenuItem>
           </Menu>
         : null
@@ -163,5 +164,11 @@ function Song (props) {
     </div>
   );
 }
+
+Song.propTypes = {
+  song: PropTypes.object,
+  onPlaySong: PropTypes.func,
+  curatorView: PropTypes.any
+};
 
 export default Song;

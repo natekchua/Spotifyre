@@ -15,6 +15,7 @@ export type ContextStateActionType =
   | 'CHECK_CURATOR_SETTINGS'
   | 'SET_CURATOR_SETTINGS'
   | 'SET_CURATOR_SUGGESTIONS'
+  | 'SET_CURATORS'
   | 'SET_PLAYLISTS'
   | 'SET_CURR_PLAYLIST'
   | 'SET_CURATOR_PLAYLIST'
@@ -24,6 +25,9 @@ export type ContextStateActionType =
   | 'SET_IS_SONG_SEARCHING'
   | 'SET_SONGS_SEARCH_QUERY'
   | 'SET_SONGS_SEARCH_RESULTS'
+  | 'SET_IS_CURATOR_SEARCHING'
+  | 'SET_CURATORS_SEARCH_QUERY'
+  | 'SET_CURATORS_SEARCH_RESULTS'
   | 'SET_SONG_STATUS'
   | 'SET_CURR_SONG';
 
@@ -68,6 +72,7 @@ export interface ContextProviderState {
     suggestionsPerUser: number;
   };
   curatorSuggestions: any[];
+  curators: any[];
   playlists: any[];
   currPlaylist: any;
   curatorPlaylist: any;
@@ -77,6 +82,9 @@ export interface ContextProviderState {
   isSongSearching: boolean;
   songsSearchQuery: any;
   songsSearchResults: any[];
+  isCuratorSearching: boolean;
+  curatorsSearchQuery: any;
+  curatorsSearchResults: any[];
   songStatus: boolean;
   currSong: any;
   recentSongs: any;

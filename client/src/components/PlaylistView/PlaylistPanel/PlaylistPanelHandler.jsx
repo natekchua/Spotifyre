@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../../ContextState/Provider';
 import { getSettings } from '../../../services/dbRequests';
 import SongList from '../../SongList/SongList';
@@ -9,49 +10,17 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {
+  usePanelStyles,
+  usePanelEffectStyles,
+  usePlaylistViewStyles,
+  tabProps
+} from '../../../MUIStyles';
 
 import './PlaylistPanel.css';
 
-// *** MATERIAL UI TAB STYLING START *** //
-
-const useStyles = makeStyles(() => ({
-  playlistViewHeader: { backgroundColor: 'transparent' }
-}));
-
-const tabProps = (index) => {
-  return {
-    id: `tab-${index}`,
-    'aria-controls': `tabpanel-${index}`
-  };
-};
-
-const StyledTabs = withStyles({
-  indicator: {
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    '& > span': {
-      maxWidth: 200,
-      width: '100%',
-      backgroundColor: '#d66fe4'
-    }
-  }
-})(props => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
-
-const StyledTab = withStyles((theme) => ({
-  root: {
-    textTransform: 'none',
-    color: '#fff',
-    fontFamily: 'Raleway',
-    fontSize: theme.typography.pxToRem(16),
-    '&:focus': {
-      opacity: 1
-    }
-  }
-}))(props => <Tab disableRipple {...props} />);
-
-// *** MATERIAL UI TAB STYLING END *** //
+const StyledTabs = usePanelStyles(props => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+const StyledTab = usePanelEffectStyles(props => <Tab disableRipple {...props} />);
 
 function PlaylistPanelHandler (props) {
   const [{
@@ -60,7 +29,7 @@ function PlaylistPanelHandler (props) {
   }, dispatch] = useProviderValue();
   const { playlist, curatorView } = props;
   const [tab, setTab] = useState(0);
-  const classes = useStyles();
+  const classes = usePlaylistViewStyles();
 
   useEffect(() => {
     if (curatorView && playlist) {
@@ -126,5 +95,10 @@ function PlaylistPanelHandler (props) {
     </div>
   );
 }
+
+PlaylistPanelHandler.propTypes = {
+  playlist: PropTypes.any,
+  curatorView: PropTypes.any
+};
 
 export default PlaylistPanelHandler;

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../ContextState/Provider';
 import { Route, Redirect } from 'react-router-dom';
 import { Alert } from 'antd';
@@ -100,8 +101,8 @@ function AppContainer (props) {
 
   return (
     <div className='AppContainer-container'>
-      {notification ? (
-        <Alert
+      {notification &&
+       <Alert
           className='notification'
           showIcon
           onClose={closeNotification}
@@ -109,8 +110,8 @@ function AppContainer (props) {
           type={notification.type}
           closable
         />
-      ) : null}
-      {user ? (
+      }
+      {user &&
         <>
           <div className='AppContainer'>
             <Sidebar />
@@ -124,9 +125,13 @@ function AppContainer (props) {
           </div>
           <Footer />
         </>
-      ) : null}
+      }
     </div>
   );
 }
+
+AppContainer.propTypes = {
+  token: PropTypes.string
+};
 
 export default AppContainer;

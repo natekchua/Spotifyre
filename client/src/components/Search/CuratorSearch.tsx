@@ -1,38 +1,43 @@
+/* eslint-disable no-empty-pattern */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { searchForPlaylists } from '../../services/apiRequests';
+import { getCurators } from '../../services/dbRequests';
 import { useProviderValue } from '../ContextState/Provider';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { CuratorSearchProps } from './types';
 
 import './Search.css';
 
-function PlaylistSearch (props) {
+function CuratorSearch (props: CuratorSearchProps) {
   const { query } = props;
-  const [{ user }, dispatch] = useProviderValue();
+  const [{ }, dispatch] = useProviderValue();
 
-  const sendQuery = (q) => {
-    const params = {
-      query: q.target.value,
-      userID: user.id
-    };
-    searchForPlaylists(params).then(res => {
-      dispatch({
-        type: 'SET_PLAYLIST_SEARCH_QUERY',
-        playlistSearchQuery: q.target.value
+  const sendQuery = (q: any) => {
+    if (q.target.value) {
+      getCurators(q.target.value).then(res => {
+        dispatch({
+          type: 'SET_CURATORS_SEARCH_QUERY',
+          curatorsSearchQuery: q.target.value
+        });
+        dispatch({
+          type: 'SET_CURATORS_SEARCH_RESULTS',
+          curatorsSearchResults: res
+        });
+        dispatch({
+          type: 'SET_CURATORS',
+          curators: res
+        });
       });
-      dispatch({
-        type: 'SET_PLAYLIST_SEARCH_RESULTS',
-        playlistSearchResults: JSON.parse(res).playlistSearchResults
-      });
-    });
+    }
   };
 
   const clearSearchResults = () => {
-    dispatch({
-      type: 'SET_PLAYLIST_SEARCH_RESULTS',
-      playlistSearchResults: []
+    getCurators().then(res => {
+      dispatch({
+        type: 'SET_CURATORS',
+        curators: res
+      });
     });
   };
 
@@ -40,7 +45,7 @@ function PlaylistSearch (props) {
     <div className='search-container flex-basic p5'>
       <TextField
         className='search-text-field'
-        id='filled-basic' label={'Search Playlists'} variant='filled' value={query}
+        id='filled-basic' label={'Search Curators'} variant='filled' value={query}
         onKeyPress={event => event.key === 'Enter' ? sendQuery(event) : null}
         InputProps={{
           endAdornment:
@@ -54,8 +59,4 @@ function PlaylistSearch (props) {
   );
 }
 
-PlaylistSearch.propTypes = {
-  query: PropTypes.string
-};
-
-export default PlaylistSearch;
+export default CuratorSearch;

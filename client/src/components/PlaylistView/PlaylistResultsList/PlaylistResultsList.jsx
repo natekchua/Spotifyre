@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../../ContextState/Provider';
 import { selectPlaylist } from '../../../services/apiRequests';
 import PlaylistRow from './PlaylistRow/PlaylistRow';
@@ -6,7 +7,7 @@ import PlaylistRow from './PlaylistRow/PlaylistRow';
 import './PlaylistResultsList.css';
 
 function PlaylistResultsList (props) {
-  const { playlistsFromQuery, goBackToCuratorPlaylist } = props;
+  const { playlistsFromQuery, goBackToCuratorPlaylist, fromCuratorMenu } = props;
   const [{
     playlistSearchQuery,
     isPlaylistSearching,
@@ -54,13 +55,19 @@ function PlaylistResultsList (props) {
 
   return (
     <div className='playlist-query-results'>
-      { isPlaylistSearching
-        ? <h3>Results found for "{playlistSearchQuery}". {playlistsFromQuery.items.length} playlists returned.</h3>
-        : <h2 className='center-text p5'>{curator.display_name}'s Public Playlists</h2>
+      { isPlaylistSearching && !fromCuratorMenu
+        ? <h3>Results found for &quot;{playlistSearchQuery}&quot;. {playlistsFromQuery?.items?.length} playlists returned.</h3>
+        : <h2 className='center-text p5'>{curator?.display_name}&lsquo;s Public Playlists</h2>
       }
       {playlistRows}
     </div>
   );
 }
+
+PlaylistResultsList.propTypes = {
+  playlistsFromQuery: PropTypes.any,
+  goBackToCuratorPlaylist: PropTypes.func,
+  fromCuratorMenu: PropTypes.bool
+};
 
 export default PlaylistResultsList;

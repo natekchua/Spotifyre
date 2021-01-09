@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../../../ContextState/Provider';
 import {
   removeSuggestionFromPlaylist,
@@ -94,7 +95,7 @@ function CuratorSuggestionRow (props) {
             }
           >
             <MenuItem onClick={removeSuggestion}>
-              Remove Suggestion '{suggestion?.song_title}' from Playlist '{suggestion.playlist}'?
+              Remove Suggestion &lsquo;{suggestion?.song_title}&lsquo; from Playlist &lsquo;{suggestion.playlist}&lsquo;?
             </MenuItem>
           </Menu>
         : null
@@ -102,5 +103,10 @@ function CuratorSuggestionRow (props) {
     </>
   );
 }
+
+CuratorSuggestionRow.propTypes = {
+  suggestion: PropTypes.object,
+  onPlaySong: PropTypes.func
+};
 
 export default CuratorSuggestionRow;
