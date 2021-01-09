@@ -108,8 +108,8 @@ export const increaseCount = async (playlistID: string) => {
   const query = `UPDATE spotifyre.suggestions SET count=count+1 WHERE playlistid=${playlistID};`;
 
   try {
-    const { row } = await SQL(query);
-    return row;
+    const { rows } = await SQL(query);
+    return rows;
   } catch (err) {
     console.error(err);
     return `Failed to increase count: ${err.message}`;
@@ -120,8 +120,8 @@ export const decreaseCount = async (playlistID: string) => {
   const query = `UPDATE spotifyre.suggestions SET count=count-1 WHERE playlistid=${playlistID};`;
 
   try {
-    const { row } = await SQL(query);
-    return row;
+    const { rows } = await SQL(query);
+    return rows;
   } catch (err) {
     console.error(err);
     return `Failed to decrease count: ${err.message}`;
