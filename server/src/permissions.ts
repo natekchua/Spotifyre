@@ -4,7 +4,7 @@ const permissions = [
   'user-read-playback-state',
   'user-top-read',
   'user-modify-playback-state',
-  'playlist-modify-public'
+  'playlist-modify-public',
 ];
 
-module.exports = permissions;
+export { permissions };

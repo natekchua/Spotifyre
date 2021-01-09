@@ -16,7 +16,7 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-function normalizePort(val) {
+function normalizePort(val: string) {
   let port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -33,7 +33,7 @@ function normalizePort(val) {
 /**
  * Event listener for HTTP server "error" event.
  */
-function onError(error) {
+function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== 'listen') {
     throw error;
   }
