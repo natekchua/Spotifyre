@@ -1,9 +1,4 @@
-export type User = {
-  id: string;
-  followers: Followers;
-  images: UserImage[];
-  display_name: string;
-}
+export type User = SpotifyApi.CurrentUsersProfileResponse;
 
 export type UserImage = {
   url: string;
