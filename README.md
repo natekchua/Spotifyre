@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to Spotifyre 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.1-blue.svg?cacheSeconds=2592000" />
 </p>
 
 > Spotifyre is a Spotify application that acts as a Playlist Manager for curators. Our app focuses on making playlist collaboration and song sharing between listeners and curators super easy.
@@ -11,37 +11,75 @@
 
 ## Install & Usage Locally
 
+```sh
+yarn install
+yarn run dev
+```
+
 ### Server
+
 ```sh
 cd server
-npm install && npm start
+yarn install && yarn dev
 ```
 
 ### Client
 
 ```sh
 cd client
-npm install && npm start
+yarn install && yarn dev
+```
+
+### Editor Setup
+
+#### VS Code
+
+To have `eslint` running in VS Code, create a `.vscode/settings.json` file with following content:
+
+> Note: this assumes you have eslint extension installed.
+
+```json
+{
+    "eslint.workingDirectories": [
+        "client/",
+        "server/"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
+}
 ```
 
 ## Authors
 
 👤 **Afrah Ahmed**
+
 - Github: [@afrahahmed1](https://github.com/afrahahmed1)
 
 👤 **Daniel Artuso**
+
 - Github: [@dartuso](https://github.com/dartuso)
 
 👤 **Nathan Chua**
+
 - Github: [@natekchua](https://github.com/natekchua)
 - Website: https://natekchua.me
 
 👤 **Naweed Anwari**
+
 - Github: [@naweedanwari](https://github.com/naweedanwari)
 
 👤 **Rakheem Dewji**
+
 - Github: [@raksdewji](https://github.com/raksdewji)
 - Website: https://raksdewji.github.io/
+
+### Community Contributors
+
+👤 **Artem Golovin**
+
+- Github: [@awave1](https://github.com/awave1)
+- Website: https://temagolovin.dev/
 
 ## Technology Stack
 
@@ -56,10 +94,9 @@ npm install && npm start
 - [Heroku](https://heroku.com/) used to host the server and PostgreSQL database.
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node) universal wrapper/client for the Spotify Web API that runs on Node.JS.
 
-
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/natekchua/Spotifyre/issues). 
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/natekchua/Spotifyre/issues).
 
 ## Show your support
 
@@ -70,5 +107,6 @@ Give a ⭐️ if this project helped you!
 Copyright © 2020 Spotifyre<br />
 This project is ISC licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

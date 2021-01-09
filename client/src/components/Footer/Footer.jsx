@@ -3,7 +3,7 @@ import { useProviderValue } from '../ContextState/Provider';
 import { Slider } from '@material-ui/core';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import PlaybackControl from './PlaybackControl/PlaybackControl';
-import { 
+import {
   getPlaybackState
 } from '../../services/apiRequests';
 
@@ -18,7 +18,7 @@ function Footer () {
 
   useEffect(() => {
     getPlaybackState(user.id).then(res => {
-        dispatch({
+      dispatch({
         type: 'SET_CURR_SONG',
         songObj: res.song?.item
       });
@@ -26,13 +26,13 @@ function Footer () {
         type: 'SET_SONG_STATUS',
         isPlaying: res.isPlaying
       });
-    })
+    });
   }, []);
 
   return (
     <div className='footer'>
       <div className='album-desc'>
-        { 
+        {
           songStatus && currSong
             ? <>
                 <img src={currSong.album.images[1].url} alt='Current Album Art' />
@@ -44,7 +44,7 @@ function Footer () {
             : <div className='song-info'>
                 <h3>Click Play!</h3>
               </div>
-        }     
+        }
       </div>
       <PlaybackControl />
       <div className='volume-control'>

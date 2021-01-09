@@ -164,6 +164,10 @@
   .profile-name > strong{
     font-size: 12px;
   }
+
+  .info-icon > .MuiSvgIcon-root {
+    font-size: 70%;
+  }
 }
 
 /* Larger Phones and Tablets (Landscape) */

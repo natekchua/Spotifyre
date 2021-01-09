@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../ContextState/Provider';
 import PlaylistPanelHandler from './PlaylistPanel/PlaylistPanelHandler';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
@@ -6,7 +7,7 @@ import SongResultsList from './SongsResultsList/SongsResultsList';
 import SongSearch from '../Search/SongSearch';
 import SearchIcon from '@material-ui/icons/Search';
 import he from 'he';
-import { 
+import {
   getPlaybackState,
   playPlaylist
 } from '../../services/apiRequests';
@@ -16,17 +17,16 @@ import './PlaylistView.css';
 
 function PlaylistView (props) {
   const { playlist } = props;
-  const [{ 
-    songsSearchResults, 
+  const [{
+    songsSearchResults,
     isSongSearching,
     user
   }, dispatch] = useProviderValue();
-
   const onPlayPlaylist = async () => {
     const params = {
       playlistID: playlist.id,
       userID: user.id
-    }
+    };
     await playPlaylist(params);
     await wait(200);
     getPlaybackState(user.id).then(res => {
@@ -38,7 +38,7 @@ function PlaylistView (props) {
         type: 'SET_SONG_STATUS',
         isPlaying: res.isPlaying
       });
-    })
+    });
   };
 
   const goToSearch = () => {
@@ -46,7 +46,7 @@ function PlaylistView (props) {
       type: 'SET_IS_SONG_SEARCHING',
       isSongSearching: true
     });
-  }
+  };
 
   const searchPage = (
     <div className='playlist-container'>
@@ -62,8 +62,8 @@ function PlaylistView (props) {
     <>
     { !isSongSearching
       ? <div className='playlist-container'>
-          <div className='playlist-info p20'>
-            <img src={playlist?.images[0].url} alt='album-art' />
+          <div className='playlist-info p10'>
+            <img src={playlist?.images[0]?.url} alt='album-art' />
             <div className='playlist-text'>
               <h1>{playlist?.name}</h1>
               <p>{he.decode(playlist?.description)}</p>
@@ -79,9 +79,12 @@ function PlaylistView (props) {
         </div>
       : <>{searchPage}</>
     }
-      
     </>
   );
 }
+
+PlaylistView.propTypes = {
+  playlist: PropTypes.any
+};
 
 export default PlaylistView;

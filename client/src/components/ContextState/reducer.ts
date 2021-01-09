@@ -1,8 +1,10 @@
+import { ContextStateReducer } from './types';
+
 // Reducer to listen for actions.
-const reducer = (state, action) => {
+const reducer: ContextStateReducer = (state, action) => {
   // console.log(action); //  used for debugging context state
 
-  switch(action.type) {
+  switch (action.type) {
     case 'SET_TOKEN':
       return {
         ...state,
@@ -67,7 +69,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         curatorSuggestions: action.curatorSuggestions
-      };   
+      };
+    case 'SET_CURATORS':
+      return {
+        ...state,
+        curators: action.curators
+      };
     case 'SET_PLAYLISTS':
       return {
         ...state,
@@ -104,14 +111,29 @@ const reducer = (state, action) => {
         isSongSearching: action.isSongSearching
       };
     case 'SET_SONGS_SEARCH_QUERY':
-    return {
-      ...state,
-      songsSearchQuery: action.songsSearchQuery
-    };
+      return {
+        ...state,
+        songsSearchQuery: action.songsSearchQuery
+      };
     case 'SET_SONGS_SEARCH_RESULTS':
       return {
         ...state,
         songsSearchResults: action.songsSearchResults
+      };
+    case 'SET_IS_CURATOR_SEARCHING':
+      return {
+        ...state,
+        isCuratorSearching: action.isCuratorSearching
+      };
+    case 'SET_CURATORS_SEARCH_QUERY':
+      return {
+        ...state,
+        curatorsSearchQuery: action.curatorsSearchQuery
+      };
+    case 'SET_CURATORS_SEARCH_RESULTS':
+      return {
+        ...state,
+        curatorsSearchResults: action.curatorsSearchResults
       };
     case 'SET_SONG_STATUS':
       return {
@@ -126,6 +148,6 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-}
+};
 
 export default reducer;

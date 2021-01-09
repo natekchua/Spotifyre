@@ -1,4 +1,6 @@
-export const initialState = {
+import { ContextProviderState } from './types';
+
+export const initialState: ContextProviderState = {
   token: null,
   notification: null,
   suggestionNotifications: [],
@@ -19,6 +21,7 @@ export const initialState = {
     suggestionsPerUser: 10
   },
   curatorSuggestions: [],
+  curators: [],
   playlists: [],
   currPlaylist: null,
   curatorPlaylist: null,
@@ -28,7 +31,13 @@ export const initialState = {
   isSongSearching: false,
   songsSearchQuery: null,
   songsSearchResults: [],
+  isCuratorSearching: true,
+  curatorsSearchQuery: null,
+  curatorsSearchResults: [],
   songStatus: false,
   currSong: null,
-  recentSongs: null
+  recentSongs: null,
+  isPlaying: false,
+  songObj: null,
+  spotify: null
 };

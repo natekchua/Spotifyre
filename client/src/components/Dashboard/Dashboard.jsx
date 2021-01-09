@@ -5,7 +5,7 @@ import ShowcasePlaylist from './Showcase/ShowcasePlaylist';
 import TopTracks from './TopTracks/TopTracks';
 import Carousel from 'react-elastic-carousel';
 
-import './Dashboard.css'
+import './Dashboard.css';
 
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
@@ -26,10 +26,10 @@ function Dashboard () {
 
     getFeaturedPlaylists(user.id).then(res => {
       setFeaturedPlaylists(res.featured.playlists.items);
-    })
-  }, [])
+    });
+  }, []);
 
-  const playlistShowcase = featuredPlaylists.map((fpl, idx) => <ShowcasePlaylist number={idx+1} key={idx} playlist={fpl} />);
+  const playlistShowcase = featuredPlaylists.map((fpl, idx) => <ShowcasePlaylist number={idx + 1} key={idx} playlist={fpl} />);
 
   return (
     playlistShowcase

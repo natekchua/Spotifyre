@@ -7,21 +7,18 @@ import CuratorPlaylistView from '../PlaylistView/CuratorPlaylistView';
 import './Collaborate.css';
 
 function Collaborate () {
-  const [{
-    currPlaylist,
-    curatorPlaylist
-  }, dispatch] = useProviderValue();
+  const [{ currPlaylist, curatorPlaylist }, dispatch] = useProviderValue();
 
   useEffect(() => {
     dispatch({
       type: 'SET_TAB',
       tab: 'Collaborate'
-    })
-  }, [])
+    });
+  }, []);
 
-  const onDragEnd = (result) => {
+  const onDragEnd = result => {
     // TODO: implement source destination for curator suggestions
-  }
+  };
 
   return (
     <div className='collaborate-container'>

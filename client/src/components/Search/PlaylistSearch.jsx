@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { searchForPlaylists } from '../../services/apiRequests';
 import { useProviderValue } from '../ContextState/Provider';
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +8,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import './Search.css';
 
-function PlaylistSearch ({ query }) {
+function PlaylistSearch (props) {
+  const { query } = props;
   const [{ user }, dispatch] = useProviderValue();
 
   const sendQuery = (q) => {
@@ -25,31 +27,35 @@ function PlaylistSearch ({ query }) {
         playlistSearchResults: JSON.parse(res).playlistSearchResults
       });
     });
-  }
+  };
 
   const clearSearchResults = () => {
     dispatch({
       type: 'SET_PLAYLIST_SEARCH_RESULTS',
       playlistSearchResults: []
     });
-  }
-  
+  };
+
   return (
     <div className='search-container flex-basic p5'>
-      <TextField 
+      <TextField
         className='search-text-field'
         id='filled-basic' label={'Search Playlists'} variant='filled' value={query}
         onKeyPress={event => event.key === 'Enter' ? sendQuery(event) : null}
         InputProps={{
-          endAdornment: 
+          endAdornment:
             <InputAdornment className='search-icon' position='end'>
               <SearchIcon onClick={event => sendQuery(event)}/>
             </InputAdornment>
-          }}
+        }}
       />
       <div className='search-clear flex-basic m5' onClick={clearSearchResults}>Clear</div>
     </div>
   );
 }
+
+PlaylistSearch.propTypes = {
+  query: PropTypes.string
+};
 
 export default PlaylistSearch;

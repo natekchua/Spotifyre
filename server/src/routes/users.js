@@ -6,10 +6,11 @@ const app = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/getCurators', (req, res) => {
+app.get('/get-curators/:query', (req, res) => {
   action
-    .getAllCurators()
+    .getCurators(req.params.query)
     .then((rtn) => {
+      console.log('curators retrieved: ', rtn);
       res.send(rtn);
     })
     .catch((err) => {

@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProviderValue } from '../../ContextState/Provider';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import InfoModal from '../../InfoModal/InfoModal';
 import ReactEmoji from 'react-emoji';
+import Badge from '@material-ui/core/Badge';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Fade from '@material-ui/core/Fade';
 import UserSuggestionRow from './SuggestionRow/UserSuggestionRow';
-import { 
+import {
   getPlaybackState,
   playSong
 } from '../../../services/apiRequests';
 import { getSuggestionsForPlaylist } from '../../../services/dbRequests';
 import { wait } from '../../../services/helperFunctions';
+import { useInfoStyles } from '../../../MUIStyles';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 import './Suggestions.css';
@@ -20,11 +25,12 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)',
+  background: isDraggingOver ? 'rgba(64, 8, 109, 0.44)' : 'rgba(64, 8, 109, 0.21)'
 });
 
 function UserSuggestions () {
-  const [{ 
+  const classes = useInfoStyles();
+  const [{
     userSuggestions,
     currPlaylist,
     user
@@ -32,11 +38,16 @@ function UserSuggestions () {
 
   useEffect(() => {
     // get suggestions from DB if playlist suggestion isn't loaded or new playlist suggestions are generated.
-    if (!userSuggestions?.length || userSuggestions[0]?.playlistid !== currPlaylist?.id) { 
+    if (!userSuggestions?.length || userSuggestions[0]?.playlistid !== currPlaylist?.id) {
       refreshSuggestions();
     }
-  }, [])
-  
+  }, []);
+
+  const [suggestionsInfo, setSuggestionsInfo] = useState(false);
+
+  const openSuggestionsInfo = () => setSuggestionsInfo(true);
+  const closeSuggestionsInfo = () => setSuggestionsInfo(false);
+
   const onPlaySong = async (safeToPlay = false, id) => {
     if (safeToPlay) {
       const params = {
@@ -54,9 +65,9 @@ function UserSuggestions () {
           type: 'SET_SONG_STATUS',
           isPlaying: res.isPlaying
         });
-      })
+      });
     }
-  }
+  };
 
   const refreshSuggestions = (manualRefresh = false) => {
     getSuggestionsForPlaylist(currPlaylist.id).then(res => {
@@ -68,13 +79,13 @@ function UserSuggestions () {
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: {
-            message: `The current playlist's suggestions have been refreshed.`,
+            message: 'The current playlist\'s suggestions have been refreshed.',
             type: 'success'
           }
         });
       }
-    }) 
-  }
+    });
+  };
 
   const suggestionsList = userSuggestions?.map((s, idx) => {
     return (
@@ -91,7 +102,7 @@ function UserSuggestions () {
         )}
       </Draggable>
     );
-  })
+  });
 
   return (
     <div className='suggestion-box'>
@@ -99,9 +110,30 @@ function UserSuggestions () {
         <p>Suggestion Details</p>
         <p style={{ marginRight: '85px' }}>Suggested By</p>
       </div>
-      <div className='refresh-icon'>
-        <RefreshIcon onClick={() => refreshSuggestions(true)} /> 
+      <div className='icons'>
+        <div className='refresh-icon'>
+          <RefreshIcon onClick={() => refreshSuggestions(true)} />
+        </div>
+        <Badge className='suggestions-info-icon' onClick={openSuggestionsInfo} color='secondary'>
+          <InfoOutlinedIcon />
+        </Badge>
       </div>
+      <InfoModal isOpen={suggestionsInfo} closeInfo={closeSuggestionsInfo}>
+        <Fade in={suggestionsInfo}>
+          <div className={classes.paper}>
+            <div className='info-box flex-basic'>
+              <h2 className='flex-basic' id='transition-modal-title'>
+                Playlist Suggestions
+              </h2>
+            </div>
+            <div id='transition-modal-description'>
+              <p>
+                Here you can view suggestions that have been suggested to your playlist. Clicking on <strong>Approve</strong> will automatically add the song to the playlist whereas <strong>Decline</strong> will deny the suggestion.
+              </p>
+            </div>
+          </div>
+        </Fade>
+      </InfoModal>
       <Droppable droppableId='songs'>
         {(provided, snapshot) => (
           <ul style={getListStyle(snapshot.isDraggingOver)} {...provided.droppableProps} ref={provided.innerRef}>
@@ -110,7 +142,7 @@ function UserSuggestions () {
             {provided.placeholder}
           </ul>
         )}
-      </Droppable>  
+      </Droppable>
     </div>
   );
 }

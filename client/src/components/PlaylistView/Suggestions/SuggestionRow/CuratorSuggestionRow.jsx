@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../../../ContextState/Provider';
-import { 
+import {
   removeSuggestionFromPlaylist,
   getSuggestionsForPlaylist
 } from '../../../../services/dbRequests';
@@ -11,15 +12,15 @@ import './SuggestionRow.css';
 
 const initialState = {
   mouseX: null,
-  mouseY: null,
+  mouseY: null
 };
 
 function CuratorSuggestionRow (props) {
-  const [{ 
+  const [{
     user,
     curatorPlaylist
   }, dispatch] = useProviderValue();
-  const { suggestion, onPlaySong } = props
+  const { suggestion, onPlaySong } = props;
   const [state, setState] = useState(initialState);
   const [safeToPlay, setSafeToPlay] = useState(true);
 
@@ -27,22 +28,22 @@ function CuratorSuggestionRow (props) {
     e.preventDefault();
     setState({
       mouseX: e.clientX - 2,
-      mouseY: e.clientY - 4,
+      mouseY: e.clientY - 4
     });
     setSafeToPlay(false);
-  }
+  };
 
   const removeSuggestion = () => {
     const params = {
       songID: suggestion?.songid,
       playlistID: suggestion?.playlistid
-    }
+    };
     removeSuggestionFromPlaylist(params).then(res => {
       getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
         dispatch({
           type: 'SET_CURATOR_SUGGESTIONS',
           curatorSuggestions: JSON.parse(res)
-        })
+        });
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: {
@@ -52,7 +53,7 @@ function CuratorSuggestionRow (props) {
         });
       }).catch(err => errorHandler(err));
     }).catch(err => errorHandler(err));
-  }
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -62,12 +63,12 @@ function CuratorSuggestionRow (props) {
         type: 'error'
       }
     });
-  }
+  };
 
   const handleClose = () => {
     setState(initialState);
     setSafeToPlay(true);
-  }
+  };
 
   return (
     <>
@@ -82,7 +83,7 @@ function CuratorSuggestionRow (props) {
         <p className='p5'>{suggestion?.suggested_by_username}</p>
       </div>
       { suggestion.suggested_by_userid === user.id
-        ? <Menu     
+        ? <Menu
             keepMounted
             open={state.mouseY !== null}
             onClose={handleClose}
@@ -94,7 +95,7 @@ function CuratorSuggestionRow (props) {
             }
           >
             <MenuItem onClick={removeSuggestion}>
-              Remove Suggestion '{suggestion?.song_title}' from Playlist '{suggestion.playlist}'?
+              Remove Suggestion &lsquo;{suggestion?.song_title}&lsquo; from Playlist &lsquo;{suggestion.playlist}&lsquo;?
             </MenuItem>
           </Menu>
         : null
@@ -102,5 +103,10 @@ function CuratorSuggestionRow (props) {
     </>
   );
 }
+
+CuratorSuggestionRow.propTypes = {
+  suggestion: PropTypes.object,
+  onPlaySong: PropTypes.func
+};
 
 export default CuratorSuggestionRow;

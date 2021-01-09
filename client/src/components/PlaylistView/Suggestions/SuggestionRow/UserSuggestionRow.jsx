@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useProviderValue } from '../../../ContextState/Provider';
-import { 
-  removeSuggestionFromPlaylist, 
+import {
+  removeSuggestionFromPlaylist,
   getSuggestionsForPlaylist,
   getNotifications
 } from '../../../../services/dbRequests';
@@ -12,11 +13,11 @@ import CheckIcon from '@material-ui/icons/Check';
 import './SuggestionRow.css';
 
 function UserSuggestionRow (props) {
-  const [{ 
+  const [{
     user,
     currPlaylist
   }, dispatch] = useProviderValue();
-  const { suggestion, onPlaySong } = props
+  const { suggestion, onPlaySong } = props;
   const [safeToPlay, setSafeToPlay] = useState(true);
 
   const rejectSuggestion = () => {
@@ -30,7 +31,7 @@ function UserSuggestionRow (props) {
         dispatch({
           type: 'SET_USER_SUGGESTIONS',
           userSuggestions: JSON.parse(res)
-        })
+        });
         dispatch({
           type: 'SET_NOTIFICATION',
           notification: {
@@ -46,7 +47,7 @@ function UserSuggestionRow (props) {
         });
       }).catch(err => errorHandler(err));
     }).catch(err => errorHandler(err));
-  }
+  };
 
   const acceptSuggestion = async () => {
     const params = {
@@ -62,7 +63,7 @@ function UserSuggestionRow (props) {
           dispatch({
             type: 'SET_USER_SUGGESTIONS',
             userSuggestions: JSON.parse(res)
-          })
+          });
           dispatch({
             type: 'SET_NOTIFICATION',
             notification: {
@@ -81,7 +82,7 @@ function UserSuggestionRow (props) {
     } catch (err) {
       errorHandler(err);
     }
-  }
+  };
 
   const errorHandler = (err) => {
     dispatch({
@@ -91,7 +92,7 @@ function UserSuggestionRow (props) {
         type: 'error'
       }
     });
-  }
+  };
 
   return (
     <>
@@ -107,7 +108,7 @@ function UserSuggestionRow (props) {
           <p className='p5'>{suggestion?.suggested_by_username}</p>
           <div className='flex-basic'>
             <div className='reject-suggestion'>
-            <ClearIcon  onClick={rejectSuggestion} />
+            <ClearIcon onClick={rejectSuggestion} />
             </div>
             <div className='accept-suggestion'>
               <CheckIcon onClick={acceptSuggestion} />
@@ -118,5 +119,10 @@ function UserSuggestionRow (props) {
     </>
   );
 }
+
+UserSuggestionRow.propTypes = {
+  suggestion: PropTypes.object,
+  onPlaySong: PropTypes.func
+};
 
 export default UserSuggestionRow;

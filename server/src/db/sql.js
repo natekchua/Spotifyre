@@ -11,7 +11,7 @@ const config = {
   port: 5432,
   poolSize: 5,
   poolIdleTimeout: 30000,
-  reapIntervalMillis: 10000,
+  reapIntervalMillis: 10000
 };
 
 const pool = new pg.Pool(config);

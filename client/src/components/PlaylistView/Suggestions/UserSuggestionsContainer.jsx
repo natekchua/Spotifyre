@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import UserSuggestions from './UserSuggestions';
 
 import './Suggestions.css';
@@ -7,7 +8,7 @@ function UserSuggestionsContainer (props) {
   const { userSettings } = props;
   return (
     <div>
-      { userSettings?.curatorMode 
+      { userSettings?.curatorMode
         ? <UserSuggestions />
         : <h3 className='flex-basic m30'>
             Enable Curator Mode in your Profile Settings to allow playlist suggestions!
@@ -16,5 +17,9 @@ function UserSuggestionsContainer (props) {
     </div>
   );
 }
+
+UserSuggestionsContainer.propTypes = {
+  userSettings: PropTypes.object
+};
 
 export default UserSuggestionsContainer;

@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "cross-env NODE_ENV=development nodemon --inspect ./bin/www",
+    "lint": "eslint --fix --ext .js ."
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "commitizen": "^4.2.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -20,26 +21,16 @@
     "superagent": "^6.1.0"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.2",
-    "prettier": "2.2.0",
-    "concurrently": "^4.0.1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,md,css,yaml,yml}": [
-      "prettier --write",
-      "git add"
-    ]
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
+    "concurrently": "^4.0.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.16.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-only-warn": "^1.0.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "nodemon": "^2.0.6"
   }
 }
