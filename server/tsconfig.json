@@ -7,7 +7,6 @@
     "noImplicitAny": false,
     "moduleResolution": "node",
     "allowJs": true,
-    "checkJs": true,
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
