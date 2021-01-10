@@ -1,32 +1,38 @@
 import { User } from '../models';
 import { SQL } from '../db/sql';
+import { playlists, PrismaClient } from '@prisma/client';
 import { AddSongSuggestionParams, AddUserParams, RemoveSongSuggestionParams, TokenData, UpdateUserParams } from './types';
 
-export const getCurators = async (searchString: string) => {
-  const query =
-    searchString !== 'undefined'
-      ? `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`
-      : 'SELECT * FROM spotifyre.user WHERE "curator_settings" != \'null\' AND "name" ILIKE \'%%\'';
+const prisma = new PrismaClient();
 
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to get curators: ${err.message}`;
-  }
+export const getCurators = async (searchString: string) => {
+  // const query =
+  //   searchString !== 'undefined'
+  //     ? `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`
+  //     : 'SELECT * FROM spotifyre.user WHERE "curator_settings" != \'null\' AND "name" ILIKE \'%%\'';
+  //
+  // try {
+  //   const { rows } = await SQL(query);
+  //   return rows;
+  // } catch (err) {
+  //   console.error(err);
+  //   return `Failed to get curators: ${err.message}`;
+  // }
+
+  return await prisma.user.findFirst({
+    where: {
+      name: {
+        contains: searchString !== 'undefined' ? searchString : ''
+      },
+      curator_settings: {
+        not: 'null'
+      }
+    }
+  });
 };
 
 export const getAllPlaylists = async () => {
-  const query = 'SELECT playlistid FROM spotifyre.playlists;';
-
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to get playlists: ${err.message}`;
-  }
+  return await prisma.playlists.findMany();
 };
 
 export const getPlaylistID = async (userID: string) => {

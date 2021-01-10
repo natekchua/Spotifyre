@@ -14,5 +14,6 @@ module.exports = {
   rules: {
     quotes: [2, 'single'],
     semi: [2, 'always'],
+    '@typescript-eslint/explicit-module-boundary-types': 'off'
   }
 };
