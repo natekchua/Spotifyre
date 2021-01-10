@@ -1,12 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const spotifyUtils = require('../../spotifyUtils.js');
-const actions = require('../actions/actions.js');
-const SpotifyWebApi = require('spotify-web-api-node');
-const permissions = require('../../permissions.js');
-const app = express.Router();
+import express from 'express';
+import bodyParser from 'body-parser';
+import SpotifyWebApi from 'spotify-web-api-node';
+import { spotify } from '../spotifyUtils';
+import * as actions from '../actions/actions';
+import { permissions } from '../permissions';
 
-const { spotify } = spotifyUtils;
+const app = express.Router();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -317,19 +316,17 @@ app.post('/api/search-for-playlists', async (req, res) => {
 app.post('/api/add-track-to-playlist', async (req, res) => {
   const { playlistID, songID, userID } = req.body.post;
   const loggedInSpotify = new SpotifyWebApi();
-  const userAccessToken = await actions.getUserToken(userID);
-  loggedInSpotify.setAccessToken(userAccessToken);
-  loggedInSpotify
-    .addTracksToPlaylist(playlistID, [`spotify:track:${songID}`])
-    .then(
-      (data) => {
-        console.log('Added track to playlist!');
-        res.send({ topTracks: data.body.items });
-      },
-      (err) => {
-        console.log('Something went wrong!', err);
-      }
-    );
+  try {
+    const userAccessToken = await actions.getUserToken(userID);
+    loggedInSpotify.setAccessToken(userAccessToken);
+    // typing provided with the spotify lib is kinda weird and body.items is not showing up??
+    const data = await loggedInSpotify.addTracksToPlaylist(playlistID, [`spotify:track:${songID}`]) as any;
+    if (data?.body?.items) {
+      res.send({ topTracks: data?.body?.items });
+    }
+  } catch (err) {
+    console.log('Something went wrong!', err);
+  }
 });
 
-module.exports = app;
+export default app;

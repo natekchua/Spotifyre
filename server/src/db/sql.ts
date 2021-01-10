@@ -1,18 +1,23 @@
 // Connect with PostgresSQL
-const pg = require('pg');
+import pg, { Defaults, PoolConfig } from 'pg';
 
 // Database config
-const config = {
+const config: PoolConfig & Defaults = {
   user: process.env.DB_user,
   database: process.env.DB,
   password: process.env.DB_password,
   host: process.env.DB_host,
-  // ssl: { rejectUnauthorized: false }, // uncomment in local dev environment
   port: 5432,
   poolSize: 5,
   poolIdleTimeout: 30000,
   reapIntervalMillis: 10000
 };
+
+if (process.env.NODE_ENV === 'development') {
+  config.ssl = {
+    rejectUnauthorized: false
+  };
+}
 
 const pool = new pg.Pool(config);
 
@@ -36,19 +41,8 @@ pool.connect((isErr, client, done) => {
   });
 });
 
-const SQL = (query) => {
-  return new Promise((resolve, reject) => {
-    pool.query(query, (err, res) => {
-      console.log('executing query: ', query); // for debugging purposes, remove later
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
-      }
-    });
-  });
+export const SQL = async (query: string) => {
+  return await pool.query(query);
 };
 
 pool.on('error', (err) => console.log('postgresql: error ->', err));
-
-module.exports = { SQL };

@@ -1,6 +1,8 @@
-const { SQL } = require('../db/sql.js');
+import { User } from '../models';
+import { SQL } from '../db/sql';
+import { AddSongSuggestionParams, AddUserParams, RemoveSongSuggestionParams, TokenData, UpdateUserParams } from './types';
 
-const getCurators = async (searchString) => {
+export const getCurators = async (searchString: string) => {
   const query =
     searchString !== 'undefined'
       ? `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`
@@ -15,7 +17,7 @@ const getCurators = async (searchString) => {
   }
 };
 
-const getAllPlaylists = async () => {
+export const getAllPlaylists = async () => {
   const query = 'SELECT playlistid FROM spotifyre.playlists;';
 
   try {
@@ -27,7 +29,7 @@ const getAllPlaylists = async () => {
   }
 };
 
-const getPlaylistID = async (userID) => {
+export const getPlaylistID = async (userID: string) => {
   const query = `SELECT playlistid FROM spotifyre.playlists WHERE userid=${userID};`;
 
   try {
@@ -41,7 +43,7 @@ const getPlaylistID = async (userID) => {
 
 // ****** SUGGESTIONS ****** //
 
-const getPlaylistSuggestions = async (playlistID) => {
+export const getPlaylistSuggestions = async (playlistID: string) => {
   const query = `SELECT * FROM spotifyre.suggestions WHERE "playlistid"='${playlistID}';`;
 
   try {
@@ -53,7 +55,7 @@ const getPlaylistSuggestions = async (playlistID) => {
   }
 };
 
-const addCuratorPlaylist = async (playlistID, ownerID) => {
+export const addCuratorPlaylist = async (playlistID: string, ownerID: string) => {
   const query = `INSERT INTO spotifyre.playlists VALUES ('${playlistID}', '${ownerID}');`;
 
   try {
@@ -65,7 +67,7 @@ const addCuratorPlaylist = async (playlistID, ownerID) => {
   }
 };
 
-const addSongSuggestion = async (params) => {
+export const addSongSuggestion = async (params: AddSongSuggestionParams) => {
   const { songInfo, playlistInfo, suggestedByUserInfo } = params;
   const selectQuery = `select * from spotifyre.playlists where "playlistid" = '${playlistInfo.id}';`; // check if curator playlist exists
   const insertQuery = `INSERT INTO spotifyre.suggestions
@@ -89,7 +91,7 @@ const addSongSuggestion = async (params) => {
   }
 };
 
-const removeSongSuggestion = async (params) => {
+export const removeSongSuggestion = async (params: RemoveSongSuggestionParams) => {
   const { songID, playlistID } = params;
   const query = `DELETE FROM spotifyre.suggestions WHERE "songid"='${songID}' AND "playlistid"='${playlistID}';`;
 
@@ -102,24 +104,24 @@ const removeSongSuggestion = async (params) => {
   }
 };
 
-const increaseCount = async (playlistID) => {
+export const increaseCount = async (playlistID: string) => {
   const query = `UPDATE spotifyre.suggestions SET count=count+1 WHERE playlistid=${playlistID};`;
 
   try {
-    const { row } = await SQL(query);
-    return row;
+    const { rows } = await SQL(query);
+    return rows;
   } catch (err) {
     console.error(err);
     return `Failed to increase count: ${err.message}`;
   }
 };
 
-const decreaseCount = async (playlistID) => {
+export const decreaseCount = async (playlistID: string) => {
   const query = `UPDATE spotifyre.suggestions SET count=count-1 WHERE playlistid=${playlistID};`;
 
   try {
-    const { row } = await SQL(query);
-    return row;
+    const { rows } = await SQL(query);
+    return rows;
   } catch (err) {
     console.error(err);
     return `Failed to decrease count: ${err.message}`;
@@ -128,7 +130,7 @@ const decreaseCount = async (playlistID) => {
 
 // ****** SETTINGS ****** //
 
-const setTokens = async (data, user) => {
+export const setTokens = async (data: TokenData, user: User) => {
   const { access_token, refresh_token } = data;
   const selectQuery = `SELECT COUNT(*) FROM spotifyre.user WHERE "userid" = '${user.id}';`;
   const updateQuery =
@@ -140,7 +142,7 @@ const setTokens = async (data, user) => {
     const { rows } = await SQL(selectQuery);
     if (Number(rows[0].count) <= 0) {
       // user does not exist
-      const params = {
+      const params: AddUserParams = {
         userID: user.id,
         name: user.display_name,
         profilePic: user.images[0].url,
@@ -160,7 +162,7 @@ const setTokens = async (data, user) => {
   }
 };
 
-const getUserToken = async (id) => {
+export const getUserToken = async (id: string) => {
   const query = `SELECT "access_token" FROM spotifyre.user WHERE "userid" = '${id}'`;
 
   try {
@@ -172,7 +174,7 @@ const getUserToken = async (id) => {
   }
 };
 
-const getUser = async (id) => {
+export const getUser = async (id: string) => {
   const query = `SELECT * FROM spotifyre.user WHERE "userid" = '${id}'`;
 
   try {
@@ -184,7 +186,7 @@ const getUser = async (id) => {
   }
 };
 
-const addUser = async (params) => {
+export const addUser = async (params: AddUserParams) => {
   const { userID, name, curatorSettings, profilePic, followers, accessToken, refreshToken } = params;
   const query = `INSERT INTO spotifyre.user (userid, name, curator_settings, access_token, refresh_token, profile_pic, followers)
   VALUES('${userID}', '${name}', '${curatorSettings}', '${accessToken}', '${refreshToken}', '${profilePic}', '${followers}');`;
@@ -198,7 +200,7 @@ const addUser = async (params) => {
   }
 };
 
-const getUserSettings = async (id) => {
+export const getUserSettings = async (id: string) => {
   const query = `SELECT "curator_settings" FROM spotifyre.user WHERE "userid" = '${id}'`;
 
   try {
@@ -210,7 +212,7 @@ const getUserSettings = async (id) => {
   }
 };
 
-const updateUserSettings = async (params) => {
+export const updateUserSettings = async (params: UpdateUserParams) => {
   const { user, newCurationSettings } = params;
   const curationSettingsStr = JSON.stringify(newCurationSettings);
 
@@ -225,7 +227,7 @@ const updateUserSettings = async (params) => {
   }
 };
 
-const getNotifications = async (userID) => {
+export const getNotifications = async (userID: string) => {
   const query = `SELECT * FROM spotifyre.suggestions WHERE "playlistid" in (
       SELECT "playlistid" FROM spotifyre.playlists WHERE "userid" = '${userID}'
     );`;
@@ -237,22 +239,4 @@ const getNotifications = async (userID) => {
     console.error(err);
     return `Failed to update user settings: ${err.message}`;
   }
-};
-
-module.exports = {
-  getCurators,
-  getAllPlaylists,
-  getPlaylistID,
-  getPlaylistSuggestions,
-  addSongSuggestion,
-  removeSongSuggestion,
-  increaseCount,
-  decreaseCount,
-  setTokens,
-  getUserToken,
-  getUser,
-  addUser,
-  getUserSettings,
-  updateUserSettings,
-  getNotifications
 };

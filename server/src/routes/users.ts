@@ -1,6 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const action = require('../actions/actions.js');
+import express from 'express';
+import bodyParser from 'body-parser';
+import * as action from '../actions/actions';
+
 const app = express.Router();
 
 app.use(bodyParser.json());
@@ -11,19 +12,6 @@ app.get('/get-curators/:query', (req, res) => {
     .getCurators(req.params.query)
     .then((rtn) => {
       console.log('curators retrieved: ', rtn);
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.get('/getType', (req, res) => {
-  action
-    .getType()
-    .then((rtn) => {
       res.send(rtn);
     })
     .catch((err) => {
@@ -179,4 +167,4 @@ app.get('/get-notifications/:userID', (req, res) => {
     });
 });
 
-module.exports = app;
+export default app;

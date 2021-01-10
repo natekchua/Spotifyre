@@ -7,4 +7,4 @@ const permissions = [
   'playlist-modify-public'
 ];
 
-module.exports = permissions;
+export { permissions };
