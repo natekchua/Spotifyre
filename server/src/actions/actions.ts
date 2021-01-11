@@ -1,24 +1,11 @@
 import { User } from '../models';
 import { SQL } from '../db/sql';
-import { playlists, PrismaClient } from '@prisma/client';
-import { AddSongSuggestionParams, AddUserParams, RemoveSongSuggestionParams, TokenData, UpdateUserParams } from './types';
+import { PrismaClient } from '@prisma/client';
+import { AddSongSuggestionParams, AddUserParams, PlaylistInfo, RemoveSongSuggestionParams, TokenData, UpdateUserParams } from './types';
 
 const prisma = new PrismaClient();
 
 export const getCurators = async (searchString: string) => {
-  // const query =
-  //   searchString !== 'undefined'
-  //     ? `SELECT * FROM spotifyre.user WHERE "curator_settings" != 'null' AND "name" ILIKE '%${searchString}%'`
-  //     : 'SELECT * FROM spotifyre.user WHERE "curator_settings" != \'null\' AND "name" ILIKE \'%%\'';
-  //
-  // try {
-  //   const { rows } = await SQL(query);
-  //   return rows;
-  // } catch (err) {
-  //   console.error(err);
-  //   return `Failed to get curators: ${err.message}`;
-  // }
-
   return await prisma.user.findFirst({
     where: {
       name: {
@@ -36,102 +23,76 @@ export const getAllPlaylists = async () => {
 };
 
 export const getPlaylistID = async (userID: string) => {
-  const query = `SELECT playlistid FROM spotifyre.playlists WHERE userid=${userID};`;
-
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to get playlist ID: ${err.message}`;
-  }
+  return await prisma.playlists.findFirst({
+    where: {
+      userid: userID
+    }
+  })
 };
 
 // ****** SUGGESTIONS ****** //
 
 export const getPlaylistSuggestions = async (playlistID: string) => {
-  const query = `SELECT * FROM spotifyre.suggestions WHERE "playlistid"='${playlistID}';`;
-
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to get suggestions: ${err.message}`;
-  }
-};
-
-export const addCuratorPlaylist = async (playlistID: string, ownerID: string) => {
-  const query = `INSERT INTO spotifyre.playlists VALUES ('${playlistID}', '${ownerID}');`;
-
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to store song suggestion: ${err.message}`;
-  }
-};
-
-export const addSongSuggestion = async (params: AddSongSuggestionParams) => {
-  const { songInfo, playlistInfo, suggestedByUserInfo } = params;
-  const selectQuery = `select * from spotifyre.playlists where "playlistid" = '${playlistInfo.id}';`; // check if curator playlist exists
-  const insertQuery = `INSERT INTO spotifyre.suggestions
-   VALUES ('${songInfo.id}', '${playlistInfo.id}', '${suggestedByUserInfo.id}', '${playlistInfo.name}', 1,
-    '${songInfo.name}', '${songInfo.artist}', '${songInfo.albumArt}', '${suggestedByUserInfo.name}');`;
-
-  try {
-    const { rows } = await SQL(selectQuery);
-    if (rows.length > 0) {
-      // playlist exists
-      const { rows } = await SQL(insertQuery);
-      return rows;
-    } else {
-      await addCuratorPlaylist(playlistInfo.id, playlistInfo.ownerID); // if it doesn't exist, add it into the DB
-      const { rows } = await SQL(insertQuery);
-      return rows;
+  return await prisma.suggestions.findFirst({
+    where: {
+      playlistid: playlistID
     }
-  } catch (err) {
-    console.error(err);
-    return `Failed to store song suggestion: ${err.message}`;
+  })
+};
+
+export const addCuratorPlaylist = async ({ id, ownerID }: Pick<PlaylistInfo, 'id' | 'ownerID'>) => {
+  return await prisma.playlists.create({
+    data: {
+      playlistid: id,
+      user: {
+        connect: {
+          userid: ownerID,
+        }
+      }
+    }
+  })
+};
+
+const createSuggestion = async ({ playlistInfo, songInfo, suggestedByUserInfo }: AddSongSuggestionParams) => {
+  return await prisma.suggestions.create({
+    data: {
+      songid: songInfo.id,
+      song_title: songInfo.name,
+      artist: songInfo.artist,
+      album_art: songInfo.albumArt,
+      playlist: playlistInfo.name,
+      suggested_by_userid: suggestedByUserInfo.id,
+      suggested_by_username: suggestedByUserInfo.name,
+      count: 1,
+      playlists: {
+        connect: {
+          playlistid: playlistInfo.id,
+        }
+      }
+    }
+  });
+}
+
+export const addSongSuggestion = async ({ playlistInfo, songInfo, suggestedByUserInfo }: AddSongSuggestionParams) => {
+  const playlistCount = await prisma.playlists.count({ where: { playlistid: playlistInfo.id } });
+
+  if (playlistCount > 0) {
+    return await createSuggestion({ suggestedByUserInfo, songInfo, playlistInfo });
+  } else {
+    await addCuratorPlaylist(playlistInfo);
+    return await createSuggestion({ suggestedByUserInfo, songInfo, playlistInfo });
   }
 };
 
-export const removeSongSuggestion = async (params: RemoveSongSuggestionParams) => {
-  const { songID, playlistID } = params;
-  const query = `DELETE FROM spotifyre.suggestions WHERE "songid"='${songID}' AND "playlistid"='${playlistID}';`;
-
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to remove song: ${err.message}`;
-  }
-};
-
-export const increaseCount = async (playlistID: string) => {
-  const query = `UPDATE spotifyre.suggestions SET count=count+1 WHERE playlistid=${playlistID};`;
-
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to increase count: ${err.message}`;
-  }
-};
-
-export const decreaseCount = async (playlistID: string) => {
-  const query = `UPDATE spotifyre.suggestions SET count=count-1 WHERE playlistid=${playlistID};`;
-
-  try {
-    const { rows } = await SQL(query);
-    return rows;
-  } catch (err) {
-    console.error(err);
-    return `Failed to decrease count: ${err.message}`;
-  }
+export const removeSongSuggestion = async ({ songID, playlistID }: RemoveSongSuggestionParams) => {
+  return await prisma.suggestions.delete({
+    where: {
+      songid_playlistid: {
+        songid: songID,
+        playlistid: playlistID,
+      }
+    }
+  })
 };
 
 // ****** SETTINGS ****** //

@@ -49,36 +49,6 @@ app.get('/getAllPlaylists', (req, res) => {
     });
 });
 
-app.post('/increaseCount', (req, res) => {
-  const playlistID = req.body;
-
-  action
-    .increaseCount(playlistID)
-    .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.post('/decreaseCount', (req, res) => {
-  const playlistID = req.body;
-
-  action
-    .decreaseCount(playlistID)
-    .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
 // ****** SETTINGS ****** //
 
 app.post('/get-settings', (req, res) => {
