@@ -6,7 +6,9 @@ if (process.env.NODE_ENV === 'development') {
   // Merge the .env.local and .env
   ['.env.local', '.env'].forEach(env => {
     const path = resolve(process.cwd(), env);
-    existsSync(path) && dotenv.config({ path });
+    if (existsSync(path)) {
+      dotenv.config({ path });
+    }
   });
 } else {
   dotenv.config();

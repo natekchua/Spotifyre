@@ -10,14 +10,9 @@ const config: PoolConfig & Defaults = {
   port: Number.parseInt(process.env.DB_PORT, 10) ?? 5432,
   poolSize: 5,
   poolIdleTimeout: 30000,
-  reapIntervalMillis: 10000
+  reapIntervalMillis: 10000,
+  ssl: process.env.NODE_ENV === 'production'
 };
-
-if (process.env.NODE_ENV === 'development') {
-  config.ssl = {
-    rejectUnauthorized: false
-  };
-}
 
 const pool = new pg.Pool(config);
 
