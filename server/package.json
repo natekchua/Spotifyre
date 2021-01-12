@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./dist/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon",
-    "build": "tsc",
+    "start": "cross-env NODE_ENV=production ts-node ./src/index.ts",
+    "dev": "npm-run-all docker:start start:dev",
+    "start:dev": "cross-env NODE_ENV=development nodemon",
+    "docker:start": "docker-compose up -d",
     "lint": "eslint --fix --ext .ts ./src"
   },
   "dependencies": {
@@ -29,7 +30,8 @@
     "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.20",
     "@types/pg": "^7.14.7",
-    "@types/spotify-web-api-node": "^4.0.2"
+    "@types/spotify-web-api-node": "^4.0.2",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.12.0",
@@ -42,7 +44,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-only-warn": "^1.0.2",
     "eslint-plugin-promise": "^4.2.1",
-    "nodemon": "^2.0.6",
-    "npm-run-all": "^4.1.5"
+    "nodemon": "^2.0.6"
   }
 }
