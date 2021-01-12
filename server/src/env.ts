@@ -1,9 +1,13 @@
-import path from 'path';
+import { resolve } from 'path';
 import * as dotenv from 'dotenv';
+import { existsSync } from 'fs';
 
-dotenv.config({
-  path: path.resolve(
-    process.cwd(),
-    `.env${process.env.NODE_ENV === 'development' ? '.local' : ''}`
-  )
-});
+if (process.env.NODE_ENV === 'development') {
+  // Merge the .env.local and .env
+  ['.env.local', '.env'].forEach(env => {
+    const path = resolve(process.cwd(), env);
+    existsSync(path) && dotenv.config({ path });
+  });
+} else {
+  dotenv.config();
+}

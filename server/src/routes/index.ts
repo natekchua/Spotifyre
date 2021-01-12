@@ -38,7 +38,7 @@ app.post('/api/handle-token', (req, res) => {
       res.send({ tokens });
     },
     (err) => {
-      console.log('Something went wrong!', err);
+      console.log('Error: /api/handle-token', err);
     }
   );
 });
