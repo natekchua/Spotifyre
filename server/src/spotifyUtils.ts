@@ -19,11 +19,8 @@ const dev = {
 
 const config = process.env.NODE_ENV === 'development' ? dev : prod;
 
-const clientID = process.env.clientID;
-const clientSecret = process.env.clientSecret;
-
 export const spotify = new SpotifyWebApi({
-  clientId: clientID,
-  clientSecret: clientSecret,
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: config.url.redirectURI
 });
