@@ -1,8 +1,4 @@
 import SpotifyWebApi from 'spotify-web-api-node';
-import * as dotenv from 'dotenv';
-
-// TODO: check if this is required here
-dotenv.config();
 
 // https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
 
