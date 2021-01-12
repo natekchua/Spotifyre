@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./.bin/spotifyre.sql:/docker-entrypoint-initdb.d/spotifyre.sql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=spotifyre
+    ports:
+      - '5432:5432'
