@@ -3,11 +3,11 @@ import pg, { Defaults, PoolConfig } from 'pg';
 
 // Database config
 const config: PoolConfig & Defaults = {
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: Number.parseInt(process.env.DB_PORT, 10) ?? 5432,
+  user: process.env.POSTGRES_USER,
+  database: process.env.POSTGRES_NAME,
+  password: process.env.POSTGRES_PASSWORD,
+  host: process.env.POSTGRES_HOST,
+  port: Number.parseInt(process.env.POSTGRES_PORT, 10) ?? 5432,
   poolSize: 5,
   poolIdleTimeout: 30000,
   reapIntervalMillis: 10000,

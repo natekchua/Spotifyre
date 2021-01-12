@@ -13,3 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   dotenv.config();
 }
+
+if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
+  console.error(new Error(`Failed to start the server: Please specify 'process.env.SPOTIFY_CLIENT_ID' and 'process.env.SPOTIFY_CLIENT_SECRET'`));
+}

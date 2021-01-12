@@ -10,7 +10,7 @@
   "scripts": {
     "dev:client": "yarn workspace client start",
     "dev:server": "yarn workspace server dev",
-    "dev": "npm-run-all --parallel dev:*",
+    "dev": "npm-run-all --parallel dev:server dev:client",
     "lint:client": "yarn workspace client lint",
     "lint:server": "yarn workspace server lint",
     "build:server": "yarn workspace server build",

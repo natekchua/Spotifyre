@@ -6,12 +6,12 @@ declare namespace NodeJS {
     NODE_ENV: 'development' | 'production';
     PORT: string;
 
-    DB_USER: string;
-    DB_NAME: string;
-    DB_PASSWORD: string;
-    DB_HOST: string;
-    DB_PORT: string;
-    DB_URL: string;
+    POSTGRES_USER: string;
+    POSTGRES_NAME: string;
+    POSTGRES_PASSWORD: string;
+    POSTGRES_HOST: string;
+    POSTGRES_PORT: string;
+    POSTGRES_URL: string;
 
     SPOTIFY_CLIENT_ID: string;
     SPOTIFY_CLIENT_SECRET: string;
