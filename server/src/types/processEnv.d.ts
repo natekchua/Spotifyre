@@ -3,7 +3,7 @@ declare namespace NodeJS {
    * Types based on .env file. When adding new keys to .env, make sure to add an entry here as well
    */
   export interface ProcessEnv {
-    NODE_ENV: 'development' | 'production';
+    NODE_ENV: Environment;
     PORT: string;
 
     POSTGRES_USER: string;
@@ -15,5 +15,7 @@ declare namespace NodeJS {
 
     SPOTIFY_CLIENT_ID: string;
     SPOTIFY_CLIENT_SECRET: string;
+
+    USE_DOCKER: string;
   }
 }

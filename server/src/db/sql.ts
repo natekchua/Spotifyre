@@ -14,6 +14,8 @@ const config: PoolConfig & Defaults = {
   ssl: process.env.NODE_ENV === 'production'
 };
 
+console.log(config);
+
 const pool = new pg.Pool(config);
 
 pool.connect((isErr, client, done) => {
