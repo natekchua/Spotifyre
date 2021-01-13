@@ -4,6 +4,7 @@ import { promisify } from 'util';
 import { exec } from 'child_process';
 import yargs from 'yargs';
 import nodemon from 'nodemon';
+import pm2 from 'pm2';
 
 const { argv } = yargs
   .scriptName('spotify-server-run')
@@ -60,6 +61,8 @@ async function main () {
     }
 
     startNodemon();
+  } else {
+    throw new Error(`Unknown environment: '${env}'`);
   }
 }
 
