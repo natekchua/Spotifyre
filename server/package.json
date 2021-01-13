@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 start ecosystem.config.js --env production",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
     "dev": "ts-node ./src/scripts/run.ts --env development",
     "build": "tsc",
     "lint": "eslint --fix --ext .ts ./src"
