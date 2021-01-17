@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./.bin/spotifyre.sql:/docker-entrypoint-initdb.d/spotifyre.sql
+    env_file:
+      - ./server/.env.local
+    ports:
+      - "5432:5432"

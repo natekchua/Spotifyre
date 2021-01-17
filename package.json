@@ -8,24 +8,23 @@
     "./server"
   ],
   "scripts": {
-    "start:client": "yarn workspace client start",
-    "start:server": "yarn workspace server dev",
-    "dev": "npm-run-all --parallel start:*",
+    "dev:client": "yarn workspace client start",
+    "dev:server": "yarn workspace server dev",
+    "dev": "npm-run-all --parallel dev:server dev:client",
     "lint:client": "yarn workspace client lint",
     "lint:server": "yarn workspace server lint",
     "build:server": "yarn workspace server build",
-    "preCommit": "npm-run-all build:* lint:*",
     "lint": "npm-run-all --parallel lint:*",
     "clean": "rimraf node_modules/ server/node_modules client/node_modules "
   },
-  "devDependencies": {
+  "dependencies": {
     "commitizen": "^4.2.2",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2"
   },
-  "dependencies": {},
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
@@ -33,7 +32,10 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn preCommit"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "yarn lint"
   }
 }

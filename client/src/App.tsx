@@ -20,15 +20,20 @@ function App () {
         if (code) {
           getToken(code)
             .then(res => {
+              const json = JSON.parse(res);
               dispatch({
                 type: 'SET_TOKEN',
-                token: JSON.parse(res).tokens.accessToken
+                token: json.tokens.accessToken
               });
             })
-            .catch(err => errorHandler(err));
+            .catch(err => {
+              errorHandler(err);
+            });
         }
       })
-      .catch((err: Error) => errorHandler(err));
+      .catch((err: Error) => {
+        errorHandler(err);
+      });
   }, []);
 
   const errorHandler = (err: Error) => {

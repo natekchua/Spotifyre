@@ -1,11 +1,10 @@
-import app from './app';
+import './env';
+
 import http from 'http';
-import * as dotenv from 'dotenv';
+import app from './app';
 
-dotenv.config();
+const port = process.env.PORT || '8080';
 
-const DEFAULT_PORT = '5000';
-const port = normalizePort(process.env.PORT);
 app.set('port', port);
 
 // Create HTTP server.
@@ -15,20 +14,6 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-function normalizePort (val: string) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    return val;
-  }
-
-  if (port >= 0) {
-    return port;
-  }
-
-  return DEFAULT_PORT;
-}
 
 /**
  * Event listener for HTTP server "error" event.

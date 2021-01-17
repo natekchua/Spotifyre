@@ -23,6 +23,30 @@ cd server
 yarn install && yarn dev
 ```
 
+#### Local Postgres Setup
+
+> Make sure `docker` is setup on your machine first
+
+In the project root, run:
+
+```sh
+docker-compose up -d
+```
+
+To connect to database:
+
+```sh
+psql spotifyre -h localhost -U postgres
+# When prompted for password, enter "postgres"
+```
+
+If postgres tools are not installed on your machine:
+
+```sh
+docker container ls # find the container for spotifyre_db and copy its id
+docker exec -it <container-id> psql -U postgres spotifyre
+```
+
 ### Client
 
 ```sh
