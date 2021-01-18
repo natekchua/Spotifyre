@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { spotify } from '../spotifyUtils';
-import * as actions from '../actions/actions';
+import * as actions from '../actions';
 import { permissions } from '../permissions';
 
 const app = express.Router();

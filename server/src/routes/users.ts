@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as action from '../actions/actions';
+import * as action from '../actions';
 
 const app = express.Router();
 
