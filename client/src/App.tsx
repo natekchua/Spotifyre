@@ -13,27 +13,27 @@ function App () {
   const [{ token }, dispatch] = useProviderValue();
 
   useEffect(() => {
-    getAuthURL()
-      .then(res => {
-        setLoginURL(res.loginURL);
+    async function cb () {
+      try {
+        const authURL = await getAuthURL();
+        setLoginURL(authURL);
+
         const code = getCode();
         if (code) {
-          getToken(code)
-            .then(res => {
-              const json = JSON.parse(res);
-              dispatch({
-                type: 'SET_TOKEN',
-                token: json.tokens.accessToken
-              });
-            })
-            .catch(err => {
-              errorHandler(err);
-            });
+          const token = await getToken(code);
+          const json = JSON.parse(token);
+          dispatch({
+            type: 'SET_TOKEN',
+            token: json.tokens.accessToken
+          });
         }
-      })
-      .catch((err: Error) => {
+      } catch (err) {
         errorHandler(err);
-      });
+        console.error(err);
+      }
+    }
+
+    cb();
   }, []);
 
   const errorHandler = (err: Error) => {

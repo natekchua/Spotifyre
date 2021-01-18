@@ -1,5 +1,4 @@
 import { User } from '../models';
-import { SQL } from '../db/sql';
 import { PrismaClient } from '@prisma/client';
 import { AddSongSuggestionParams, AddUserParams, PlaylistInfo, RemoveSongSuggestionParams, TokenData, UpdateUserParams } from './types';
 
@@ -46,7 +45,7 @@ export const addCuratorPlaylist = async ({ id, ownerID }: Pick<PlaylistInfo, 'id
       playlistid: id,
       user: {
         connect: {
-          userid: ownerID,
+          userid: ownerID
         }
       }
     }
