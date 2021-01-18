@@ -27,7 +27,7 @@ export const getPlaylistID = async (userID: string) => {
     where: {
       userid: userID
     }
-  })
+  });
 };
 
 // ****** SUGGESTIONS ****** //
@@ -37,7 +37,7 @@ export const getPlaylistSuggestions = async (playlistID: string) => {
     where: {
       playlistid: playlistID
     }
-  })
+  });
 };
 
 export const addCuratorPlaylist = async ({ id, ownerID }: Pick<PlaylistInfo, 'id' | 'ownerID'>) => {
@@ -71,7 +71,7 @@ const createSuggestion = async ({ playlistInfo, songInfo, suggestedByUserInfo }:
       }
     }
   });
-}
+};
 
 export const addSongSuggestion = async ({ playlistInfo, songInfo, suggestedByUserInfo }: AddSongSuggestionParams) => {
   const playlistCount = await prisma.playlists.count({ where: { playlistid: playlistInfo.id } });
@@ -92,22 +92,22 @@ export const removeSongSuggestion = async ({ songID, playlistID }: RemoveSongSug
         playlistid: playlistID,
       }
     }
-  })
+  });
 };
 
 // ****** SETTINGS ****** //
 
 export const setTokens = async (data: TokenData, user: User) => {
   const { access_token, refresh_token } = data;
-  const selectQuery = `SELECT COUNT(*) FROM spotifyre.user WHERE "userid" = '${user.id}';`;
-  const updateQuery =
-    `UPDATE spotifyre.user 
-      SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}', "profile_pic" = '${user.images[0].url}', "followers" = '${user.followers.total}'
-      WHERE "userid" = '${user.id}';`;
 
   try {
-    const { rows } = await SQL(selectQuery);
-    if (Number(rows[0].count) <= 0) {
+    const userCount = await prisma.user.count({
+      where: {
+        userid: user.id
+      }
+    });
+
+    if (!userCount) {
       // user does not exist
       const params: AddUserParams = {
         userID: user.id,
@@ -120,8 +120,16 @@ export const setTokens = async (data: TokenData, user: User) => {
       };
       await addUser(params);
     } else {
-      const { rows } = await SQL(updateQuery);
-      return rows[0];
+      return await prisma.user.update({
+        where: {
+          userid: user.id
+        },
+        data: {
+          access_token,
+          refresh_token,
+          profile_pic: user?.images[0]?.url
+        }
+      });
     }
   } catch (err) {
     console.error(err);
@@ -130,11 +138,9 @@ export const setTokens = async (data: TokenData, user: User) => {
 };
 
 export const getUserToken = async (id: string) => {
-  const query = `SELECT "access_token" FROM spotifyre.user WHERE "userid" = '${id}'`;
-
   try {
-    const { rows } = await SQL(query);
-    return rows[0].access_token;
+    const user = await getUser(id);
+    return user.access_token;
   } catch (err) {
     console.error(err);
     return `Failed to get user settings: ${err.message}`;
@@ -142,25 +148,29 @@ export const getUserToken = async (id: string) => {
 };
 
 export const getUser = async (id: string) => {
-  const query = `SELECT * FROM spotifyre.user WHERE "userid" = '${id}'`;
-
   try {
-    const { rows } = await SQL(query);
-    return rows[0];
+    return await prisma.user.findUnique({ where: { userid: id } });
   } catch (err) {
     console.error(err);
-    return `Failed to get user settings: ${err.message}`;
+    throw new Error(`Failed to find a user with id "${id}"`);
   }
 };
 
 export const addUser = async (params: AddUserParams) => {
-  const { userID, name, curatorSettings, profilePic, followers, accessToken, refreshToken } = params;
-  const query = `INSERT INTO spotifyre.user (userid, name, curator_settings, access_token, refresh_token, profile_pic, followers)
-  VALUES('${userID}', '${name}', '${curatorSettings}', '${accessToken}', '${refreshToken}', '${profilePic}', '${followers}');`;
+  const { userID: userid, name, curatorSettings: curator_settings, profilePic: profile_pic, followers, accessToken: access_token, refreshToken: refresh_token } = params;
 
   try {
-    const { rows } = await SQL(query);
-    return rows[0];
+    return await prisma.user.create({
+      data: {
+        userid,
+        name,
+        curator_settings,
+        profile_pic,
+        followers,
+        access_token,
+        refresh_token
+      }
+    });
   } catch (err) {
     console.error(err);
     return `Failed to add user: ${err.message}`;
@@ -168,11 +178,9 @@ export const addUser = async (params: AddUserParams) => {
 };
 
 export const getUserSettings = async (id: string) => {
-  const query = `SELECT "curator_settings" FROM spotifyre.user WHERE "userid" = '${id}'`;
-
   try {
-    const { rows } = await SQL(query);
-    return rows[0];
+    const { curator_settings } = await getUser(id);
+    return curator_settings;
   } catch (err) {
     console.error(err);
     return `Failed to get user settings: ${err.message}`;
@@ -181,13 +189,15 @@ export const getUserSettings = async (id: string) => {
 
 export const updateUserSettings = async (params: UpdateUserParams) => {
   const { user, newCurationSettings } = params;
-  const curationSettingsStr = JSON.stringify(newCurationSettings);
-
-  const query = `UPDATE spotifyre.user SET "curator_settings" = '${curationSettingsStr}' WHERE "userid" = '${user.id}';`;
-
   try {
-    const { rows } = await SQL(query);
-    return rows[0];
+    return await prisma.user.update({
+      where: {
+        userid: user.id
+      },
+      data: {
+        curator_settings: JSON.stringify(newCurationSettings)
+      }
+    });
   } catch (err) {
     console.error(err);
     return `Failed to update user settings: ${err.message}`;
@@ -195,13 +205,13 @@ export const updateUserSettings = async (params: UpdateUserParams) => {
 };
 
 export const getNotifications = async (userID: string) => {
-  const query = `SELECT * FROM spotifyre.suggestions WHERE "playlistid" in (
-      SELECT "playlistid" FROM spotifyre.playlists WHERE "userid" = '${userID}'
-    );`;
-
   try {
-    const { rows } = await SQL(query);
-    return rows;
+    const { playlistid } = await prisma.playlists.findFirst({ where: { userid: userID } });
+    return await prisma.suggestions.findMany({
+      where: {
+        playlistid
+      }
+    });
   } catch (err) {
     console.error(err);
     return `Failed to update user settings: ${err.message}`;
