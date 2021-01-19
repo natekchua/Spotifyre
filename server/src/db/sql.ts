@@ -4,7 +4,7 @@ import pg, { Defaults, PoolConfig } from 'pg';
 // Database config
 const config: PoolConfig & Defaults = {
   user: process.env.POSTGRES_USER,
-  database: process.env.POSTGRES_NAME,
+  database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
   host: process.env.POSTGRES_HOST,
   port: Number.parseInt(process.env.POSTGRES_PORT, 10) ?? 5432,

@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   db:
+    container_name: 'spotifyre-db'
     image: postgres
     volumes:
       - ./.bin/spotifyre.sql:/docker-entrypoint-initdb.d/spotifyre.sql

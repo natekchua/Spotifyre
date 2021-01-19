@@ -1,19 +1,15 @@
 import path from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
-import { exec } from 'child_process';
+import { exec as execCb } from 'child_process';
 import yargs from 'yargs';
 import nodemon from 'nodemon';
-import pm2 from 'pm2';
+
+const exec = promisify(execCb);
 
 const { argv } = yargs
   .scriptName('spotify-server-run')
   .options({
-    docker: {
-      type: 'boolean',
-      default: false,
-      description: 'Use docker image instead of connecting to remote database (currently used in development only)'
-    },
     env: {
       alias: 'e',
       choices: ['development', 'production'] as Environment[],
@@ -41,23 +37,20 @@ function startNodemon () {
 }
 
 async function main () {
-  const { docker, env } = argv;
+  const { env } = argv;
 
   // inject current env to NODE_ENV
   process.env.NODE_ENV = env;
-  process.env.USE_DOCKER = String(docker);
+  // flag USE_DOCKER as false by default
+  process.env.USE_DOCKER = 'false';
 
   if (env === 'development') {
-    if (docker) {
-      const { stderr, stdout } = await promisify(exec)('docker-compose up -d');
-
-      if (stderr && !stderr.includes('spotifyre_db_1 is up-to-date')) {
-        const err = new Error(`Failed to spin up docker image: ${stderr}`);
-        console.error(err);
-        throw err;
-      }
-
-      console.log(stdout);
+    // detect if docker is running and set USE_DOCKER to true
+    const dockerExec = await exec('docker container ps --format "{{.Names}}"');
+    if (!dockerExec.stderr && dockerExec.stdout) {
+      const names = dockerExec.stdout.split('\n').filter(name => !!name);
+      const dockerRunning = names.some(name => /spotifyre-db/g.test(name));
+      process.env.USE_DOCKER = String(dockerRunning);
     }
 
     startNodemon();
