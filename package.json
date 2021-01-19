@@ -15,7 +15,8 @@
     "lint:server": "yarn workspace server lint",
     "build:server": "yarn workspace server build",
     "lint": "npm-run-all --parallel lint:*",
-    "clean": "rimraf node_modules/ server/node_modules client/node_modules "
+    "clean": "rimraf node_modules/ server/node_modules client/node_modules",
+    "postinstall": "yarn workspace client install && yarn workspace server install"
   },
   "dependencies": {
     "commitizen": "^4.2.2",

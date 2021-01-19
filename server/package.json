@@ -6,7 +6,8 @@
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "dev": "ts-node ./src/scripts/run.ts --env development",
     "build": "tsc",
-    "lint": "eslint --fix --ext .ts ./src"
+    "lint": "eslint --fix --ext .ts ./src",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
