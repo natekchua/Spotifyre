@@ -16,7 +16,7 @@ function App () {
     async function cb () {
       try {
         const authURL = await getAuthURL();
-        setLoginURL(authURL);
+        setLoginURL(authURL.loginURL);
 
         const code = getCode();
         if (code) {
