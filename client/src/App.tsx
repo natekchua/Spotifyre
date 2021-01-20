@@ -15,17 +15,26 @@ function App () {
   useEffect(() => {
     async function cb () {
       try {
-        const authURL = await getAuthURL();
-        setLoginURL(authURL.loginURL);
-
-        const code = getCode();
-        if (code) {
-          const token = await getToken(code);
-          const json = JSON.parse(token);
+        if (localStorage.getItem('SPOTIFY_ACCESS_TOKEN')) {
+          console.log('access token')
           dispatch({
             type: 'SET_TOKEN',
-            token: json.tokens.accessToken
+            token: localStorage.getItem('SPOTIFY_ACCESS_TOKEN')
           });
+        } else {
+          const authURL = await getAuthURL();
+          setLoginURL(authURL.loginURL);
+
+          const code = getCode();
+          if (code) {
+            const token = await getToken(code);
+            const json = JSON.parse(token);
+            localStorage.setItem('SPOTIFY_ACCESS_TOKEN', json.tokens.accessToken);
+            dispatch({
+              type: 'SET_TOKEN',
+              token: json.tokens.accessToken
+            });
+          }
         }
       } catch (err) {
         errorHandler(err);

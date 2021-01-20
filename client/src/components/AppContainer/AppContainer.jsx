@@ -18,7 +18,7 @@ import { getNotifications, getSettings } from '../../services/dbRequests';
 
 import './AppContainer.css';
 
-function AppContainer (props) {
+function AppContainer(props) {
   const { token } = props;
   const [{ notification, user }, dispatch] = useProviderValue();
 
@@ -42,11 +42,12 @@ function AppContainer (props) {
 
           getSettings(me.id)
             .then(res => {
-              if (JSON.parse(JSON.parse(res).curator_settings)) {
-                const resultObj = JSON.parse(res).curator_settings;
+              const response = JSON.parse(res);
+              if (response && response.curator_settings) {
+                const { curator_settings } = response;
                 dispatch({
                   type: 'SET_USER_SETTINGS',
-                  userSettings: JSON.parse(resultObj)
+                  userSettings: curator_settings
                 });
                 dispatch({
                   type: 'CHECK_USER_SETTINGS',
@@ -54,7 +55,9 @@ function AppContainer (props) {
                 });
               }
             })
-            .catch(err => errorHandler(err));
+            .catch(err => {
+              errorHandler(err);
+            });
 
           // Get User Playlists and set user playlists in Context State.
           getUserPlaylists(me.id)
@@ -85,11 +88,14 @@ function AppContainer (props) {
             })
             .catch(err => errorHandler(err));
         })
-        .catch(err => errorHandler(err));
+        .catch(err => {
+          errorHandler(err)
+        });
     }
   }, []);
 
   const errorHandler = err => {
+    console.error(err);
     dispatch({
       type: 'SET_NOTIFICATION',
       notification: {
@@ -102,7 +108,7 @@ function AppContainer (props) {
   return (
     <div className='AppContainer-container'>
       {notification &&
-       <Alert
+        <Alert
           className='notification'
           showIcon
           onClose={closeNotification}

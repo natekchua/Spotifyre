@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     quotes: [2, 'single'],
     semi: [2, 'always'],
+    camelcase: 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': [2, { functions: false, variables: false }]
   }

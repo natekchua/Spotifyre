@@ -56,7 +56,11 @@ export const getUserToken = async (id: string) => {
 export const getUserSettings = async (id: string) => {
   try {
     const { curator_settings } = await getUser(id);
-    return curator_settings;
+    if (curator_settings) {
+      return curator_settings;
+    } else {
+      return { curator_settings: '' };
+    }
   } catch (err) {
     console.error(err);
     return `Failed to get user settings: ${err.message}`;
