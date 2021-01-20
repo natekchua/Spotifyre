@@ -7,19 +7,20 @@ import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
 
 import './App.css';
+import { useLocalStorageTTL } from './hooks';
 
 function App () {
   const [loginURL, setLoginURL] = useState('');
   const [{ token }, dispatch] = useProviderValue();
+  const [accessToken, setAccessToken] = useLocalStorageTTL('SPOTIFY_ACCESS_TOKEN', '', (60 * 60 * 60) * 1000);
 
   useEffect(() => {
     async function cb () {
       try {
-        if (localStorage.getItem('SPOTIFY_ACCESS_TOKEN')) {
-          console.log('access token')
+        if (accessToken && accessToken.value) {
           dispatch({
             type: 'SET_TOKEN',
-            token: localStorage.getItem('SPOTIFY_ACCESS_TOKEN')
+            token: accessToken.value
           });
         } else {
           const authURL = await getAuthURL();
@@ -29,7 +30,7 @@ function App () {
           if (code) {
             const token = await getToken(code);
             const json = JSON.parse(token);
-            localStorage.setItem('SPOTIFY_ACCESS_TOKEN', json.tokens.accessToken);
+            setAccessToken(json.tokens.accessToken);
             dispatch({
               type: 'SET_TOKEN',
               token: json.tokens.accessToken
