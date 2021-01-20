@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { spotify } from '../spotifyUtils';
-import * as actions from '../actions/actions';
+import * as actions from '../actions';
 import { permissions } from '../permissions';
 
 const app = express.Router();
@@ -11,11 +11,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.send({ express: 'Welcome to Spotifyre!' });
+  res.send({ api: 'Welcome to Spotifyre!' });
 });
 
 app.get('/api/authorize', async (req, res) => {
-  const authorizeURL = await spotify.createAuthorizeURL(
+  const authorizeURL = spotify.createAuthorizeURL(
     permissions,
     null,
     true

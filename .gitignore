@@ -122,3 +122,5 @@ fabric.properties
 .vscode/settings.json
 
 !.env.local
+
+.idea
