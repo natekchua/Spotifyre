@@ -1,4 +1,5 @@
 import './env';
+import 'reflect-metadata';
 
 import http from 'http';
 import app from './app';
@@ -18,7 +19,7 @@ server.on('listening', onListening);
 /**
  * Event listener for HTTP server "error" event.
  */
-function onError (error: NodeJS.ErrnoException) {
+function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -43,7 +44,7 @@ function onError (error: NodeJS.ErrnoException) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-function onListening () {
+function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   console.log(`Listening on: ${bind}`);

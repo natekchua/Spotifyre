@@ -1,52 +1,40 @@
 import express from 'express';
-import SpotifyWebApi from 'spotify-web-api-node';
-import { spotify } from '../../spotifyUtils';
-import * as actions from '../../actions';
-import { permissions } from '../../permissions';
+import Container from 'typedi';
+import { SpotifyService } from '../../services/spotifyService';
 
 const app = express.Router();
 
 app.get('/api/authorize', async (req, res) => {
-  const authorizeURL = spotify.createAuthorizeURL(
-    permissions,
-    null,
-    true
-  );
-  res.send({ loginURL: authorizeURL });
+  try {
+    const spotifyService = Container.get(SpotifyService);
+    const loginURL = spotifyService.createAuthorizeURL();
+    res.send({ loginURL });
+  } catch (err) {
+    res.send(err).status(500);
+  }
 });
 
-app.post('/api/handle-token', (req, res) => {
-  spotify.authorizationCodeGrant(req.body.post).then(
-    async (data) => {
-      // Set the access token on the API object to use it in later calls
-      spotify.setAccessToken(data.body.access_token);
-      spotify.setRefreshToken(data.body.refresh_token);
-      const user = await spotify.getMe();
-      await actions.setTokens(data.body, user.body);
-      const tokens = {
-        accessToken: data.body.access_token,
-        refreshToken: data.body.refresh_token
-      };
-      res.send({ tokens });
-    },
-    (err) => {
-      console.log('Error: /api/handle-token', err);
-    }
-  );
+app.post('/api/handle-token', async (req, res) => {
+  try {
+    const spotifyService = Container.get(SpotifyService);
+    const data = await spotifyService.handleToken({
+      code: req.body.post,
+    });
+
+    res.send(data);
+  } catch (err) {
+    res.send(err).status(500);
+  }
 });
 
-app.post('/api/get-me', (req, res) => {
-  const loggedInSpotify = new SpotifyWebApi();
-  loggedInSpotify.setAccessToken(req.body.post);
-  loggedInSpotify.getMe().then(
-    async (data) => {
-      console.log('Some information about the authenticated user', data.body);
-      res.send({ me: data.body });
-    },
-    (err) => {
-      console.log('Something went wrong!', err);
-    }
-  );
+app.post('/api/get-me', async (req, res) => {
+  try {
+    const spotifyService = Container.get(SpotifyService);
+    const user = await spotifyService.getLoggedInUser({ accessToken: req.body.post });
+    res.send({ me: user });
+  } catch (err) {
+    res.send(err).status(500);
+  }
 });
 
 export default app;

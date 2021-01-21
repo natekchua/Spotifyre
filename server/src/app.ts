@@ -1,5 +1,6 @@
-import createError from 'http-errors';
+import './di';
 import express, { Request, Response, NextFunction } from 'express';
+import createError from 'http-errors';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
