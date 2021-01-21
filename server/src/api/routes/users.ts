@@ -1,11 +1,7 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import * as action from '../actions';
+import * as action from '../../actions';
 
 const app = express.Router();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/get-curators/:query', (req, res) => {
   action
