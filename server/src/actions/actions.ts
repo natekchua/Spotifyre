@@ -135,7 +135,7 @@ export const setTokens = async (data: TokenData, user: User) => {
   const selectQuery = `SELECT COUNT(*) FROM spotifyre.user WHERE "userid" = '${user.id}';`;
   const updateQuery =
     `UPDATE spotifyre.user 
-      SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}', "profile_pic" = '${user.images[0].url}', "followers" = '${user.followers.total}'
+      SET "access_token" = '${access_token}', "refresh_token" = '${refresh_token}', "profile_pic" = '${user?.images[0]?.url}', "followers" = '${user.followers.total}'
       WHERE "userid" = '${user.id}';`;
 
   try {
