@@ -52,7 +52,7 @@ export const apiGet = async (path) => {
   return body;
 };
 
-export const apiPost = async (path, item) => {
+export const apiPost = async (path, item, wrapInPost = true) => {
   // Prod environment
   const prod = {
     urlPath: 'https://spotifyre.herokuapp.com' + path
@@ -70,7 +70,7 @@ export const apiPost = async (path, item) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ post: item })
+    body: wrapInPost ? JSON.stringify({ post: item }) : JSON.stringify(item)
   });
   const body = await response.text();
   return body;

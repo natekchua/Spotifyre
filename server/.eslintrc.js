@@ -15,7 +15,9 @@ module.exports = {
     quotes: [2, 'single'],
     semi: [2, 'always'],
     camelcase: 'off',
+    'no-useless-constructor': 'off',
     'no-use-before-define': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off'
   }
 };
