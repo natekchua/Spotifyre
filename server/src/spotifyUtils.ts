@@ -1,8 +1,4 @@
 import SpotifyWebApi from 'spotify-web-api-node';
-import * as dotenv from 'dotenv';
-
-// TODO: check if this is required here
-dotenv.config();
 
 // https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
 
@@ -19,11 +15,8 @@ const dev = {
 
 const config = process.env.NODE_ENV === 'development' ? dev : prod;
 
-const clientID = process.env.clientID;
-const clientSecret = process.env.clientSecret;
-
 export const spotify = new SpotifyWebApi({
-  clientId: clientID,
-  clientSecret: clientSecret,
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: config.url.redirectURI
 });

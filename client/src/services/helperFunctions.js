@@ -18,7 +18,8 @@ export const getResponseToken = () => {
 
 // Parse the authorization code from the URL
 export const getCode = () => {
-  return window.location.href.split('=')[1].split('&')[0];
+  const url = new URL(window.location.href);
+  return url.searchParams.get('code');
 };
 
 // https://stackoverflow.com/questions/21294302/converting-milliseconds-to-minutes-and-seconds-with-javascript

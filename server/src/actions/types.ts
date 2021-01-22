@@ -1,4 +1,4 @@
-import { User, Followers } from '../models';
+import { User } from '../models';
 
 export type AddSongSuggestionParams = {
   songInfo: SongInfo;
@@ -31,7 +31,6 @@ export type TokenData = {
   refresh_token: string;
 };
 
-// TODO: might need to mvoe to models
 export type PlaylistInfo = {
   id: string;
   name: string;

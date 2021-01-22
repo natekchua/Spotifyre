@@ -1,7 +1,11 @@
 {
-  "watch": ["src"],
+  "watch": [
+    "src"
+  ],
   "ext": "ts,js,json",
-  "ignore": ["./node_modules"],
+  "ignore": [
+    "./node_modules"
+  ],
   "exec": "ts-node ./src/index.ts",
   "inspect": true
 }

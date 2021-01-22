@@ -7,28 +7,43 @@ import Login from './components/Login/Login';
 import AppContainer from './components/AppContainer/AppContainer';
 
 import './App.css';
+import { useLocalStorageTTL } from './hooks';
 
 function App () {
   const [loginURL, setLoginURL] = useState('');
   const [{ token }, dispatch] = useProviderValue();
+  const [accessToken, setAccessToken] = useLocalStorageTTL('SPOTIFY_ACCESS_TOKEN', '', (60 * 60 * 60) * 1000);
 
   useEffect(() => {
-    getAuthURL()
-      .then(res => {
-        setLoginURL(res.loginURL);
-        const code = getCode();
-        if (code) {
-          getToken(code)
-            .then(res => {
-              dispatch({
-                type: 'SET_TOKEN',
-                token: JSON.parse(res).tokens.accessToken
-              });
-            })
-            .catch(err => errorHandler(err));
+    async function cb () {
+      try {
+        if (accessToken && accessToken.value) {
+          dispatch({
+            type: 'SET_TOKEN',
+            token: accessToken.value
+          });
+        } else {
+          const authURL = await getAuthURL();
+          setLoginURL(authURL.loginURL);
+
+          const code = getCode();
+          if (code) {
+            const token = await getToken(code);
+            const json = JSON.parse(token);
+            setAccessToken(json.tokens.accessToken);
+            dispatch({
+              type: 'SET_TOKEN',
+              token: json.tokens.accessToken
+            });
+          }
         }
-      })
-      .catch((err: Error) => errorHandler(err));
+      } catch (err) {
+        errorHandler(err);
+        console.error(err);
+      }
+    }
+
+    cb();
   }, []);
 
   const errorHandler = (err: Error) => {

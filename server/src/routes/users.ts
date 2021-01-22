@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as action from '../actions/actions';
+import * as action from '../actions';
 
 const app = express.Router();
 
@@ -39,36 +39,6 @@ app.get('/getPlaylistID', (req, res) => {
 app.get('/getAllPlaylists', (req, res) => {
   action
     .getAllPlaylists()
-    .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.post('/increaseCount', (req, res) => {
-  const playlistID = req.body;
-
-  action
-    .increaseCount(playlistID)
-    .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.post('/decreaseCount', (req, res) => {
-  const playlistID = req.body;
-
-  action
-    .decreaseCount(playlistID)
     .then((rtn) => {
       res.send(rtn);
     })
