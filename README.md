@@ -1,9 +1,8 @@
-<h1 align="center">Welcome to Spotifyre 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.1-blue.svg?cacheSeconds=2592000" />
+<p align="center">
+    <img alt="Playfyre" src="assets/playlit.png" />
 </p>
 
-> Spotifyre is a Spotify application that acts as a Playlist Manager for curators. Our app focuses on making playlist collaboration and song sharing between listeners and curators super easy.
+> Playlit is a Spotify application that acts as a Playlist Manager for curators. Our app focuses on making playlist collaboration and song sharing between listeners and curators super easy.
 
 ### ✨ [Use the App Here!](https://spotifyre-manager.netlify.app/)
 
