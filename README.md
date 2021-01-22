@@ -44,7 +44,7 @@ If postgres tools are not installed on your machine:
 
 ```sh
 docker container ls # find the container for spotifyre_db and copy its id
-docker exec -it <container-id> psql -U postgres
+docker exec -it <container-id> psql -U postgres spotifyre
 ```
 
 ### Client
