@@ -9,8 +9,8 @@ export const getToken = async (code) => {
   return apiPost('/api/handle-token', { code }, false);
 };
 
-export const getMe = async (token) => {
-  return apiPost('/api/get-me', token);
+export const getMe = async (accessToken) => {
+  return apiPost('/api/get-me', { accessToken }, false);
 };
 
 export const getUserPlaylists = async (userID) => {

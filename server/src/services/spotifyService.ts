@@ -2,7 +2,7 @@ import { Service, Inject } from 'typedi';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { permissions } from '../permissions';
 import { setTokens } from '../actions';
-import { Auth } from '../models/auth';
+import { InAuthDTO, InGetMeDTO } from '../models/auth';
 
 @Service()
 export class SpotifyService {
@@ -15,7 +15,7 @@ export class SpotifyService {
     return url;
   }
 
-  async handleToken({ code }: Auth) {
+  async handleToken({ code }: InAuthDTO) {
     try {
       const data = await this.spotifyApiClient.authorizationCodeGrant(code);
 
@@ -41,8 +41,8 @@ export class SpotifyService {
   // TODO:
   //   - normalize the user
   //   - add the DTO for this
-  async getLoggedInUser(spotifyDto: { accessToken: string }) {
-    this.spotifyApiClient.setAccessToken(spotifyDto.accessToken);
+  async getLoggedInUser({ accessToken }: InGetMeDTO) {
+    this.spotifyApiClient.setAccessToken(accessToken);
     const { body: user } = await this.spotifyApiClient.getMe();
     try {
       // TODO: logging

@@ -1,5 +1,5 @@
 import express from 'express';
-import { AuthDecoder } from '../../models/auth';
+import { InAuthDTODecoder, InGetMeDTODecoder } from '../../models/auth';
 import Container from 'typedi';
 import { SpotifyService } from '../../services/spotifyService';
 import { validator } from '../middleware/validator';
@@ -16,7 +16,7 @@ app.get('/api/authorize', async (req, res) => {
   }
 });
 
-app.post('/api/handle-token', validator(AuthDecoder), async (req, res) => {
+app.post('/api/handle-token', validator(InAuthDTODecoder), async (req, res) => {
   try {
     const spotifyService = Container.get(SpotifyService);
     const data = await spotifyService.handleToken(req.body);
@@ -27,10 +27,10 @@ app.post('/api/handle-token', validator(AuthDecoder), async (req, res) => {
   }
 });
 
-app.post('/api/get-me', async (req, res) => {
+app.post('/api/get-me', validator(InGetMeDTODecoder), async (req, res) => {
   try {
     const spotifyService = Container.get(SpotifyService);
-    const user = await spotifyService.getLoggedInUser({ accessToken: req.body.post });
+    const user = await spotifyService.getLoggedInUser(req.body);
     res.send({ me: user });
   } catch (err) {
     res.send(err).status(500);
