@@ -30,7 +30,7 @@ yarn install && yarn dev
 In the project root, run:
 
 ```sh
-docker-compose up -d
+docker-compose --env-file ./server/.env.local up -d
 ```
 
 To connect to database:
@@ -44,7 +44,7 @@ If postgres tools are not installed on your machine:
 
 ```sh
 docker container ls # find the container for spotifyre_db and copy its id
-docker exec -it <container-id> psql -U postgres spotifyre
+docker exec -it <container-id> psql -U postgres
 ```
 
 ### Client
