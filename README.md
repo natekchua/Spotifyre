@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="Playfyre" src="assets/playlit.png" />
+    <img alt="Playfyre" src="assets/playlit-dark.png" />
 </p>
 
 > Playlit is a Spotify application that acts as a Playlist Manager for curators. Our app focuses on making playlist collaboration and song sharing between listeners and curators super easy.
