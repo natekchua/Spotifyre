@@ -45,15 +45,19 @@ async function main () {
   process.env.USE_DOCKER = 'false';
 
   if (env === 'development') {
-    // detect if docker is running and set USE_DOCKER to true
-    const dockerExec = await exec('docker container ps --format "{{.Names}}"');
-    if (!dockerExec.stderr && dockerExec.stdout) {
-      const names = dockerExec.stdout.split('\n').filter(name => !!name);
-      const dockerRunning = names.some(name => /spotifyre-db/g.test(name));
-      process.env.USE_DOCKER = String(dockerRunning);
+    try {
+      // detect if docker is running and set USE_DOCKER to true
+      const dockerExec = await exec('docker container ps --format "{{.Names}}"');
+      if (!dockerExec.stderr && dockerExec.stdout) {
+        const names = dockerExec.stdout.split('\n').filter(name => !!name);
+        const dockerRunning = names.some(name => /spotifyre-db/g.test(name));
+        process.env.USE_DOCKER = String(dockerRunning);
+      }
+    } catch {
+      console.warn('⚠ docker continer hasn\'t been detected');
+    } finally {
+      startNodemon();
     }
-
-    startNodemon();
   } else {
     throw new Error(`Unknown environment: '${env}'`);
   }
