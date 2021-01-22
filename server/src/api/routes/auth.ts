@@ -1,6 +1,8 @@
 import express from 'express';
+import { AuthDecoder, Auth } from '../../models/auth';
 import Container from 'typedi';
 import { SpotifyService } from '../../services/spotifyService';
+import { validator } from '../middleware/validator';
 
 const app = express.Router();
 
@@ -14,11 +16,11 @@ app.get('/api/authorize', async (req, res) => {
   }
 });
 
-app.post('/api/handle-token', async (req, res) => {
+app.post('/api/handle-token', validator(AuthDecoder), async (req, res) => {
   try {
     const spotifyService = Container.get(SpotifyService);
     const data = await spotifyService.handleToken({
-      code: req.body.post,
+      code: req.body.post
     });
 
     res.send(data);
