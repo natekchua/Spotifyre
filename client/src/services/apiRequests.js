@@ -6,7 +6,7 @@ export const getAuthURL = async () => {
 };
 
 export const getToken = async (code) => {
-  return apiPost('/api/handle-token', code);
+  return apiPost('/api/handle-token', { code }, false);
 };
 
 export const getMe = async (token) => {

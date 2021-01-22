@@ -2,6 +2,7 @@ import { Service, Inject } from 'typedi';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { permissions } from '../permissions';
 import { setTokens } from '../actions';
+import { Auth } from '../models/auth';
 
 @Service()
 export class SpotifyService {
@@ -14,9 +15,9 @@ export class SpotifyService {
     return url;
   }
 
-  async handleToken(handleTokenDto: { code: string }) {
+  async handleToken({ code }: Auth) {
     try {
-      const data = await this.spotifyApiClient.authorizationCodeGrant(handleTokenDto.code);
+      const data = await this.spotifyApiClient.authorizationCodeGrant(code);
 
       // Set the access token on the API object to use it in later calls
       this.spotifyApiClient.setAccessToken(data.body.access_token);
