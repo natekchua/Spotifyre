@@ -145,7 +145,7 @@ export const setTokens = async (data: TokenData, user: User) => {
       const params: AddUserParams = {
         userID: user.id,
         name: user.display_name,
-        profilePic: user.images[0].url,
+        profilePic: user?.images[0]?.url,
         followers: user.followers.total,
         curatorSettings: null,
         accessToken: access_token,
