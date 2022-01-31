@@ -71,7 +71,6 @@ ALTER TABLE spotifyre.suggestions OWNER TO postgres;
 CREATE TABLE spotifyre."user" (
     userid character varying(256) NOT NULL,
     name character varying(256),
-    curator_settings character varying(256),
     access_token character varying(512),
     refresh_token character varying(512),
     profile_pic character varying(1024),

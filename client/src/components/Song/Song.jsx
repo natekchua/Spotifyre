@@ -18,10 +18,8 @@ function Song (props) {
     tab,
     user,
     curator,
-    curatorSettings,
     curatorSuggestions,
-    curatorPlaylist,
-    settingsSetByCurator
+    curatorPlaylist
   }, dispatch] = useProviderValue();
   const { song, onPlaySong, curatorView } = props;
   const [state, setState] = useState(initialState);
@@ -71,56 +69,21 @@ function Song (props) {
     };
 
     if (curator.id !== user.id) {
-      const currUserSuggestions = curatorSuggestions.filter(s => s?.suggested_by_username === user?.display_name);
-
-      // check current entries with curator Settings to see if they satisfy conditions before posting API request.
-      if (currUserSuggestions.length < curatorSettings.suggestionsPerUser &&
-        curatorSuggestions.length < curatorSettings.maxSuggestions) {
-        suggestSongToPlaylist(params).then(() => {
-          getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
-            dispatch({
-              type: 'SET_CURATOR_SUGGESTIONS',
-              curatorSuggestions: JSON.parse(res)
-            });
-            dispatch({
-              type: 'SET_NOTIFICATION',
-              notification: {
-                message: 'Song suggestion successfully submitted to playlist.',
-                type: 'success'
-              }
-            });
+      suggestSongToPlaylist(params).then(() => {
+        getSuggestionsForPlaylist(curatorPlaylist.id).then(res => {
+          dispatch({
+            type: 'SET_CURATOR_SUGGESTIONS',
+            curatorSuggestions: JSON.parse(res)
           });
-        }).catch(err => errorHandler(err));
-      } else {
-        if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser &&
-          curatorSuggestions.length >= curatorSettings.maxSuggestions) {
           dispatch({
             type: 'SET_NOTIFICATION',
             notification: {
-              message:
-              `Sorry! You can't suggest more than ${curatorSettings.suggestionsPerUser} songs to this playlist.
-                This playlist has also reached its max number of suggestions.`,
-              type: 'error'
+              message: 'Song suggestion successfully submitted to playlist.',
+              type: 'success'
             }
           });
-        } else if (currUserSuggestions.length >= curatorSettings.suggestionsPerUser) {
-          dispatch({
-            type: 'SET_NOTIFICATION',
-            notification: {
-              message: `Sorry! You can't suggest more than ${curatorSettings.suggestionsPerUser} songs to this playlist.`,
-              type: 'error'
-            }
-          });
-        } else {
-          dispatch({
-            type: 'SET_NOTIFICATION',
-            notification: {
-              message: 'Sorry! This playlist has reached its max number of suggestions.',
-              type: 'error'
-            }
-          });
-        }
-      }
+        });
+      }).catch(err => errorHandler(err));
     } else {
       dispatch({
         type: 'SET_NOTIFICATION',
@@ -143,7 +106,7 @@ function Song (props) {
         </div>
       </div>
       <p className='p5'>{getDuration(song?.duration_ms)}</p>
-      { curatorPlaylist?.name && !curatorView && tab === 'Collaborate' && settingsSetByCurator
+      { curatorPlaylist?.name && !curatorView && tab === 'Collaborate'
         ? <Menu
             keepMounted
             open={state.mouseY !== null}

@@ -3,7 +3,7 @@ import { prisma } from './prisma';
 import { AddSongSuggestionParams, RemoveSongSuggestionParams } from './types';
 
 export const getPlaylistSuggestions = async (playlistID: string) => {
-  return await prisma.suggestions.findFirst({
+  return await prisma.suggestions.findMany({
     where: {
       playlistid: playlistID
     }

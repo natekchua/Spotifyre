@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useProviderValue } from '../../ContextState/Provider';
-import { getSettings } from '../../../services/dbRequests';
 import SongList from '../../SongList/SongList';
 import PlaylistPanel from './PlaylistPanel';
 import UserSuggestionsContainer from '../Suggestions/UserSuggestionsContainer';
@@ -23,10 +22,7 @@ const StyledTabs = usePanelStyles(props => <Tabs {...props} TabIndicatorProps={{
 const StyledTab = usePanelEffectStyles(props => <Tab disableRipple {...props} />);
 
 function PlaylistPanelHandler (props) {
-  const [{
-    userSettings,
-    settingsSetByCurator
-  }, dispatch] = useProviderValue();
+  const [{ }, dispatch] = useProviderValue();
   const { playlist, curatorView } = props;
   const [tab, setTab] = useState(0);
   const classes = usePlaylistViewStyles();
@@ -36,28 +32,6 @@ function PlaylistPanelHandler (props) {
       dispatch({
         type: 'SET_CURATOR',
         curator: playlist.owner
-      });
-      getSettings(playlist.owner.id).then(res => {
-        if (res) {
-          const resultObj = JSON.parse(res).curator_settings;
-          dispatch({
-            type: 'SET_CURATOR_SETTINGS',
-            curatorSettings: JSON.parse(resultObj)
-          });
-          dispatch({
-            type: 'CHECK_CURATOR_SETTINGS',
-            settingsSetByCurator: true
-          });
-        } else {
-          dispatch({
-            type: 'SET_CURATOR_SETTINGS',
-            curatorSettings: []
-          });
-          dispatch({
-            type: 'CHECK_CURATOR_SETTINGS',
-            settingsSetByCurator: false
-          });
-        }
       });
     }
   }, []);
@@ -88,8 +62,8 @@ function PlaylistPanelHandler (props) {
       <PlaylistPanel value={tab} index={1}>
         {
           !curatorView
-            ? <UserSuggestionsContainer userSettings={userSettings} />
-            : <CuratorSuggestionsContainer curatorView={curatorView} hasCuratorSettings={settingsSetByCurator} />
+            ? <UserSuggestionsContainer />
+            : <CuratorSuggestionsContainer curatorView={curatorView} />
         }
       </PlaylistPanel>
     </div>

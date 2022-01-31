@@ -6,20 +6,8 @@ export const initialState: ContextProviderState = {
   suggestionNotifications: [],
   tab: 'Dashboard',
   user: null,
-  settingsSetByUser: false,
-  userSettings: {
-    curatorMode: false,
-    maxSuggestions: 100,
-    suggestionsPerUser: 10
-  },
   userSuggestions: [],
   curator: null,
-  settingsSetByCurator: false,
-  curatorSettings: {
-    curatorMode: false,
-    maxSuggestions: 100,
-    suggestionsPerUser: 10
-  },
   curatorSuggestions: [],
   curators: [],
   playlists: [],

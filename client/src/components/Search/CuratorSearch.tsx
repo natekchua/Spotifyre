@@ -1,6 +1,6 @@
 /* eslint-disable no-empty-pattern */
 import React from 'react';
-import { getCurators } from '../../services/dbRequests';
+import { getCurator, getCurators } from '../../services/dbRequests';
 import { useProviderValue } from '../ContextState/Provider';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,7 +15,7 @@ function CuratorSearch (props: CuratorSearchProps) {
 
   const sendQuery = (q: any) => {
     if (q.target.value) {
-      getCurators(q.target.value).then(res => {
+      getCurator(q.target.value).then(res => {
         dispatch({
           type: 'SET_CURATORS_SEARCH_QUERY',
           curatorsSearchQuery: q.target.value

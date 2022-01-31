@@ -2,6 +2,7 @@ import { prisma } from './prisma';
 
 export const getNotifications = async (userID: string) => {
   try {
+    // TODO: fix this
     const playlist = await prisma.playlists.findFirst({ where: { userid: userID } });
     if (playlist) {
       return await prisma.suggestions.findMany({

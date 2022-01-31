@@ -66,7 +66,7 @@ function CuratorShowcase () {
                 justify='center'
                 alignItems='center'
               >
-                {curators.map((c, idx) => (
+                {curators?.map((c, idx) => (
                   <Grid
                     className='avatar-container'
                     item

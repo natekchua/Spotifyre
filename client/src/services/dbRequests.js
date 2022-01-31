@@ -1,14 +1,6 @@
 // All api requests involving the Postgres database.
 import { apiGet, apiPost } from './helperFunctions';
 
-export const getSettings = async (id) => {
-  return apiPost('/users/get-settings', id);
-};
-
-export const updateCurationSettings = async (params) => {
-  return apiPost('/users/update-settings', params);
-};
-
 export const suggestSongToPlaylist = async (params) => {
   return apiPost('/users/suggest-song', params);
 };
@@ -25,6 +17,10 @@ export const getNotifications = async (userID) => {
   return apiGet(`/users/get-notifications/${userID}`);
 };
 
-export const getCurators = async (query) => {
-  return apiGet(`/users/get-curators/${query}`);
+export const getCurator = async (name) => {
+  return apiGet(`/users/get-curator/${name}`);
+};
+
+export const getCurators = async () => {
+  return apiGet('/users/get-curators');
 };

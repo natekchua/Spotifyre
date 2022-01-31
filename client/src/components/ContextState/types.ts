@@ -8,12 +8,8 @@ export type ContextStateActionType =
   | 'SET_TAB'
   | 'SET_SPOTIFY'
   | 'SET_USER'
-  | 'CHECK_USER_SETTINGS'
-  | 'SET_USER_SETTINGS'
   | 'SET_USER_SUGGESTIONS'
   | 'SET_CURATOR'
-  | 'CHECK_CURATOR_SETTINGS'
-  | 'SET_CURATOR_SETTINGS'
   | 'SET_CURATOR_SUGGESTIONS'
   | 'SET_CURATORS'
   | 'SET_PLAYLISTS'
@@ -57,20 +53,8 @@ export interface ContextProviderState {
   suggestionNotifications: any[];
   tab: Tabs;
   user: any;
-  settingsSetByUser: boolean;
-  userSettings: {
-    curatorMode: boolean;
-    maxSuggestions: number;
-    suggestionsPerUser: number;
-  };
   userSuggestions: any[];
   curator: any;
-  settingsSetByCurator: boolean;
-  curatorSettings: {
-    curatorMode: boolean;
-    maxSuggestions: number;
-    suggestionsPerUser: number;
-  };
   curatorSuggestions: any[];
   curators: any[];
   playlists: any[];

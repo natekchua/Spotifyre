@@ -14,7 +14,6 @@ export type RemoveSongSuggestionParams = {
 export type AddUserParams = {
   userID: string;
   name: string;
-  curatorSettings: any | null;
   profilePic: string;
   followers: number;
   accessToken: string;
@@ -23,7 +22,6 @@ export type AddUserParams = {
 
 export type UpdateUserParams = {
   user: User;
-  newCurationSettings: any;
 }
 
 export type TokenData = {

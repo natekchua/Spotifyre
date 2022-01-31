@@ -5,23 +5,17 @@ import CuratorSuggestions from './CuratorSuggestions';
 import './Suggestions.css';
 
 function CuratorSuggestionsContainer (props) {
-  const { curatorView, hasCuratorSettings } = props;
+  const { curatorView } = props;
 
   return (
     <div>
-      { curatorView && hasCuratorSettings
-        ? <CuratorSuggestions />
-        : <h3 className='flex-basic m30'>
-            Sorry! You can&lsquo;t suggest to this playlist because the owner has not enabled Curator Mode.
-          </h3>
-      }
+      <CuratorSuggestions />
     </div>
   );
 }
 
 CuratorSuggestionsContainer.propTypes = {
-  curatorView: PropTypes.any,
-  hasCuratorSettings: PropTypes.any
+  curatorView: PropTypes.any
 };
 
 export default CuratorSuggestionsContainer;

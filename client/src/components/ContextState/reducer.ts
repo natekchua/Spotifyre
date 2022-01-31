@@ -35,16 +35,6 @@ const reducer: ContextStateReducer = (state, action) => {
         ...state,
         user: action.user
       };
-    case 'CHECK_USER_SETTINGS':
-      return {
-        ...state,
-        settingsSetByUser: action.settingsSetByUser
-      };
-    case 'SET_USER_SETTINGS':
-      return {
-        ...state,
-        userSettings: action.userSettings
-      };
     case 'SET_USER_SUGGESTIONS':
       return {
         ...state,
@@ -54,16 +44,6 @@ const reducer: ContextStateReducer = (state, action) => {
       return {
         ...state,
         curator: action.curator
-      };
-    case 'CHECK_CURATOR_SETTINGS':
-      return {
-        ...state,
-        settingsSetByCurator: action.settingsSetByCurator
-      };
-    case 'SET_CURATOR_SETTINGS':
-      return {
-        ...state,
-        curatorSettings: action.curatorSettings
       };
     case 'SET_CURATOR_SUGGESTIONS':
       return {

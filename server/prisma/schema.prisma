@@ -32,7 +32,6 @@ model suggestions {
 model user {
   userid           String      @id
   name             String?
-  curator_settings String?
   access_token     String?
   refresh_token    String?
   profile_pic      String?

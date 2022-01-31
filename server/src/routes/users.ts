@@ -7,9 +7,23 @@ const app = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/get-curators/:query', (req, res) => {
+app.get('/get-curator/:query', (req, res) => {
   action
-    .getCurators(req.params.query)
+    .getCurator(req.params.query)
+    .then((rtn) => {
+      console.log('curator retrieved: ', rtn);
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
+app.get('/get-curators', (req, res) => {
+  action
+    .getCurators()
     .then((rtn) => {
       console.log('curators retrieved: ', rtn);
       res.send(rtn);
@@ -40,36 +54,6 @@ app.get('/getAllPlaylists', (req, res) => {
   action
     .getAllPlaylists()
     .then((rtn) => {
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-// ****** SETTINGS ****** //
-
-app.post('/get-settings', (req, res) => {
-  action
-    .getUserSettings(req.body.post)
-    .then((rtn) => {
-      console.log('user settings retrieved: ', rtn);
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.post('/update-settings', (req, res) => {
-  action
-    .updateUserSettings(req.body.post)
-    .then((rtn) => {
-      console.log('updated settings');
       res.send(rtn);
     })
     .catch((err) => {

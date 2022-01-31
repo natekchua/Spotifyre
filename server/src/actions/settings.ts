@@ -1,6 +1,6 @@
 import { User } from '../models';
 import { prisma } from './prisma';
-import { AddUserParams, TokenData, UpdateUserParams } from './types';
+import { AddUserParams, TokenData } from './types';
 import { addUser, getUser } from './user';
 
 export const setTokens = async (data: TokenData, user: User) => {
@@ -20,7 +20,6 @@ export const setTokens = async (data: TokenData, user: User) => {
         name: user.display_name,
         profilePic: user?.images[0]?.url,
         followers: user.followers.total,
-        curatorSettings: null,
         accessToken: access_token,
         refreshToken: refresh_token
       };
@@ -50,36 +49,5 @@ export const getUserToken = async (id: string) => {
   } catch (err) {
     console.error(err);
     return `Failed to get user settings: ${err.message}`;
-  }
-};
-
-export const getUserSettings = async (id: string) => {
-  try {
-    const { curator_settings } = await getUser(id);
-    if (curator_settings) {
-      return curator_settings;
-    } else {
-      return { curator_settings: '' };
-    }
-  } catch (err) {
-    console.error(err);
-    return `Failed to get user settings: ${err.message}`;
-  }
-};
-
-export const updateUserSettings = async (params: UpdateUserParams) => {
-  const { user, newCurationSettings } = params;
-  try {
-    return await prisma.user.update({
-      where: {
-        userid: user.id
-      },
-      data: {
-        curator_settings: JSON.stringify(newCurationSettings)
-      }
-    });
-  } catch (err) {
-    console.error(err);
-    return `Failed to update user settings: ${err.message}`;
   }
 };

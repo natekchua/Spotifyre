@@ -14,11 +14,11 @@ import {
   getUserPlaylists,
   getPlaylist
 } from '../../services/apiRequests';
-import { getNotifications, getSettings } from '../../services/dbRequests';
+import { getNotifications } from '../../services/dbRequests';
 
 import './AppContainer.css';
 
-function AppContainer(props) {
+function AppContainer (props) {
   const { token } = props;
   const [{ notification, user }, dispatch] = useProviderValue();
 
@@ -39,25 +39,6 @@ function AppContainer(props) {
             type: 'SET_USER',
             user: me
           });
-
-          getSettings(me.id)
-            .then(res => {
-              const response = JSON.parse(res);
-              if (response && response.curator_settings) {
-                const { curator_settings } = response;
-                dispatch({
-                  type: 'SET_USER_SETTINGS',
-                  userSettings: curator_settings
-                });
-                dispatch({
-                  type: 'CHECK_USER_SETTINGS',
-                  settingsSetByUser: true
-                });
-              }
-            })
-            .catch(err => {
-              errorHandler(err);
-            });
 
           // Get User Playlists and set user playlists in Context State.
           getUserPlaylists(me.id)
@@ -89,7 +70,7 @@ function AppContainer(props) {
             .catch(err => errorHandler(err));
         })
         .catch(err => {
-          errorHandler(err)
+          errorHandler(err);
         });
     }
   }, []);

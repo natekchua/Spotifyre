@@ -1,17 +1,18 @@
 import { prisma } from './prisma';
 import { AddUserParams } from './types';
 
-export const getCurators = async (searchString: string) => {
+export const getCurator = async (name: string) => {
   return await prisma.user.findFirst({
     where: {
       name: {
-        contains: searchString !== 'undefined' ? searchString : ''
-      },
-      curator_settings: {
-        not: 'null'
+        contains: name !== 'undefined' ? name : ''
       }
     }
   });
+};
+
+export const getCurators = async () => {
+  return await prisma.user.findMany();
 };
 
 export const getUser = async (id: string) => {
@@ -24,14 +25,13 @@ export const getUser = async (id: string) => {
 };
 
 export const addUser = async (params: AddUserParams) => {
-  const { userID: userid, name, curatorSettings: curator_settings, profilePic: profile_pic, followers, accessToken: access_token, refreshToken: refresh_token } = params;
+  const { userID: userid, name, profilePic: profile_pic, followers, accessToken: access_token, refreshToken: refresh_token } = params;
 
   try {
     return await prisma.user.create({
       data: {
         userid,
         name,
-        curator_settings,
         profile_pic,
         followers,
         access_token,
