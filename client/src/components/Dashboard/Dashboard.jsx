@@ -36,7 +36,7 @@ function Dashboard () {
       ? <>
         <div className='showcase m20'>
           <h2 className='p5'>Expand your horizon.</h2>
-          <div className="dash-playlists">
+          <div className='dash-playlists'>
             <Carousel breakPoints={breakPoints}>
               {playlistShowcase}
             </Carousel>

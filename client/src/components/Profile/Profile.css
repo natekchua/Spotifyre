@@ -24,8 +24,8 @@ input[type=number] {
 
 #profile-settings-avatar {
   width: 20vw;
-  max-width: 250px;
-  height: auto;
+  min-width: 20vw;
+  height: 20vw;
   margin: 12px;
 }
 
@@ -128,10 +128,6 @@ input[type=number] {
 
   .profile-container h4 {
     font-size: 12px;
-  }
-
-  #profile-settings-avatar {
-    display: none;
   }
 
   #avatar-info-container p{

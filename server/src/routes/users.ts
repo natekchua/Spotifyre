@@ -35,7 +35,7 @@ app.get('/get-curators', (req, res) => {
     });
 });
 
-app.get('/getPlaylistID', (req, res) => {
+app.get('/get-playlist-id', (req, res) => {
   const userID = req.body;
 
   action
@@ -50,7 +50,7 @@ app.get('/getPlaylistID', (req, res) => {
     });
 });
 
-app.get('/getAllPlaylists', (req, res) => {
+app.get('/get-all-playlists', (req, res) => {
   action
     .getAllPlaylists()
     .then((rtn) => {
