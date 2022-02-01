@@ -66,7 +66,7 @@ function PlaylistView (props) {
             <img src={playlist?.images[0]?.url} alt='album-art' />
             <div className='playlist-text'>
               <h1>{playlist?.name}</h1>
-              <p>{he.decode(playlist?.description)}</p>
+              {playlist.description && <p>{he.decode(playlist?.description)}</p>}
               <br />
               <p>Created by <strong>{playlist?.owner.display_name}</strong></p>
               <p><strong>{playlist?.tracks?.total}</strong> {playlist?.tracks?.total === 1 ? 'Song' : 'Songs'}</p>

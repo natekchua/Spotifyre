@@ -2,9 +2,14 @@ import createError from 'http-errors';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import logger from 'morgan';
+
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
+import dbRouter from './routes/db';
+import playerRouter from './routes/player';
+import playlistRouter from './routes/playlist';
+import userRouter from './routes/user';
 
 const app = express();
 
@@ -14,8 +19,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/db', dbRouter);
+app.use('/player', playerRouter);
+app.use('/playlist', playlistRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

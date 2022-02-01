@@ -54,7 +54,7 @@ async function main () {
         process.env.USE_DOCKER = String(dockerRunning);
       }
     } catch {
-      console.warn('⚠ docker continer hasn\'t been detected');
+      console.warn('⚠ docker container hasn\'t been detected');
     } finally {
       startNodemon();
     }

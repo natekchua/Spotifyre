@@ -4,18 +4,6 @@ export const wait = async (ms) => {
   });
 };
 
-// Parses the access token from the URL
-export const getResponseToken = () => {
-  return window.location.hash
-    .substring(1)
-    .split('&')
-    .reduce((init, item) => {
-      const queryString = item.split('=');
-      init[queryString[0]] = decodeURIComponent(queryString[1]);
-      return init;
-    }, {});
-};
-
 // Parse the authorization code from the URL
 export const getCode = () => {
   const url = new URL(window.location.href);

@@ -1,14 +1,12 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import * as action from '../actions';
+import * as actions from '../actions';
 
 const app = express.Router();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// ****** GETS ****** //
 
 app.get('/get-curator/:query', (req, res) => {
-  action
+  actions
     .getCurator(req.params.query)
     .then((rtn) => {
       console.log('curator retrieved: ', rtn);
@@ -22,7 +20,7 @@ app.get('/get-curator/:query', (req, res) => {
 });
 
 app.get('/get-curators', (req, res) => {
-  action
+  actions
     .getCurators()
     .then((rtn) => {
       console.log('curators retrieved: ', rtn);
@@ -35,10 +33,24 @@ app.get('/get-curators', (req, res) => {
     });
 });
 
+app.get('/get-notifications/:userID', (req, res) => {
+  actions
+    .getNotifications(req.params.userID)
+    .then((rtn) => {
+      console.log('notifications retrieved: ', rtn);
+      res.send(rtn);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.send({ error: err });
+    });
+});
+
 app.get('/get-playlist-id', (req, res) => {
   const userID = req.body;
 
-  action
+  actions
     .getPlaylistID(userID)
     .then((rtn) => {
       res.send(rtn);
@@ -51,7 +63,7 @@ app.get('/get-playlist-id', (req, res) => {
 });
 
 app.get('/get-all-playlists', (req, res) => {
-  action
+  actions
     .getAllPlaylists()
     .then((rtn) => {
       res.send(rtn);
@@ -63,10 +75,10 @@ app.get('/get-all-playlists', (req, res) => {
     });
 });
 
-// ****** SUGGESTIONS ****** //
+// ****** POSTS ****** //
 
 app.post('/playlist-suggestions', (req, res) => {
-  action
+  actions
     .getPlaylistSuggestions(req.body.post)
     .then((rtn) => {
       console.log('retrieved playlist suggestions');
@@ -80,7 +92,7 @@ app.post('/playlist-suggestions', (req, res) => {
 });
 
 app.post('/suggest-song', (req, res) => {
-  action
+  actions
     .addSongSuggestion(req.body.post)
     .then((rtn) => {
       console.log('song sucessfully suggested: ', rtn);
@@ -94,24 +106,10 @@ app.post('/suggest-song', (req, res) => {
 });
 
 app.post('/remove-suggestion', (req, res) => {
-  action
+  actions
     .removeSongSuggestion(req.body.post)
     .then((rtn) => {
       console.log('suggestion removed: ', rtn);
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
-});
-
-app.get('/get-notifications/:userID', (req, res) => {
-  action
-    .getNotifications(req.params.userID)
-    .then((rtn) => {
-      console.log('notifications retrieved: ', rtn);
       res.send(rtn);
     })
     .catch((err) => {

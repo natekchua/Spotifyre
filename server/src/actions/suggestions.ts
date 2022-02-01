@@ -33,12 +33,10 @@ export const createSuggestion = async ({ playlistInfo, songInfo, suggestedByUser
 export const addSongSuggestion = async ({ playlistInfo, songInfo, suggestedByUserInfo }: AddSongSuggestionParams) => {
   const playlistCount = await prisma.playlists.count({ where: { playlistid: playlistInfo.id } });
 
-  if (playlistCount > 0) {
-    return await createSuggestion({ suggestedByUserInfo, songInfo, playlistInfo });
-  } else {
+  if (playlistCount === 0) {
     await addCuratorPlaylist(playlistInfo);
-    return await createSuggestion({ suggestedByUserInfo, songInfo, playlistInfo });
   }
+  return await createSuggestion({ suggestedByUserInfo, songInfo, playlistInfo });
 };
 
 export const removeSongSuggestion = async ({ songID, playlistID }: RemoveSongSuggestionParams) => {

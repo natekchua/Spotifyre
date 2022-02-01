@@ -50,7 +50,7 @@ function AppContainer (props) {
             })
             .catch(err => errorHandler(err));
 
-          // Top tracks of 2020 playlist hard-coded for now
+          // Top tracks of 2021 playlist hard-coded for now
           getPlaylist(me.id)
             .then(res => {
               dispatch({
@@ -87,7 +87,7 @@ function AppContainer (props) {
   };
 
   return (
-    <div className='AppContainer-container'>
+    <div className='app-container'>
       {notification &&
         <Alert
           className='notification'
@@ -100,9 +100,9 @@ function AppContainer (props) {
       }
       {user &&
         <>
-          <div className='AppContainer'>
+          <div className='app-container-flex'>
             <Sidebar />
-            <div className='Content-container'>
+            <div className='content-container'>
               <Header />
               {props.token ? <Redirect to='/dashboard' /> : null}
               <Route path='/dashboard' render={() => <Dashboard />} />

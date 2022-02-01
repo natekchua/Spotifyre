@@ -1,14 +1,14 @@
-.AppContainer-container {
+.app-container {
   display: flex;
   flex-direction: column;
 }
 
-.AppContainer {
+.app-container-flex {
   display: flex;
   flex-grow: 1;
 }
 
-.Content-container {
+.content-container {
   padding: 30px;
   width: 100%;
   height: 105vh;
@@ -41,7 +41,7 @@
 
 /* Small Devices (Phones, Tablets) */
 @media only screen and (min-width: 280px) and (max-width: 767px) {
-  .Content-container {
+  .content-container {
     padding: 10px;
   }
   .notification {
