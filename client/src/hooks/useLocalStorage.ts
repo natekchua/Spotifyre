@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { LocalStoreKey } from "../types";
+import { useState } from 'react';
+import { LocalStoreKey } from '../types';
 
 /**
  * A hook to use localstorage value, similar to useState
- * 
+ *
  * original: https://usehooks.com/useLocalStorage
- * 
+ *
  * @param key - a key of type LocalStoreKey
  * @param initialValue - initial value to put in the localstorage
  */
-function useLocalStorage<T>(key: LocalStoreKey, initialValue: T) {
+function useLocalStorage<T> (key: LocalStoreKey, initialValue: T) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState<T>(() => {

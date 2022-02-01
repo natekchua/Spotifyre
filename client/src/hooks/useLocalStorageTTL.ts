@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LocalStoreKey } from "../types";
+import { LocalStoreKey } from '../types';
 
 type TTLValue<T> = {
   value: T;
@@ -8,11 +8,11 @@ type TTLValue<T> = {
 
 /**
  * A hook to use localstorage value with expiry time
- * 
+ *
  * @param key - a key of type LocalStoreKey
  * @param initialValue - initial value to put in the localstorage
  */
-function useLocalStorageTTL<T>(key: LocalStoreKey, initialValue: T, expiry: number) {
+function useLocalStorageTTL<T> (key: LocalStoreKey, initialValue: T, expiry: number) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState<TTLValue<T> | null>(() => {

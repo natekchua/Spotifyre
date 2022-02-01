@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useProviderValue } from '../ContextState/Provider';
 import { Avatar } from '@material-ui/core';
-import { useInfoStyles } from '../../MUIStyles';
 
 import 'antd/lib/alert/style/index.css';
 import './Profile.css';
