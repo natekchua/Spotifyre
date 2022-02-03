@@ -124,3 +124,4 @@ fabric.properties
 !.env.local
 
 .idea
+.turbo
