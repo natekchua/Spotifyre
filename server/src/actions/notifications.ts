@@ -1,16 +1,15 @@
 import { prisma } from './prisma';
+import type { suggestions } from '@prisma/client';
 
 /**
- * `select * from spotifyre.suggestions where playlistid in (
- *    select playlistid from spotifyre.playlists where userid = 'my_userid'
- *  )`
- *
  * @param userID
- * @returns
+ * @returns list of suggestions/notifications sent to specified user
  */
-export async function getNotifications (userID: string) {
+export async function getNotifications (
+  userID: string
+): Promise<suggestions[] | Error> {
   try {
-    return await prisma.playlists.findMany({
+    const result = await prisma.playlists.findMany({
       where: {
         userid: userID
       },
@@ -18,8 +17,10 @@ export async function getNotifications (userID: string) {
         suggestions: true
       }
     });
+
+    return result.flatMap(({ suggestions }) => suggestions);
   } catch (err) {
     console.error(err);
-    return `Failed to update user settings: ${err.message}`;
+    return new Error(`Failed to get user's notifications: ${err.message}`);
   }
 }

@@ -8,33 +8,33 @@ datasource db {
 }
 
 model playlists {
-  playlistid  String        @id
-  userid      String?
-  user        user?         @relation(fields: [userid], references: [userid])
+  playlistid  String        @id @db.VarChar(256)
+  userid      String?       @db.VarChar(256)
+  user        user?         @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
   suggestions suggestions[]
 }
 
 model suggestions {
-  songid                String
-  playlistid            String
-  suggested_by_userid   String?
-  playlist              String?
+  songid                String    @db.VarChar(256)
+  playlistid            String    @db.VarChar(256)
+  suggested_by_userid   String?   @db.VarChar(256)
+  playlist              String?   @db.VarChar(256)
   count                 Int?
-  song_title            String?
-  artist                String?
-  album_art             String?
-  suggested_by_username String?
-  playlists             playlists @relation(fields: [playlistid], references: [playlistid])
+  song_title            String?   @db.VarChar(256)
+  artist                String?   @db.VarChar(256)
+  album_art             String?   @db.VarChar(256)
+  suggested_by_username String?   @db.VarChar(256)
+  playlists             playlists @relation(fields: [playlistid], references: [playlistid], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([songid, playlistid])
 }
 
 model user {
-  userid           String      @id
-  name             String?
-  access_token     String?
-  refresh_token    String?
-  profile_pic      String?
-  followers        Int?
-  playlists        playlists[]
+  userid        String      @id(map: "users_pkey") @db.VarChar(256)
+  name          String?     @db.VarChar(256)
+  access_token  String?     @db.VarChar(512)
+  refresh_token String?     @db.VarChar(512)
+  profile_pic   String?     @db.VarChar(1024)
+  followers     Int?
+  playlists     playlists[]
 }
