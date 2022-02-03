@@ -33,18 +33,16 @@ app.get('/get-curators', (req, res) => {
     });
 });
 
-app.get('/get-notifications/:userID', (req, res) => {
-  actions
-    .getNotifications(req.params.userID)
-    .then((rtn) => {
-      console.log('notifications retrieved: ', rtn);
-      res.send(rtn);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500);
-      res.send({ error: err });
-    });
+app.get('/get-notifications/:userID', async (req, res) => {
+  try {
+    const notifications = await actions.getNotifications(req.params.userID);
+    console.log('notifications retrieved', { notifications });
+    res.send(notifications);
+  } catch (err) {
+    console.error('Failed to get user notifications', err);
+    res.status(500);
+    res.send({ error: err });
+  }
 });
 
 app.get('/get-playlist-id', (req, res) => {
