@@ -1,20 +1,26 @@
 import { prisma } from './prisma';
+import type { suggestions } from '@prisma/client';
 
-export const getNotifications = async (userID: string) => {
+/**
+ * @param userID
+ * @returns list of suggestions/notifications sent to specified user
+ */
+export async function getNotifications (
+  userID: string
+): Promise<suggestions[] | Error> {
   try {
-    // TODO: fix this
-    const playlist = await prisma.playlists.findFirst({ where: { userid: userID } });
-    if (playlist) {
-      return await prisma.suggestions.findMany({
-        where: {
-          playlistid: playlist.playlistid
-        }
-      });
-    } else {
-      return [];
-    }
+    const result = await prisma.playlists.findMany({
+      where: {
+        userid: userID
+      },
+      include: {
+        suggestions: true
+      }
+    });
+
+    return result.flatMap(({ suggestions }) => suggestions);
   } catch (err) {
     console.error(err);
-    return `Failed to update user settings: ${err.message}`;
+    return new Error(`Failed to get user's notifications: ${err.message}`);
   }
-};
+}
