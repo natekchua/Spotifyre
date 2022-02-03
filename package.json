@@ -8,15 +8,9 @@
     "./server"
   ],
   "scripts": {
-    "dev:client": "yarn workspace client start",
-    "dev:server": "yarn workspace server dev",
-    "dev": "npm-run-all --parallel dev:server dev:client",
-    "lint:client": "yarn workspace client lint",
-    "lint:server": "yarn workspace server lint",
-    "build:server": "yarn workspace server build",
-    "lint": "npm-run-all --parallel lint:*",
-    "clean": "rimraf node_modules/ server/node_modules client/node_modules",
-    "postinstall": "yarn workspace client install && yarn workspace server install"
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
   },
   "dependencies": {
     "commitizen": "^4.2.2",
@@ -38,5 +32,9 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix"
-  }
+  },
+  "devDependencies": {
+    "turbo": "^1.1.2"
+  },
+  "packageManager": "yarn@1.22.15"
 }
