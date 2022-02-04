@@ -28,7 +28,7 @@ export const apiGet = async (path) => {
 
   // local dev environment
   const dev = {
-    urlPath: path
+    urlPath: 'http://localhost:8080' + path
   };
 
   const config = process.env.NODE_ENV === 'development' ? dev : prod;

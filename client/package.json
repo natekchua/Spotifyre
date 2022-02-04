@@ -50,7 +50,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080",
   "devDependencies": {
     "@types/node": "^14.14.13",
     "@types/react": "^17.0.0",
